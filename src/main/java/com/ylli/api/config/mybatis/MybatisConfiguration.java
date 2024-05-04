@@ -18,6 +18,7 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 public class MybatisConfiguration {
 
+    //单数据源下事物管理
     @Bean
     public PlatformTransactionManager transactionManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
@@ -33,7 +34,8 @@ public class MybatisConfiguration {
         configuration.setMapUnderscoreToCamelCase(true);
         bean.setConfiguration(configuration);
 
-        //bean.setTypeHandlers(new StringListTypeHandler());
+        //bean.setTypeHandlers(new ListTypeHandler());
+        bean.setTypeHandlersPackage("com.ylli.api.config.mybatis");
 
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         bean.setMapperLocations(resolver.getResources("classpath:/db/mapper/*.xml"));
