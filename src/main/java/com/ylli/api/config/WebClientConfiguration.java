@@ -1,7 +1,8 @@
 package com.ylli.api.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.client.loadbalancer.reactive.DeferringLoadBalancerExchangeFilterFunction;
 import org.springframework.cloud.client.loadbalancer.reactive.ReactorLoadBalancerExchangeFilterFunction;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,18 +18,20 @@ import java.time.Duration;
 @Configuration
 public class WebClientConfiguration {
 
-    @Autowired
-    private ReactorLoadBalancerExchangeFilterFunction reactorLoadBalancerExchangeFilterFunction;
-
     @Bean
     @LoadBalanced
-    public WebClient.Builder loadBalancedWebClientBuilder() {
+    public WebClient.Builder loadBalancedWebClientBuilder(ObjectProvider<ReactorLoadBalancerExchangeFilterFunction> reactorLoadBalancerExchangeFilterFunctionObjectProvider) {
+        DeferringLoadBalancerExchangeFilterFunction<ReactorLoadBalancerExchangeFilterFunction> filterFunction =
+                new DeferringLoadBalancerExchangeFilterFunction<>(reactorLoadBalancerExchangeFilterFunctionObjectProvider);
+
         return WebClient.builder()
                 .clientConnector(new ReactorClientHttpConnector(HttpClient.create().resolver(spec -> {
                     //查询超时时间，默认5s.
                     spec.queryTimeout(Duration.ofMillis(2000));
                 })))
-                .filter(reactorLoadBalancerExchangeFilterFunction);
+                .filter(filterFunction);
+
+
     }
 
 //    public Mono<String> doOtherStuff() {
@@ -41,3 +44,4 @@ public class WebClientConfiguration {
 //                .bodyToMono(String.class);
 //    }
 }
+
