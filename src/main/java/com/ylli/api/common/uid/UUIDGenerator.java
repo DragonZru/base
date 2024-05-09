@@ -6,11 +6,16 @@ import io.mybatis.provider.keysql.GenId;
 
 import java.util.random.RandomGenerator;
 
-public class UUIDGenerator implements GenId<Long> {
+public class UUIDGenerator implements GenId<Long>,IDGenerator<Long> {
 
     @Override
     public Long genId(EntityTable table, EntityColumn column) {
         // java 17 Enhanced Pseudo-Random Number Generators
+        return RandomGenerator.getDefault().nextLong(1, Long.MAX_VALUE);
+    }
+
+    @Override
+    public Long nextId() {
         return RandomGenerator.getDefault().nextLong(1, Long.MAX_VALUE);
     }
 }

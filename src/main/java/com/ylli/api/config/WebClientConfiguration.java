@@ -25,10 +25,10 @@ public class WebClientConfiguration {
                 new DeferringLoadBalancerExchangeFilterFunction<>(reactorLoadBalancerExchangeFilterFunctionObjectProvider);
 
         return WebClient.builder()
-                .clientConnector(new ReactorClientHttpConnector(HttpClient.create().resolver(spec -> {
-                    //查询超时时间，默认5s.
-                    spec.queryTimeout(Duration.ofMillis(2000));
-                })))
+//                .clientConnector(new ReactorClientHttpConnector(HttpClient.create().resolver(spec -> {
+//                    //查询超时时间，默认5s.
+//                    spec.queryTimeout(Duration.ofMillis(2000));
+//                })))
                 .filter(filterFunction);
 
 
