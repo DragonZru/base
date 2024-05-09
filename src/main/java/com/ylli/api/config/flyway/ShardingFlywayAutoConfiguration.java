@@ -20,12 +20,6 @@ import java.util.Objects;
 @ConditionalOnProperty(prefix = "sharding.flyway", value = "enabled", havingValue = "true")
 public class ShardingFlywayAutoConfiguration {
 
-    private ShardingFlywayProperties properties;
-
-    public ShardingFlywayAutoConfiguration(ShardingFlywayProperties properties) {
-        this.properties = properties;
-    }
-
     @Bean
     @ConditionalOnMissingBean
     public List<MigrateResult> flywayMigrationInitializers(ShardingFlywayProperties properties,
