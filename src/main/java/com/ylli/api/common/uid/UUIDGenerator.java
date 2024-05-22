@@ -10,12 +10,12 @@ public class UUIDGenerator implements GenId<Long>,IDGenerator<Long> {
 
     @Override
     public Long genId(EntityTable table, EntityColumn column) {
-        // java 17 Enhanced Pseudo-Random Number Generators
-        return RandomGenerator.getDefault().nextLong(1, Long.MAX_VALUE);
+        return nextId();
     }
 
     @Override
     public Long nextId() {
+        // java 17 Enhanced Pseudo-Random Number Generators
         return RandomGenerator.getDefault().nextLong(1, Long.MAX_VALUE);
     }
 }
