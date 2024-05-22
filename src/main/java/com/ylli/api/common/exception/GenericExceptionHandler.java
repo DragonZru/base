@@ -22,7 +22,7 @@ public class GenericExceptionHandler {
     public ResponseEntity<?> exceptionHandler(GenericException ex) {
         log.error("GenericException exceptionHandler", ex);
         if (debug) {
-            return ResponseEntity.status(ex.getCode()).body(new ResponseBody(ex.getCode(), ex.getMessage(), getSysError(ex)));
+            return ResponseEntity.status(ex.getCode()).body(new ResponseBody(ex.getCode(), ex.getMessage(), printStackTrace(ex)));
         }
         return ResponseEntity.status(ex.getCode()).body(new ResponseBody(ex.getCode(), ex.getMessage()));
     }
@@ -31,13 +31,13 @@ public class GenericExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<?> exceptionHandler(Exception ex) {
         log.error("Exception exceptionHandler", ex);
-        //默认500.
+        //默认503.
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new ResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage(), getSysError(ex)));
+                .body(new ResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), ex.getMessage(), printStackTrace(ex)));
     }
 
-    private String getSysError(Exception ex) {
+    private String printStackTrace(Exception ex) {
         try (StringWriter sw = new StringWriter();
              PrintWriter pw = new PrintWriter(sw)) {
             ex.printStackTrace(pw);
