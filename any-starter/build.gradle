@@ -18,7 +18,7 @@ repositories {
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
+        maven(MavenPublication) {
             versionMapping {
                 usage('java-api') {
                     fromResolutionOf('runtimeClasspath')
@@ -38,7 +38,11 @@ publishing {
                 username "admin"
                 password "cryStal1"
             }
-            url "http://localhost:8081/repository/localhost-snapshot/"
+            def releasesRepoUrl = 'http://localhost:8081/repository/local-release/'
+            def snapshotsRepoUrl = 'http://localhost:8081/repository/localhost-snapshot/'
+
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
             allowInsecureProtocol = true
         }
     }
