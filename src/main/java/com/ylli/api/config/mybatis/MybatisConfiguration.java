@@ -43,4 +43,8 @@ public class MybatisConfiguration {
         return bean.getObject();
     }
 
+    //TODO 多数据源下sqlSessionFactory & transactionManager 解决方案
+    //分布式事物 可以使用 Seata
+    //TODO 集成 Druid
+
 }

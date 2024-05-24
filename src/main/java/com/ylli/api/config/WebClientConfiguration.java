@@ -10,6 +10,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * https://docs.spring.io/spring-cloud-commons/docs/current/reference/html/#webflux-with-reactive-loadbalancer
+ * https://docs.spring.io/spring-cloud-commons/reference/spring-cloud-commons/loadbalancer.html
+ * @LoadBalanced log warning: https://github.com/spring-cloud/spring-cloud-commons/issues/1315
  */
 @Configuration
 public class WebClientConfiguration {

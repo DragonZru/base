@@ -16,3 +16,8 @@
 ## mybatis mapper 
 新版mapper5，可以参考mapper4 https://github.com/abel533/Mapper/wiki
 [mybatis mapper](https://mapper.mybatis.io/docs/v2.x/1.getting-started.html#_1-1-%E4%B8%BB%E8%A6%81%E7%9B%AE%E6%A0%87)
+
+## mysql MGR
+``
+
+``
