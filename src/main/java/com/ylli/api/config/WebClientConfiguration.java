@@ -11,6 +11,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 /**
  * https://docs.spring.io/spring-cloud-commons/docs/current/reference/html/#webflux-with-reactive-loadbalancer
  * https://docs.spring.io/spring-cloud-commons/reference/spring-cloud-commons/loadbalancer.html
+ *
  * @LoadBalanced log warning: https://github.com/spring-cloud/spring-cloud-commons/issues/1315
  */
 @Configuration
@@ -23,23 +24,18 @@ public class WebClientConfiguration {
                 new DeferringLoadBalancerExchangeFilterFunction<>(reactorLoadBalancerExchangeFilterFunctionProvider);
 
         return WebClient.builder()
-//                .clientConnector(new ReactorClientHttpConnector(HttpClient.create().resolver(spec -> {
-//                    //查询超时时间，默认5s.
-//                    spec.queryTimeout(Duration.ofMillis(2000));
-//                })))
+//                .clientConnector(new ReactorClientHttpConnector(HttpClient.create()
+//                        .proxy(proxy -> proxy.type(ProxyProvider.Proxy.HTTP))
+//                        .resolver(spec -> {
+//                            //查询超时时间，默认5s.
+//                            spec.queryTimeout(Duration.ofMillis(2000));
+//                        })))
                 .filter(filterFunction);
-
-
     }
 
-//    public Mono<String> doOtherStuff() {
-//        return WebClient.builder().baseUrl("http://stores")
-//                .filter(lbFunction)
-//                .build()
-//                .get()
-//                .uri("/stores")
-//                .retrieve()
-//                .bodyToMono(String.class);
-//    }
+    @Bean
+    public WebClient.Builder webClientBuilder() {
+        return WebClient.builder();
+    }
 }
 

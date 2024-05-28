@@ -16,6 +16,7 @@ import java.util.Map;
 public class ExampleModel {
 
     @Entity.Column(id = true, updatable = false, genId = SnowFlakeGenerator.class)
+    //@Entity.Column(id = true, updatable = false) = @Id 使用mysql自增
     public Long id;
 
     public String username;
@@ -41,17 +42,4 @@ public class ExampleModel {
         this.username = username;
         this.password = password;
     }
-
-    /*
-        CREATE TABLE `example`.`t_example`  (
-      `id` bigint UNSIGNED NOT NULL,
-      `username` varchar(255) NOT NULL,
-      `password` varchar(255) NOT NULL,
-      `version` bigint NOT NULL DEFAULT 0,
-      `status` tinyint(1) NOT NULL DEFAULT 1,
-      `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      `update_time` datetime NULL ON UPDATE CURRENT_TIMESTAMP,
-      PRIMARY KEY (`id`)
-    );
-         */
 }
