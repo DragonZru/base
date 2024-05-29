@@ -1,12 +1,14 @@
 package com.ylli.api.example;
 
+import com.ylli.api.common.exception.GenericException;
 import com.ylli.api.example.model.ExampleModel;
 import com.ylli.api.example.service.ExampleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.sql.Timestamp;
+import java.util.List;
 
 @RestController
 @RequestMapping("/example")
@@ -16,7 +18,44 @@ public class ExampleController {
     ExampleService exampleService;
 
     @PostMapping
-    public Object Create(@RequestBody ExampleModel model) {
-        return exampleService.Create(model);
+    public void create(@RequestBody ExampleModel model) {
+        exampleService.create(model);
+    }
+
+    @DeleteMapping
+    public void delete(@RequestParam Long id) {
+        exampleService.delete(id);
+    }
+
+    /**
+     *
+     * @param id            精准查询
+     * @param username      模糊查询 like 'username%'
+     * @param strings       str,str1,str2... any match 匹配任意元素即可
+     * @param version       精准查询
+     * @param status        精准查询
+     * @param leftTime      >= leftTime
+     * @param rightTime     <= rightTime
+     * @return
+     */
+    @GetMapping
+    public List<ExampleModel> get(@RequestParam(required = false) Long id,
+                                  @RequestParam(required = false) String username,
+                                  @RequestParam(required = false) List<String> strings,
+                                  @RequestParam(required = false) Long version,
+                                  @RequestParam(required = false) Boolean status,
+                                  @RequestParam(required = false) Timestamp leftTime,
+                                  @RequestParam(required = false) Timestamp rightTime,
+                                  @RequestParam(required = false, defaultValue = "0") Integer offset,
+                                  @RequestParam(required = false, defaultValue = "10") Integer limit) {
+        return exampleService.get(id, username, strings, version, status, leftTime, rightTime,offset, limit);
+    }
+
+    @PutMapping
+    public void update(@RequestBody ExampleModel model) {
+        if (model.id == null) {
+            throw new GenericException(HttpStatus.BAD_REQUEST, "id is required");
+        }
+        exampleService.update(model);
     }
 }

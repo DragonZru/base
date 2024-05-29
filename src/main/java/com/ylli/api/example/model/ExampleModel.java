@@ -24,7 +24,7 @@ public class ExampleModel {
     public String password;
 
     // 可以是任意基础类型，any java basic type
-    public List<Object> strings;
+    public List<String> strings;
 
     public Long version;
 

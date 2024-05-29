@@ -1,5 +1,6 @@
 package com.ylli.api.common.exception;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -43,7 +44,6 @@ public class GenericExceptionHandler {
             ex.printStackTrace(pw);
             return sw.toString();
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
@@ -62,6 +62,14 @@ public class GenericExceptionHandler {
             this.code = code;
             this.message = message;
             this.debugMsg = debugMsg;
+        }
+
+        /*
+         * debugMsg excluded in json response when debugMsg is null
+         */
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        public String getDebugMsg() {
+            return debugMsg;
         }
     }
 }
