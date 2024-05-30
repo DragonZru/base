@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Map;
 
 @Entity.Table("t_example")
 @Data
@@ -23,16 +22,12 @@ public class ExampleModel {
 
     public String password;
 
-    // 可以是任意基础类型，any java basic type
-    public List<String> strings;
-
     public Long version;
 
     public Boolean status;
 
-    // 排除列
-    @Entity.Transient
-    public Map<String, Object> map;
+    // 可以是任意类型，any java basic type & reference type
+    public List<Object> extras;
 
     public Timestamp createTime;
 

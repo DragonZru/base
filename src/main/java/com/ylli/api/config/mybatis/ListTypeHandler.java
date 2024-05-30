@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @MappedTypes(value = {List.class})
-public class ListTypeHandler extends BaseTypeHandler<List> {
+public class ListTypeHandler extends BaseTypeHandler<List<?>> {
 
     static Gson gson = new GsonBuilder().create();
 
@@ -23,17 +23,17 @@ public class ListTypeHandler extends BaseTypeHandler<List> {
     }
 
     @Override
-    public List getNullableResult(ResultSet rs, String columnName) throws SQLException {
+    public List<?> getNullableResult(ResultSet rs, String columnName) throws SQLException {
         return rs.wasNull() ? null : gson.fromJson(rs.getString(columnName), List.class);
     }
 
     @Override
-    public List getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+    public List<?> getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         return rs.wasNull() ? null : gson.fromJson(rs.getString(columnIndex), List.class);
     }
 
     @Override
-    public List getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+    public List<?> getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         return cs.wasNull() ? null : gson.fromJson(cs.getString(columnIndex), List.class);
     }
 }

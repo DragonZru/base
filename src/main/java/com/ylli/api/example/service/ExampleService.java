@@ -44,17 +44,22 @@ public class ExampleService {
         exampleMapper.deleteByPrimaryKey(id);
     }
 
-    public List<ExampleModel> get(Long id, String username, List<String> list, Long version, Boolean status,
+    /*
+     * JSON_OVERLAPS(json_doc1, json_doc2)
+     * Compares two JSON documents.
+     * Returns true (1) if the two document have any key-value pairs or array elements in common.
+     * 返回包含list任意元素的集合
+     * important!  <list 元素 str...  str,'str',"str" 被视为不同元素.故需要与数据库完全一致Exact Match>
+     * eg. 如果exampleModel.string=["1","2","3"],那么这里传参需要"1","2"...,不带"",1,2视为不同元素故返回empty result
+     *
+     * also see : MEMBER OF() ,JSON_CONTAINS()
+     */
+    public List<ExampleModel> get(Long id, String username, Long version, Boolean status, List<Object> extras,
                                   Timestamp leftTime, Timestamp rightTime, Integer offset, Integer limit) {
         ExampleWrapper<ExampleModel, Long> exampleWrapper = exampleMapper.wrapper();
-        if (list != null) {
-            //JSON_OVERLAPS(json_doc1, json_doc2)
-            //Compares two JSON documents.
-            //Returns true (1) if the two document have any key-value pairs or array elements in common.
-            //返回包含list任意元素的集合
-            //important!  <list 元素 str...  str,'str',"str" 被视为不同元素.故需要与数据库完全一致Exact Match>
-            //eg. 如果exampleModel.string=["1","2","3"],那么这里传参需要"1","2"...,不带"",1,2视为不同元素故返回empty result
-            exampleWrapper.anyCondition("JSON_OVERLAPS (strings, '" + list + "' )");
+        if (extras != null) {
+            exampleWrapper.anyCondition("JSON_OVERLAPS (extras, '" + extras + "' )");
+            System.out.println("JSON_OVERLAPS (extras, '" + extras + "' )");
         }
         if (id != null) {
             exampleWrapper.eq(ExampleModel::getId, id);

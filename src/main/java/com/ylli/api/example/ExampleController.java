@@ -28,27 +28,26 @@ public class ExampleController {
     }
 
     /**
-     *
-     * @param id            精准查询
-     * @param username      模糊查询 like 'username%'
-     * @param strings       str,str1,str2... any match 匹配任意元素即可
-     * @param version       精准查询
-     * @param status        精准查询
-     * @param leftTime      >= leftTime
-     * @param rightTime     <= rightTime
+     * @param id        精准查询
+     * @param username  模糊查询 like 'username%'
+     * @param extras    str,str1,str2... any match 匹配任意元素即可
+     * @param version   精准查询
+     * @param status    精准查询
+     * @param leftTime  >= leftTime
+     * @param rightTime <= rightTime
      * @return
      */
     @GetMapping
     public List<ExampleModel> get(@RequestParam(required = false) Long id,
                                   @RequestParam(required = false) String username,
-                                  @RequestParam(required = false) List<String> strings,
                                   @RequestParam(required = false) Long version,
                                   @RequestParam(required = false) Boolean status,
+                                  @RequestParam(required = false) List<Object> extras,
                                   @RequestParam(required = false) Timestamp leftTime,
                                   @RequestParam(required = false) Timestamp rightTime,
                                   @RequestParam(required = false, defaultValue = "0") Integer offset,
                                   @RequestParam(required = false, defaultValue = "10") Integer limit) {
-        return exampleService.get(id, username, strings, version, status, leftTime, rightTime,offset, limit);
+        return exampleService.get(id, username, version, status, extras, leftTime, rightTime, offset, limit);
     }
 
     @PutMapping
