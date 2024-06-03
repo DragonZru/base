@@ -2,6 +2,7 @@ package com.ylli.api.example.service;
 
 import com.ylli.api.common.exception.GenericException;
 import com.ylli.api.example.mapper.ExampleMapper;
+import com.ylli.api.example.model.ExampleInfo;
 import com.ylli.api.example.model.ExampleModel;
 import io.mybatis.mapper.example.ExampleWrapper;
 import org.apache.ibatis.session.RowBounds;
@@ -16,6 +17,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -45,21 +47,16 @@ public class ExampleService {
     }
 
     /*
-     * JSON_OVERLAPS(json_doc1, json_doc2)
-     * Compares two JSON documents.
-     * Returns true (1) if the two document have any key-value pairs or array elements in common.
-     * 返回包含list任意元素的集合
-     * important!  <list 元素 str...  str,'str',"str" 被视为不同元素.故需要与数据库完全一致Exact Match>
-     * eg. 如果exampleModel.string=["1","2","3"],那么这里传参需要"1","2"...,不带"",1,2视为不同元素故返回empty result
-     *
-     * also see : MEMBER OF() ,JSON_CONTAINS()
+     * mysql 多值索引
+     * https://dev.mysql.com/doc/refman/8.0/en/json-search-functions.html#function_json-overlaps
+     * https://dev.mysql.com/doc/refman/8.0/en/create-index.html#create-index-multi-valued
      */
-    public List<ExampleModel> get(Long id, String username, Long version, Boolean status, List<Object> extras,
+    public List<ExampleModel> get(Long id, String username, Long version, Boolean status, List<ExampleInfo> extras,
                                   Timestamp leftTime, Timestamp rightTime, Integer offset, Integer limit) {
         ExampleWrapper<ExampleModel, Long> exampleWrapper = exampleMapper.wrapper();
         if (extras != null) {
-            exampleWrapper.anyCondition("JSON_OVERLAPS (extras, '" + extras + "' )");
-            System.out.println("JSON_OVERLAPS (extras, '" + extras + "' )");
+            //	JSON_OVERLAPS (extras -> '$[*].serialNo',CAST( '["342501199310231774"]' AS JSON ));
+            exampleWrapper.anyCondition("JSON_OVERLAPS (extras -> '$[*].serialNo', CAST( '" + extras.stream().map(info -> info.serialNo).collect(Collectors.toList()) + "' AS JSON))");
         }
         if (id != null) {
             exampleWrapper.eq(ExampleModel::getId, id);

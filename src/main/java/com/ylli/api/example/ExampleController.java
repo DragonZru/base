@@ -1,6 +1,7 @@
 package com.ylli.api.example;
 
 import com.ylli.api.common.exception.GenericException;
+import com.ylli.api.example.model.ExampleInfo;
 import com.ylli.api.example.model.ExampleModel;
 import com.ylli.api.example.service.ExampleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class ExampleController {
     /**
      * @param id        精准查询
      * @param username  模糊查询 like 'username%'
-     * @param extras    str,str1,str2... any match 匹配任意元素即可
+     * @param extras    str,str1,str2... any match 匹配任意元素即可 JSON_OVERLAPS()
      * @param version   精准查询
      * @param status    精准查询
      * @param leftTime  >= leftTime
@@ -42,7 +43,7 @@ public class ExampleController {
                                   @RequestParam(required = false) String username,
                                   @RequestParam(required = false) Long version,
                                   @RequestParam(required = false) Boolean status,
-                                  @RequestParam(required = false) List<Object> extras,
+                                  @RequestParam(required = false) List<ExampleInfo> extras,
                                   @RequestParam(required = false) Timestamp leftTime,
                                   @RequestParam(required = false) Timestamp rightTime,
                                   @RequestParam(required = false, defaultValue = "0") Integer offset,
