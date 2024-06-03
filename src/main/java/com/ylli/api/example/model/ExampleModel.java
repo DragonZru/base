@@ -27,7 +27,8 @@ public class ExampleModel {
     public Boolean status;
 
     // 可以是任意类型，any java basic type & reference type
-    public List<Object> extras;
+    public List<ExampleInfo> extras;
+    //public List<String> extras;
 
     public Timestamp createTime;
 
