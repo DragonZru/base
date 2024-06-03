@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `example`.`t_example`
+CREATE TABLE IF NOT EXISTS `t_example`
 (
     `id`          bigint UNSIGNED NOT NULL AUTO_INCREMENT,
     `username`    varchar(255)    NOT NULL,
@@ -11,3 +11,4 @@ CREATE TABLE IF NOT EXISTS `example`.`t_example`
     PRIMARY KEY (`id`),
     UNIQUE INDEX `U_username`(`username`)
 );
+ALTER TABLE t_example ADD INDEX n_extras( ( CAST( extras -> '$[*].serialNo' AS UNSIGNED ARRAY)) );
