@@ -1,5 +1,6 @@
 package com.ylli.api.example.service;
 
+import com.google.gson.Gson;
 import com.ylli.api.common.exception.GenericException;
 import com.ylli.api.example.mapper.ExampleMapper;
 import com.ylli.api.example.model.ExampleInfo;
@@ -56,7 +57,7 @@ public class ExampleService {
         ExampleWrapper<ExampleModel, Long> exampleWrapper = exampleMapper.wrapper();
         if (extras != null) {
             //	JSON_OVERLAPS (extras -> '$[*].serialNo',CAST( '["342501199310231774"]' AS JSON ));
-            exampleWrapper.anyCondition("JSON_OVERLAPS (extras -> '$[*].serialNo', CAST( '" + extras.stream().map(info -> info.serialNo).collect(Collectors.toList()) + "' AS JSON))");
+            exampleWrapper.anyCondition("JSON_OVERLAPS (extras ->> '$[*].serialNo', CAST( '" + new Gson().toJson(extras.stream().map(info -> info.serialNo).collect(Collectors.toList())) + "' AS JSON))");
         }
         if (id != null) {
             exampleWrapper.eq(ExampleModel::getId, id);
@@ -83,7 +84,7 @@ public class ExampleService {
     public void update(ExampleModel source) {
         Optional<ExampleModel> target = exampleMapper.selectByPrimaryKey(source.id);
         if (target.isEmpty()) {
-            throw new GenericException(HttpStatus.BAD_REQUEST, String.format("id %s not exists", source.id));
+            throw new GenericException(HttpStatus.NOT_FOUND, String.format("id %s not exists", source.id));
         }
         copyPropertiesIgnoreNull(source, target.get());
         target.get().version = target.get().version + 1;

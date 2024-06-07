@@ -11,4 +11,6 @@ CREATE TABLE IF NOT EXISTS `t_example`
     PRIMARY KEY (`id`),
     UNIQUE INDEX `U_username`(`username`)
 );
-ALTER TABLE t_example ADD INDEX n_extras( ( CAST( extras -> '$[*].serialNo' AS UNSIGNED ARRAY)) );
+-- ALTER TABLE t_example ADD INDEX n_extras( ( CAST( extras -> '$[*].serialNo' AS UNSIGNED ARRAY)) );
+-- 支持string,utf8mb4_bin 区分大小写,
+ALTER TABLE t_example ADD INDEX n_extras( ( CAST( extras ->> '$[*].serialNo' AS CHAR(30)) COLLATE utf8mb4_bin) );
