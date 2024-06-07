@@ -6,6 +6,7 @@ import com.ylli.api.example.mapper.ExampleMapper;
 import com.ylli.api.example.model.ExampleInfo;
 import com.ylli.api.example.model.ExampleModel;
 import io.mybatis.mapper.example.ExampleWrapper;
+import io.mybatis.mapper.fn.Fn;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
@@ -77,19 +78,57 @@ public class ExampleService {
         if (rightTime != null) {
             exampleWrapper.le(ExampleModel::getCreateTime, rightTime);
         }
+        //查询指定字段
+//        exampleWrapper.select(Fn.field(ExampleModel.class, "extras"),
+//                Fn.field(ExampleModel.class, "username"),
+//                Fn.field(ExampleModel.class, "password"),
+//                Fn.field(ExampleModel.class, "id"));
         return exampleMapper.selectByExample(exampleWrapper.example(), new RowBounds(offset, limit));
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void update(ExampleModel source) {
-        Optional<ExampleModel> target = exampleMapper.selectByPrimaryKey(source.id);
-        if (target.isEmpty()) {
-            throw new GenericException(HttpStatus.NOT_FOUND, String.format("id %s not exists", source.id));
+        ExampleModel target = selectByPrimaryKey(source.id);
+        BeanUtils.copyProperties(source, target);
+        target.version = target.version + 1;
+        target.updateTime = Timestamp.from(Instant.now());
+        exampleMapper.updateByPrimaryKeySelective(target);
+    }
+
+    public ExampleModel selectByPrimaryKey(Long id) {
+        if (id == null) {
+            throw new GenericException(HttpStatus.BAD_REQUEST, "id is required");
         }
-        copyPropertiesIgnoreNull(source, target.get());
-        target.get().version = target.get().version + 1;
-        target.get().updateTime = Timestamp.from(Instant.now());
-        exampleMapper.updateByPrimaryKeySelective(target.get());
+        Optional<ExampleModel> target = exampleMapper.selectByPrimaryKey(id);
+        if (target.isEmpty()) {
+            throw new GenericException(HttpStatus.NOT_FOUND, String.format("id %s not exists", id));
+        }
+        return target.get();
+    }
+
+
+    /**
+     * 强制更新null值,fields字段注意数据库非空限制
+     * only extras support null
+     */
+    public void updateNull(ExampleModel source) {
+        ExampleModel target = selectByPrimaryKey(source.id);
+        BeanUtils.copyProperties(source, target);
+        target.version = target.version + 1;
+        target.updateTime = Timestamp.from(Instant.now());
+
+        String[] fields = Stream.of(source.getClass().getFields())
+                .filter(field -> {
+                    try {
+                        return field.get(source) == null;
+                    } catch (IllegalAccessException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .map(field -> field.getName()).collect(Collectors.toList()).toArray(new String[0]);
+
+        exampleMapper.updateByPrimaryKeySelectiveWithForceFields(target,
+                Fn.of(ExampleModel.class, fields));
     }
 
     public void copyPropertiesIgnoreNull(Object source, Object target) {

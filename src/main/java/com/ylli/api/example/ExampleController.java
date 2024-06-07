@@ -1,11 +1,8 @@
 package com.ylli.api.example;
 
-import com.ylli.api.common.exception.GenericException;
 import com.ylli.api.example.model.ExampleInfo;
 import com.ylli.api.example.model.ExampleModel;
 import com.ylli.api.example.service.ExampleService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
@@ -15,8 +12,11 @@ import java.util.List;
 @RequestMapping("/example")
 public class ExampleController {
 
-    @Autowired
     ExampleService exampleService;
+
+    public ExampleController(ExampleService exampleService) {
+        this.exampleService = exampleService;
+    }
 
     @PostMapping
     public void create(@RequestBody ExampleModel model) {
@@ -53,9 +53,6 @@ public class ExampleController {
 
     @PutMapping
     public void update(@RequestBody ExampleModel model) {
-        if (model.id == null) {
-            throw new GenericException(HttpStatus.BAD_REQUEST, "id is required");
-        }
         exampleService.update(model);
     }
 }
