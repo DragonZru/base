@@ -1,5 +1,6 @@
 package com.ylli.api.example;
 
+import com.github.pagehelper.PageInfo;
 import com.ylli.api.example.model.ExampleInfo;
 import com.ylli.api.example.model.ExampleModel;
 import com.ylli.api.example.service.ExampleService;
@@ -39,16 +40,16 @@ public class ExampleController {
      * @return
      */
     @GetMapping
-    public List<ExampleModel> get(@RequestParam(required = false) Long id,
-                                  @RequestParam(required = false) String username,
-                                  @RequestParam(required = false) Long version,
-                                  @RequestParam(required = false) Boolean status,
-                                  @RequestParam(required = false) List<ExampleInfo> extras,
-                                  @RequestParam(required = false) Timestamp leftTime,
-                                  @RequestParam(required = false) Timestamp rightTime,
-                                  @RequestParam(required = false, defaultValue = "0") Integer offset,
-                                  @RequestParam(required = false, defaultValue = "10") Integer limit) {
-        return exampleService.get(id, username, version, status, extras, leftTime, rightTime, offset, limit);
+    public PageInfo<ExampleModel> get(@RequestParam(required = false) Long id,
+                                      @RequestParam(required = false) String username,
+                                      @RequestParam(required = false) Long version,
+                                      @RequestParam(required = false) Boolean status,
+                                      @RequestParam(required = false) List<ExampleInfo> extras,
+                                      @RequestParam(required = false) Timestamp leftTime,
+                                      @RequestParam(required = false) Timestamp rightTime,
+                                      @RequestParam(required = false, defaultValue = "0") Integer offset,
+                                      @RequestParam(required = false, defaultValue = "10") Integer limit) {
+        return new PageInfo<ExampleModel>(exampleService.get(id, username, version, status, extras, leftTime, rightTime, offset, limit));
     }
 
     @PutMapping

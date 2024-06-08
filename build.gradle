@@ -65,4 +65,8 @@ dependencies {
 
 	implementation 'com.ylli:any-starter:0.0.1-SNAPSHOT'
 
+	// https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper-spring-boot-starter
+	implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:2.1.0'
+
+
 }

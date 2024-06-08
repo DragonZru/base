@@ -1,5 +1,6 @@
 package com.ylli.api.example.service;
 
+import com.github.pagehelper.PageHelper;
 import com.google.gson.Gson;
 import com.ylli.api.common.exception.GenericException;
 import com.ylli.api.example.mapper.ExampleMapper;
@@ -7,7 +8,6 @@ import com.ylli.api.example.model.ExampleInfo;
 import com.ylli.api.example.model.ExampleModel;
 import io.mybatis.mapper.example.ExampleWrapper;
 import io.mybatis.mapper.fn.Fn;
-import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -82,7 +82,8 @@ public class ExampleService {
         }
         //查询指定字段
 //        exampleWrapper.select(ExampleModel::getId, ExampleModel::getUsername, ExampleModel::getPassword);
-        return exampleMapper.selectByExample(exampleWrapper.example(), new RowBounds(offset, limit));
+        PageHelper.offsetPage(offset, limit);
+        return exampleMapper.selectByExample(exampleWrapper.example());
 
 //        return exampleMapper.selectByExample(exampleWrapper.example()
 //                        .selectColumns(ExampleModel::getId, ExampleModel::getUsername, ExampleModel::getPassword),
