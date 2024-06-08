@@ -79,11 +79,12 @@ public class ExampleService {
             exampleWrapper.le(ExampleModel::getCreateTime, rightTime);
         }
         //查询指定字段
-//        exampleWrapper.select(Fn.field(ExampleModel.class, "extras"),
-//                Fn.field(ExampleModel.class, "username"),
-//                Fn.field(ExampleModel.class, "password"),
-//                Fn.field(ExampleModel.class, "id"));
+//        exampleWrapper.select(ExampleModel::getId, ExampleModel::getUsername, ExampleModel::getPassword);
         return exampleMapper.selectByExample(exampleWrapper.example(), new RowBounds(offset, limit));
+
+//        return exampleMapper.selectByExample(exampleWrapper.example()
+//                        .selectColumns(ExampleModel::getId, ExampleModel::getUsername, ExampleModel::getPassword),
+//                new RowBounds(offset, limit));
     }
 
     @Transactional(rollbackFor = Exception.class)
