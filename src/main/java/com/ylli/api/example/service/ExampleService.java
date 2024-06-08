@@ -45,7 +45,9 @@ public class ExampleService {
 
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long id) {
-        exampleMapper.deleteByPrimaryKey(id);
+        if (exampleMapper.deleteByPrimaryKey(id) != 1) {
+            throw new GenericException(HttpStatus.NOT_FOUND, String.format("id %s not exists", id));
+        }
     }
 
     /*
@@ -119,7 +121,8 @@ public class ExampleService {
         if (true) { //执行需要更新为null的逻辑
             target.extras = null;
         }
-        //Fn.of(ExampleModel::getExtras, ExampleModel::getUpdateTime);
+        //Fn.of(ExampleModel::getId, ExampleModel::getExtras);
+        //Fn.of(ExampleModel.class, "id", "extras");
         exampleMapper.updateByPrimaryKeySelectiveWithForceFields(target, Fn.of(ExampleModel::getExtras));
     }
 
