@@ -90,7 +90,7 @@ public class ExampleService {
     @Transactional(rollbackFor = Exception.class)
     public void update(ExampleModel source) {
         ExampleModel target = selectByPrimaryKey(source.id);
-        BeanUtils.copyProperties(source, target);
+        copyPropertiesIgnoreNull(source, target);
         target.version = target.version + 1;
         target.updateTime = Timestamp.from(Instant.now());
         //更新非空字段
@@ -112,7 +112,7 @@ public class ExampleService {
      */
     public void updateNull(ExampleModel source) {
         ExampleModel target = selectByPrimaryKey(source.id);
-        BeanUtils.copyProperties(source, target);
+        BeanUtils.copyProperties(source, target, "version");
         target.version = target.version + 1;
         target.updateTime = Timestamp.from(Instant.now());
 
