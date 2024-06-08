@@ -2,20 +2,17 @@ DELIMITER //
 CREATE PROCEDURE CreateTables(IN table_count INT)
 BEGIN
     DECLARE counter INT DEFAULT 0;
-    simple_loop: LOOP
-        IF counter >= table_count THEN
-            LEAVE simple_loop;
-        END IF;
-        SET @sql = CONCAT('CREATE TABLE IF NOT EXISTS t_user_', counter, ' (
-        id INT PRIMARY KEY AUTO_INCREMENT,
-        name VARCHAR(50)
+    while counter < table_count do
+        set @sql = concat('create table if not exists t_user_',counter,' (
+        id int primary key auto_increment,
+        name varchar(50)
         -- 其他字段...
     );');
-        PREPARE stmt FROM @sql;
-        EXECUTE stmt;
-        DEALLOCATE PREPARE stmt;
-        SET counter = counter + 1;
-    END LOOP simple_loop;
+        prepare stmt from @sql;
+        execute stmt;
+        deallocate prepare stmt;
+        set counter = counter + 1;
+    end while;
 END//
 DELIMITER ;
 CALL CreateTables(2);

@@ -110,24 +110,17 @@ public class ExampleService {
      * 强制更新null值,fields字段注意数据库非空限制
      * only extras support null
      */
+    @Transactional(rollbackFor = Exception.class)
     public void updateNull(ExampleModel source) {
         ExampleModel target = selectByPrimaryKey(source.id);
-        BeanUtils.copyProperties(source, target, "version");
+        copyPropertiesIgnoreNull(source, target);
         target.version = target.version + 1;
         target.updateTime = Timestamp.from(Instant.now());
-
-        String[] fields = Stream.of(source.getClass().getFields())
-                .filter(field -> {
-                    try {
-                        return field.get(source) == null;
-                    } catch (IllegalAccessException e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .map(field -> field.getName()).collect(Collectors.toList()).toArray(new String[0]);
-
-        exampleMapper.updateByPrimaryKeySelectiveWithForceFields(target,
-                Fn.of(ExampleModel.class, fields));
+        if (true) { //执行需要更新为null的逻辑
+            target.extras = null;
+        }
+        //Fn.of(ExampleModel::getExtras, ExampleModel::getUpdateTime);
+        exampleMapper.updateByPrimaryKeySelectiveWithForceFields(target, Fn.of(ExampleModel::getExtras));
     }
 
     public void copyPropertiesIgnoreNull(Object source, Object target) {
