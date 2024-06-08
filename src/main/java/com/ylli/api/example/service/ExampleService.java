@@ -92,6 +92,7 @@ public class ExampleService {
         BeanUtils.copyProperties(source, target);
         target.version = target.version + 1;
         target.updateTime = Timestamp.from(Instant.now());
+        //更新非空字段
         exampleMapper.updateByPrimaryKeySelective(target);
     }
 
@@ -100,10 +101,7 @@ public class ExampleService {
             throw new GenericException(HttpStatus.BAD_REQUEST, "id is required");
         }
         Optional<ExampleModel> target = exampleMapper.selectByPrimaryKey(id);
-        if (target.isEmpty()) {
-            throw new GenericException(HttpStatus.NOT_FOUND, String.format("id %s not exists", id));
-        }
-        return target.get();
+        return target.orElseThrow(() -> new GenericException(HttpStatus.NOT_FOUND, String.format("id %s not exists", id)));
     }
 
 
@@ -146,5 +144,9 @@ public class ExampleService {
             }
         });
         BeanUtils.copyProperties(source, target, ignoreProperties.toArray(new String[0]));
+    }
+
+    public void batchInsert(List<ExampleModel> models) {
+        exampleMapper.insertList(models);
     }
 }
