@@ -8,6 +8,7 @@ import com.ylli.api.example.model.ExampleInfo;
 import com.ylli.api.example.model.ExampleModel;
 import io.mybatis.mapper.example.ExampleWrapper;
 import io.mybatis.mapper.fn.Fn;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class ExampleService {
     ExampleService(ExampleMapper exampleMapper) {
         this.exampleMapper = exampleMapper;
     }
+
 
     /**
      * insert          插入all fields
@@ -56,11 +58,14 @@ public class ExampleService {
      * https://dev.mysql.com/doc/refman/8.0/en/create-index.html#create-index-multi-valued
      */
     public List<ExampleModel> get(Long id, String username, Long version, Boolean status, List<ExampleInfo> extras,
-                                  Timestamp leftTime, Timestamp rightTime, Integer offset, Integer limit) {
+                                  String keyword, Timestamp leftTime, Timestamp rightTime, Integer offset, Integer limit) {
         ExampleWrapper<ExampleModel, Long> exampleWrapper = exampleMapper.wrapper();
-        if (extras != null) {
+        if (extras != null && !extras.isEmpty()) {
             //	JSON_OVERLAPS (extras -> '$[*].serialNo',CAST( '["342501199310231774"]' AS JSON ));
             exampleWrapper.anyCondition("JSON_OVERLAPS (extras ->> '$[*].serialNo', CAST( '" + new Gson().toJson(extras.stream().map(info -> info.serialNo).collect(Collectors.toList())) + "' AS JSON))");
+        }
+        if (Strings.isNotEmpty(keyword)) {
+            exampleWrapper.anyCondition(fulltext(keyword, true, true));
         }
         if (id != null) {
             exampleWrapper.eq(ExampleModel::getId, id);
@@ -88,6 +93,27 @@ public class ExampleService {
 //        return exampleMapper.selectByExample(exampleWrapper.example()
 //                        .selectColumns(ExampleModel::getId, ExampleModel::getUsername, ExampleModel::getPassword),
 //                new RowBounds(offset, limit));
+    }
+
+    //todo 分区表不支持全文索引 & 分区表后对分页查询的影响。
+    //https://dev.mysql.com/doc/refman/8.0/en/partitioning-limitations.html
+    //sharding-jdbc 是否可以
+    public String fulltext(String keyword, boolean useNatural, boolean queryExpansion) {
+        StringBuffer sql = new StringBuffer("MATCH ( value ) AGAINST('")
+                .append(keyword)
+                .append("' IN ");
+
+        if (useNatural) {
+            sql.append(" NATURAL LANGUAGE MODE ");
+            if (queryExpansion) {
+                sql.append(" WITH QUERY EXPANSION");
+            }
+        } else {
+            sql.append(" BOOLEAN MODE ");
+        }
+
+        sql.append(")");
+        return sql.toString();
     }
 
     @Transactional(rollbackFor = Exception.class)

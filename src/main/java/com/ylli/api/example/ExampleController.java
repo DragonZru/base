@@ -45,11 +45,12 @@ public class ExampleController {
                                       @RequestParam(required = false) Long version,
                                       @RequestParam(required = false) Boolean status,
                                       @RequestParam(required = false) List<ExampleInfo> extras,
+                                      @RequestParam(required = false) String keyword,
                                       @RequestParam(required = false) Timestamp leftTime,
                                       @RequestParam(required = false) Timestamp rightTime,
                                       @RequestParam(required = false, defaultValue = "0") Integer offset,
                                       @RequestParam(required = false, defaultValue = "10") Integer limit) {
-        return new PageInfo<ExampleModel>(exampleService.get(id, username, version, status, extras, leftTime, rightTime, offset, limit));
+        return new PageInfo<ExampleModel>(exampleService.get(id, username, version, status, extras, keyword, leftTime, rightTime, offset, limit));
     }
 
     @PutMapping

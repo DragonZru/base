@@ -6,8 +6,9 @@ CREATE TABLE IF NOT EXISTS `t_example`
     `version`     bigint          NOT NULL DEFAULT 0,
     `status`      tinyint         NOT NULL DEFAULT 1,
     `extras`      JSON            NULL,
-    `create_time` datetime        NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `update_time` datetime        NULL ON UPDATE CURRENT_TIMESTAMP,
+    `value`       LONGTEXT        NULL,
+    `create_time` TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `update_time` TIMESTAMP       NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     UNIQUE INDEX `U_username`(`username`)
 );
@@ -21,3 +22,8 @@ CREATE TABLE IF NOT EXISTS `t_example`
  * https://dev.mysql.com/doc/refman/8.0/en/create-index.html
  */
 ALTER TABLE t_example ADD INDEX n_extras( ( CAST( extras ->> '$[*].serialNo' AS CHAR(30)) COLLATE utf8mb4_bin) );
+
+/**
+  * 创建全文索引,ngram支持中文
+ */
+ALTER TABLE t_example ADD FULLTEXT INDEX F_value (value) WITH PARSER ngram;

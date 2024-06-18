@@ -30,6 +30,9 @@ public class ExampleModel {
     public List<ExampleInfo> extras;
     //public List<String> extras;
 
+    // fullText search.
+    public String value;
+
     public Timestamp createTime;
 
     public Timestamp updateTime;
