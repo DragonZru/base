@@ -1,1 +1,1 @@
-com.ylli.api.config.flyway.ShardingFlywayAutoConfiguration
+com.ylli.api.config.flyway.XXAutoConfiguration
