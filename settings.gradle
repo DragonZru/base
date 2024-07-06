@@ -5,5 +5,5 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
-rootProject.name = 'basis'
-include 'any-starter'
+rootProject.name = 'base'
+include 'leaf-starter'

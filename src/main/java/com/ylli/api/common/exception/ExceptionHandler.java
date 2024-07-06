@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.io.IOException;
@@ -14,12 +13,12 @@ import java.io.StringWriter;
 
 @Slf4j
 @RestControllerAdvice
-public class GenericExceptionHandler {
+public class ExceptionHandler {
 
     @Value("${debugMsg.enable:false}")
     boolean debug;
 
-    @ExceptionHandler(GenericException.class)
+    @org.springframework.web.bind.annotation.ExceptionHandler(GenericException.class)
     public ResponseEntity<?> exceptionHandler(GenericException ex) {
         log.error("GenericException exceptionHandler", ex);
         if (debug) {
@@ -29,7 +28,7 @@ public class GenericExceptionHandler {
     }
 
 
-    @ExceptionHandler
+    @org.springframework.web.bind.annotation.ExceptionHandler
     public ResponseEntity<?> exceptionHandler(Exception ex) {
         log.error("Exception exceptionHandler", ex);
         //默认503.
