@@ -63,13 +63,8 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.github.ben-manes.caffeine/caffeine
 	implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8'
 
-	implementation 'com.ylli:any-starter:0.0.1-SNAPSHOT'
+	//implementation 'com.ylli:any-starter:0.0.1-SNAPSHOT'
 
 	// https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper-spring-boot-starter
 	implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:2.1.0'
-
-	// https://mvnrepository.com/artifact/com.alibaba/druid-spring-boot-starter
-	implementation 'com.alibaba:druid-spring-boot-starter:1.2.23'
-
-
 }
