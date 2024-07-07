@@ -26,4 +26,4 @@ ALTER TABLE t_example ADD INDEX n_extras( ( CAST( extras ->> '$[*].serialNo' AS 
 /**
   * 创建全文索引,ngram支持中文
  */
-ALTER TABLE t_example ADD FULLTEXT INDEX F_value (value) WITH PARSER ngram;
+ALTER TABLE t_example ADD FULLTEXT INDEX f_value (value) WITH PARSER ngram;

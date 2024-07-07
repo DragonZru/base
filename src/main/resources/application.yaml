@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+# debug error info
+debugMsg:
+  enabled: false
+
+# pagehelper分页
+pagehelper:
+  helperDialect: mysql
+  # 默认查询总数, if false-> "total":-1
+  defaultCount: true
+
+spring:
+  profiles:
+    active:
+
+  application:
+    name: base
+
+  datasource:
+    url: jdbc:mysql://localhost:13306/example?useUnicode=true&useJDBCCompliantTimezoneShift=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    driverClassName: com.mysql.cj.jdbc.Driver
+    hikari:
+      connectionInitSql: select 1
+
+  flyway:
+    enabled: true
+    url: jdbc:mysql://localhost:13306
+    user: root
+    password: 123456
+    schemas: example
+
+  data:
+    redis:
+      cluster:
+        nodes[0]: 127.0.0.1:6371
+        nodes[1]: 127.0.0.1:6372
+        nodes[2]: 127.0.0.1:6373

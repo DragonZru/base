@@ -67,4 +67,12 @@ dependencies {
 
 	// https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper-spring-boot-starter
 	implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:2.1.0'
+
+	// https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-jdbc-core
+	implementation 'org.apache.shardingsphere:shardingsphere-jdbc-core:5.4.1'
+
+	// https://mvnrepository.com/artifact/com.google.guava/guava
+	implementation 'com.google.guava:guava:33.2.1-jre'
+
+
 }
