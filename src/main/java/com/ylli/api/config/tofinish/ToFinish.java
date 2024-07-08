@@ -1,4 +1,4 @@
-package com.ylli.api.config.flyway;
+package com.ylli.api.config.tofinish;
 
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodInterceptor;

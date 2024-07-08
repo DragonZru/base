@@ -1,6 +1,7 @@
 package com.ylli.api.example;
 
 import com.ylli.api.example.service.ExampleItemService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,11 @@ public class ExampleItemController {
     @PostMapping()
     public void create() {
         exampleItemService.create();
+    }
+
+    @GetMapping()
+    public Object get() {
+        return exampleItemService.get();
     }
 
 }
