@@ -6,6 +6,9 @@ import org.apache.shardingsphere.sharding.spi.KeyGenerateAlgorithm;
 import java.util.Properties;
 
 public class CustomIdGenerator implements KeyGenerateAlgorithm {
+
+    private Properties props;
+
     @Override
     public Comparable<?> generateKey() {
         return RandomLongGenerator.nextId(0, Long.MAX_VALUE);
@@ -18,11 +21,11 @@ public class CustomIdGenerator implements KeyGenerateAlgorithm {
 
     @Override
     public Properties getProps() {
-        return null;
+        return props;
     }
 
     @Override
     public void init(Properties props) {
-
+        this.props = props;
     }
 }
