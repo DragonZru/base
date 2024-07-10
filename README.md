@@ -329,66 +329,76 @@ sentinel auth-pass mymaster 123456
 
 # redis-cluster 示例：
 ```yaml
-services:   
-  redis-cluster-6380:
+services:
+  redis-cluster-1:
     image: redis:latest
-    container_name: node-80
+    container_name: node-1
     ports:
-      - "6380:6380"
-      - "16380:16380"
+      - "6371:6371"
+      - "16371:16371"
     volumes:
-      - /Users/ylli/Downloads/redis-cluster/redis-6380.conf:/etc/redis/redis.conf
+      - ./redis-1.conf:/etc/redis/redis.conf
     command: sh -c "redis-server /etc/redis/redis.conf"
-   
-  redis-cluster-6381:
+
+  redis-cluster-2:
     image: redis:latest
-    container_name: node-81
+    container_name: node-2
     ports:
-      - "6381:6381"
-      - "16381:16381"
+      - "6372:6372"
+      - "16372:16372"
     volumes:
-      - /Users/ylli/Downloads/redis-cluster/redis-6381.conf:/etc/redis/redis.conf
+      - ./redis-2.conf:/etc/redis/redis.conf
     command: sh -c "redis-server /etc/redis/redis.conf"
-    
-  redis-cluster-6382:
+    depends_on:
+      - redis-cluster-1
+
+  redis-cluster-3:
     image: redis:latest
-    container_name: node-82
+    container_name: node-3
     ports:
-      - "6382:6382"
-      - "16382:16382"
+      - "6373:6373"
+      - "16373:16373"
     volumes:
-      - /Users/ylli/Downloads/redis-cluster/redis-6382.conf:/etc/redis/redis.conf
+      - ./redis-3.conf:/etc/redis/redis.conf
     command: sh -c "redis-server /etc/redis/redis.conf"
-    
-  redis-cluster-6383:
+    depends_on:
+      - redis-cluster-2
+
+  redis-cluster-4:
     image: redis:latest
-    container_name: node-83
+    container_name: node-4
     ports:
-      - "6383:6383"
-      - "16383:16383"
+      - "6374:6374"
+      - "16374:16374"
     volumes:
-      - /Users/ylli/Downloads/redis-cluster/redis-6383.conf:/etc/redis/redis.conf
+      - ./redis-4.conf:/etc/redis/redis.conf
     command: sh -c "redis-server /etc/redis/redis.conf"
-      
-  redis-cluster-6384:
+    depends_on:
+      - redis-cluster-3
+
+  redis-cluster-5:
     image: redis:latest
-    container_name: node-84
+    container_name: node-5
     ports:
-      - "6384:6384"
-      - "16384:16384"
+      - "6375:6375"
+      - "16375:16375"
     volumes:
-      - /Users/ylli/Downloads/redis-cluster/redis-6384.conf:/etc/redis/redis.conf
+      - ./redis-5.conf:/etc/redis/redis.conf
     command: sh -c "redis-server /etc/redis/redis.conf"
-      
-  redis-cluster-6385:
+    depends_on:
+      - redis-cluster-4
+
+  redis-cluster-6:
     image: redis:latest
-    container_name: node-85
+    container_name: node-6
     ports:
-      - "6385:6385"
-      - "16385:16385"
+      - "6376:6376"
+      - "16376:16376"
     volumes:
-      - /Users/ylli/Downloads/redis-cluster/redis-6385.conf:/etc/redis/redis.conf
+      - ./redis-6.conf:/etc/redis/redis.conf
     command: sh -c "redis-server /etc/redis/redis.conf"
+    depends_on:
+      - redis-cluster-5
 
 ```
 **redis-x.conf 如下，/path/to/redis-x.conf 自行修改, chmod 777 redis-cluster.sh**
@@ -428,10 +438,10 @@ docker network inspect redis-cluster_default
 ```
 **进入容器，配置集群(ip:port 与docker网络中对应，--cluster-replicas 1 表示一主一从)**
 ```shell
-docker exec -it node-80 /bin/bash 
+docker exec -it node-1 /bin/bash 
 ```
 ```shell
-redis-cli --cluster create 172.21.0.3:6380 172.21.0.2:6381 172.21.0.7:6382 172.21.0.4:6383 172.21.0.6:6384 172.21.0.5:6385 --cluster-replicas 1
+redis-cli --cluster create 172.20.0.2:6371 172.20.0.3:6372 172.20.0.4:6373 172.20.0.5:6374 172.20.0.6:6375 172.20.0.7:6376 --cluster-replicas 1
 ```
 **提升ok 即完成. 可以 redis-cli -p port 进入redis实例：cluster info 查看集群信息，测试 get set k/v   >>   redis-cli -p port -c  （-c 表示以集群模式**
 
