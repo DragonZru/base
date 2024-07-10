@@ -249,3 +249,190 @@ start slave;
 show slave status;
 
 ```
+
+## redis-sentinel 示例，docker-compose up -d
+**redis.conf & sentinel.conf 默认配置就行，个性化配置自行修改**
+**ps: sentinel.conf 所在文件夹 chmod -R 777 否则redis不能修改配置**
+```yaml
+services:
+  redis-master:
+    image: redis:latest
+    container_name: master-6379
+    ports:
+      - "6379:6379"
+    volumes:
+      - /Users/ylli/Downloads/redis/redis.conf:/etc/redis/redis.conf
+    command: redis-server /etc/redis/redis.conf --bind 0.0.0.0 --protected-mode no --requirepass 123456
+
+  redis-slave1:
+    image: redis:latest
+    container_name: slave-8001
+    ports:
+      - "8001:6379"
+    volumes:
+      - /Users/ylli/Downloads/redis/redis.conf:/etc/redis/redis.conf
+    command: redis-server /etc/redis/redis.conf --replicaof master 6379  --bind 0.0.0.0 --protected-mode no --requirepass 123456 --masterauth 123456
+    links:
+      - redis-master:master
+
+  redis-slave2:
+    image: redis:latest
+    container_name: slave-8002
+    ports:
+      - "8002:6379"
+    volumes:
+      - /Users/ylli/Downloads/redis/redis.conf:/etc/redis/redis.conf
+    command: redis-server /etc/redis/redis.conf --replicaof master 6379 --bind 0.0.0.0 --protected-mode no --requirepass 123456 --masterauth 123456
+    links:
+      - redis-master:master
+
+  redis-sentinel-master:
+    image: redis:latest
+    container_name: sentinel-26379
+    ports:
+      - "26379:26379"
+    depends_on:
+      - redis-master
+    volumes:
+      - /Users/ylli/Downloads/redis:/etc/redis
+    command: redis-sentinel /etc/redis/sentinel.conf
+
+  redis-sentinel-slave1:
+    image: redis:latest
+    container_name: sentinel-28001
+    ports:
+      - "28001:26379"
+    depends_on:
+      - redis-master
+    volumes:
+      - /Users/ylli/Downloads/redis:/etc/redis
+    command: redis-sentinel /etc/redis/sentinel.conf
+
+  redis-sentinel-slave2:
+    image: redis:latest
+    container_name: sentinel-28002
+    ports:
+      - "28002:26379"
+    depends_on:
+      - redis-master
+    volumes:
+      - /Users/ylli/Downloads/redis:/etc/redis
+    command: redis-sentinel /etc/redis/sentinel.conf
+```
+**sentinel.conf 配置：**
+```text
+protected-mode no #保护模式关闭，否则需要bind 指定ip
+sentinel auth-pass mymaster 123456 
+```
+
+-------------------------------------------------------------------------------------
+
+# redis-cluster 示例：
+```yaml
+services:   
+  redis-cluster-6380:
+    image: redis:latest
+    container_name: node-80
+    ports:
+      - "6380:6380"
+      - "16380:16380"
+    volumes:
+      - /Users/ylli/Downloads/redis-cluster/redis-6380.conf:/etc/redis/redis.conf
+    command: sh -c "redis-server /etc/redis/redis.conf"
+   
+  redis-cluster-6381:
+    image: redis:latest
+    container_name: node-81
+    ports:
+      - "6381:6381"
+      - "16381:16381"
+    volumes:
+      - /Users/ylli/Downloads/redis-cluster/redis-6381.conf:/etc/redis/redis.conf
+    command: sh -c "redis-server /etc/redis/redis.conf"
+    
+  redis-cluster-6382:
+    image: redis:latest
+    container_name: node-82
+    ports:
+      - "6382:6382"
+      - "16382:16382"
+    volumes:
+      - /Users/ylli/Downloads/redis-cluster/redis-6382.conf:/etc/redis/redis.conf
+    command: sh -c "redis-server /etc/redis/redis.conf"
+    
+  redis-cluster-6383:
+    image: redis:latest
+    container_name: node-83
+    ports:
+      - "6383:6383"
+      - "16383:16383"
+    volumes:
+      - /Users/ylli/Downloads/redis-cluster/redis-6383.conf:/etc/redis/redis.conf
+    command: sh -c "redis-server /etc/redis/redis.conf"
+      
+  redis-cluster-6384:
+    image: redis:latest
+    container_name: node-84
+    ports:
+      - "6384:6384"
+      - "16384:16384"
+    volumes:
+      - /Users/ylli/Downloads/redis-cluster/redis-6384.conf:/etc/redis/redis.conf
+    command: sh -c "redis-server /etc/redis/redis.conf"
+      
+  redis-cluster-6385:
+    image: redis:latest
+    container_name: node-85
+    ports:
+      - "6385:6385"
+      - "16385:16385"
+    volumes:
+      - /Users/ylli/Downloads/redis-cluster/redis-6385.conf:/etc/redis/redis.conf
+    command: sh -c "redis-server /etc/redis/redis.conf"
+
+```
+**redis-x.conf 如下，/path/to/redis-x.conf 自行修改, chmod 777 redis-cluster.sh**
+```shell
+mkdir -p /Users/ylli/Downloads/redis-cluster
+for port in $(seq 6380 6385); 
+do 
+touch /Users/ylli/Downloads/redis-cluster/redis-${port}.conf
+cat  << EOF > /Users/ylli/Downloads/redis-cluster/redis-${port}.conf
+port ${port}
+
+#requirepass 1234
+
+bind 0.0.0.0
+
+protected-mode no
+
+#enable cluster mode
+cluster-enabled yes
+
+#ms
+cluster-node-timeout 15000
+
+#集群内配置文件
+cluster-config-file "nodes-${port}.conf"
+
+#公网选服务器ip,内网查看ifconfig eh0 ip4地址
+cluster-announce-ip 192.168.10.3
+cluster-announce-port ${port}
+cluster-announce-bus-port 1${port}
+EOF
+done
+```
+**查看 docker network 信息. docker 默认创建 app_default network, 可以 docker network ls 自行查看**
+```shell
+docker network inspect redis-cluster_default
+```
+**进入容器，配置集群(ip:port 与docker网络中对应，--cluster-replicas 1 表示一主一从)**
+```shell
+docker exec -it node-80 /bin/bash 
+```
+```shell
+redis-cli --cluster create 172.21.0.3:6380 172.21.0.2:6381 172.21.0.7:6382 172.21.0.4:6383 172.21.0.6:6384 172.21.0.5:6385 --cluster-replicas 1
+```
+**提升ok 即完成. 可以 redis-cli -p port 进入redis实例：cluster info 查看集群信息，测试 get set k/v   >>   redis-cli -p port -c  （-c 表示以集群模式**
+
+-----------------
