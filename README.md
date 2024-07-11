@@ -80,8 +80,9 @@ networks:
   mysql_mgr:
     external: true
 ```
-- **node.cnf**
-```properties
+- **node.cnf**  
+chmod 0444 nodex.cnf [Warning: World-writable config file is ignored](https://stackoverflow.com/questions/53741107/mysql-in-docker-on-ubuntu-warning-world-writable-config-file-is-ignored)
+```
 #node1.cnf
 [mysqld]
 disabled_storage_engines="MyISAM,BLACKHOLE,FEDERATED,ARCHIVE,MEMORY"
