@@ -38,6 +38,7 @@ docker inspect mysql_mgr
 services:
   MGR1:
     image: mysql:8.0.32
+    container_name: mgr1
     ports:
       - 13306:3306
     volumes:
@@ -50,6 +51,7 @@ services:
 
   MGR2:
     image: mysql:8.0.32
+    container_name: mgr2
     ports:
       - 13307:3306
     volumes:
@@ -64,6 +66,7 @@ services:
       
   MGR3:
     image: mysql:8.0.32
+    container_name: mgr3
     ports:
       - 13308:3306      
     volumes:
@@ -102,8 +105,8 @@ transaction_write_set_extraction=XXHASH64
 plugin_load_add='group_replication.so'
 loose-group_replication_group_name="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
 loose-group_replication_start_on_boot=OFF
-loose-group_replication_local_address=192.168.32.2:33061
-loose-group_replication_group_seeds=192.168.32.2:33061,192.168.32.3:33061,192.168.32.4:33061
+loose-group_replication_local_address=mgr1:33061
+loose-group_replication_group_seeds=mgr1:33061,mgr2:33061,mgr3:33061
 loose-group_replication_bootstrap_group=OFF
 loose-group_replication_recovery_get_public_key=TRUE
 # 是否开启单主模式
@@ -134,8 +137,8 @@ transaction_write_set_extraction=XXHASH64
 plugin_load_add='group_replication.so'
 loose-group_replication_group_name="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
 loose-group_replication_start_on_boot=OFF
-loose-group_replication_local_address=192.168.32.3:33061
-loose-group_replication_group_seeds=192.168.32.2:33061,192.168.32.3:33061,192.168.32.4:33061
+loose-group_replication_local_address=mgr2:33061
+loose-group_replication_group_seeds=mgr1:33061,mgr2:33061,mgr3:33061
 loose-group_replication_bootstrap_group=OFF
 loose-group_replication_recovery_get_public_key=TRUE
 loose-group_replication_single_primary_mode=OFF
@@ -164,8 +167,8 @@ transaction_write_set_extraction=XXHASH64
 plugin_load_add='group_replication.so'
 loose-group_replication_group_name="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
 loose-group_replication_start_on_boot=OFF
-loose-group_replication_local_address=192.168.32.4:33061
-loose-group_replication_group_seeds=192.168.32.2:33061,192.168.32.3:33061,192.168.32.4:33061
+loose-group_replication_local_address=mgr3:33061
+loose-group_replication_group_seeds=mgr1:33061,mgr2:33061,mgr3:33061
 loose-group_replication_bootstrap_group=OFF
 loose-group_replication_recovery_get_public_key=TRUE
 loose-group_replication_single_primary_mode=OFF
