@@ -78,6 +78,16 @@ dependencies {
 	//implementation 'org.apache.shardingsphere:shardingsphere-transaction-base-seata-at:5.5.0'
 }
 
+//nacos
+//dependencies {
+//	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator
+//	implementation 'org.springframework.boot:spring-boot-starter-actuator:3.3.1'
+//
+//	// https://mvnrepository.com/artifact/com.alibaba.boot/nacos-config-spring-boot-starter
+//	implementation 'com.alibaba.boot:nacos-config-spring-boot-starter:0.3.0-RC'
+//}
+
+
 dependencyManagement {
 	// https://github.com/apache/shardingsphere/issues/28233
 	dependencies {
