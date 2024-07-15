@@ -1,96 +1,93 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.3.0'
-	id 'io.spring.dependency-management' version '1.1.5'
-	id 'maven-publish'
+    id 'java'
+    id 'org.springframework.boot' version '3.3.0'
+    id 'io.spring.dependency-management' version '1.1.5'
+    id 'maven-publish'
 }
 
 group = 'com.ylli'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '17'
+    sourceCompatibility = '17'
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 
-	maven {
-		url "http://localhost:8081/repository/localhost-snapshot/"
-		allowInsecureProtocol = true
-	}
+    maven {
+        url "http://localhost:8081/repository/localhost-snapshot/"
+        allowInsecureProtocol = true
+    }
 
-	maven {
-		url "http://localhost:8081/repository/local-release/"
-		allowInsecureProtocol = true
-	}
+    maven {
+        url "http://localhost:8081/repository/local-release/"
+        allowInsecureProtocol = true
+    }
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
-	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-	runtimeOnly 'com.mysql:mysql-connector-j'
-	compileOnly 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'io.projectreactor:reactor-test'
-	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
-	annotationProcessor 'org.projectlombok:lombok'
-	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    compileOnly 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 dependencies {
 
-	// https://mvnrepository.com/artifact/com.google.code.gson/gson
-	implementation 'com.google.code.gson:gson:2.10.1'
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation 'com.google.code.gson:gson:2.10.1'
 
-	// https://mvnrepository.com/artifact/io.mybatis/mybatis-mapper
-	implementation 'io.mybatis:mybatis-mapper:2.2.1'
+    // https://mvnrepository.com/artifact/io.mybatis/mybatis-mapper
+    implementation 'io.mybatis:mybatis-mapper:2.2.1'
 
-	// https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-loadbalancer
-	implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer:4.1.2'
+    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-loadbalancer
+    implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer:4.1.2'
 
-	// https://mvnrepository.com/artifact/com.github.ben-manes.caffeine/caffeine
-	implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8'
+    // https://mvnrepository.com/artifact/com.github.ben-manes.caffeine/caffeine
+    implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8'
 
-	//implementation 'com.ylli:any-starter:0.0.1-SNAPSHOT'
+    //implementation 'com.ylli:any-starter:0.0.1-SNAPSHOT'
 
-	// https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper-spring-boot-starter
-	implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:2.1.0'
+    // https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper-spring-boot-starter
+    implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:2.1.0'
 
-	// https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-jdbc-core-spring-boot-starter
-	implementation 'org.apache.shardingsphere:shardingsphere-jdbc-core-spring-boot-starter:5.2.1'
+    // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-jdbc-core-spring-boot-starter
+    implementation 'org.apache.shardingsphere:shardingsphere-jdbc-core-spring-boot-starter:5.2.1'
 
-	// https://mvnrepository.com/artifact/io.seata/seata-all
-	implementation 'io.seata:seata-all:2.0.0'
+    // https://mvnrepository.com/artifact/io.seata/seata-all
+    //implementation 'io.seata:seata-all:2.0.0'
 
-	// https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-transaction-base-seata-at
-	//implementation 'org.apache.shardingsphere:shardingsphere-transaction-base-seata-at:5.5.0'
+    // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-transaction-base-seata-at
+    //implementation 'org.apache.shardingsphere:shardingsphere-transaction-base-seata-at:5.5.0'
+
+    // https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-discovery
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:2023.0.1.2'
+
+    // https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-config
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:2023.0.1.2'
 }
-
-//nacos
-//dependencies {
-//	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator
-//	implementation 'org.springframework.boot:spring-boot-starter-actuator:3.3.1'
-//
-//	// https://mvnrepository.com/artifact/com.alibaba.boot/nacos-config-spring-boot-starter
-//	implementation 'com.alibaba.boot:nacos-config-spring-boot-starter:0.3.0-RC'
-//}
 
 
 dependencyManagement {
-	// https://github.com/apache/shardingsphere/issues/28233
-	dependencies {
-		dependency 'org.yaml:snakeyaml:1.33'
-	}
+    // https://github.com/apache/shardingsphere/issues/28233
+    dependencies {
+        dependency 'org.yaml:snakeyaml:1.33'
+    }
 }
