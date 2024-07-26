@@ -40,7 +40,7 @@ public class ExampleService {
     @Transactional(rollbackFor = Exception.class)
     public void create(ExampleModel model) {
         if (exampleMapper.wrapper().eq(ExampleModel::getUsername, model.username).count() != 0) {
-            throw new GenericException(HttpStatus.BAD_REQUEST, "username already exists");
+            throw new GenericException(HttpStatus.BAD_REQUEST, String.format("username %s already exists", model.username));
         }
         exampleMapper.insertSelective(model);
     }
