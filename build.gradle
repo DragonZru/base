@@ -82,6 +82,9 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-config
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:2023.0.1.2'
+
+    // https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder
+    implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
 }
 
 
