@@ -1,5 +1,6 @@
 # docker compose yaml
 **network elastic 需要预先创建**
+https://www.cnblogs.com/cgsdg/p/16446865.html
 ```yaml
 services:
   elasticsearch:
