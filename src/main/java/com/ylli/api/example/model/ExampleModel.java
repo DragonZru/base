@@ -11,7 +11,8 @@ import java.util.List;
 @Entity.Table("t_example")
 @Data
 @NoArgsConstructor
-// Use a different name with mapper in Example.class
+// Use a different name for Example.class, because it defined in mapper
+//broadcast table
 public class ExampleModel {
 
     @Entity.Column(id = true, updatable = false, genId = SnowFlakeGenerator.class)

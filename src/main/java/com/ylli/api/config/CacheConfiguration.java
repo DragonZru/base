@@ -37,25 +37,25 @@ public class CacheConfiguration {
 //                });
 //    }
 
-    @Bean
-    public CaffeineCacheManager caffeineCacheManager() {
-        //loadbalancer caffeine manager
-        // spring.cloud.loadbalancer.cache.enabled
-        // spring.cloud.loadbalancer.cache.ttl default is 35s
-        // spring.cloud.loadbalancer.cache.capacity default is 256
-        CaffeineCacheManager caffeineCacheManager = new CaffeineBasedLoadBalancerCacheManager(new LoadBalancerCacheProperties());
-        return caffeineCacheManager;
-    }
+//    @Bean
+//    public CaffeineCacheManager caffeineCacheManager() {
+//        //loadbalancer caffeine manager
+//        // spring.cloud.loadbalancer.cache.enabled
+//        // spring.cloud.loadbalancer.cache.ttl default is 35s
+//        // spring.cloud.loadbalancer.cache.capacity default is 256
+//        CaffeineCacheManager caffeineCacheManager = new CaffeineBasedLoadBalancerCacheManager(new LoadBalancerCacheProperties());
+//        return caffeineCacheManager;
+//    }
 
-    @Bean
-    public SimpleCacheManager simpleCacheManager() {
-        // 不支持asyncLoadingCache
-        SimpleCacheManager simpleCacheManager = new SimpleCacheManager();
-
-//        List<CaffeineCache> caches = new ArrayList<>();
-//        caches.add(new CaffeineCache("default", Caffeine.newBuilder().build()));
-//        simpleCacheManager.setCaches(caches);
-
-        return simpleCacheManager;
-    }
+//    @Bean
+//    public SimpleCacheManager simpleCacheManager() {
+//        // 不支持asyncLoadingCache
+//        SimpleCacheManager simpleCacheManager = new SimpleCacheManager();
+//
+////        List<CaffeineCache> caches = new ArrayList<>();
+////        caches.add(new CaffeineCache("default", Caffeine.newBuilder().build()));
+////        simpleCacheManager.setCaches(caches);
+//
+//        return simpleCacheManager;
+//    }
 }

@@ -1,6 +1,5 @@
 package com.ylli.api.example.model;
 
-import com.ylli.api.common.uid.RandomLongGenerator;
 import io.mybatis.provider.Entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +11,8 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class ExampleItem {
 
-    @Entity.Column(id = true, updatable = false, genId = RandomLongGenerator.class)
+    //@Entity.Column(id = true, updatable = false, genId = RandomLongGenerator.class)
+    @Entity.Column(id = true, updatable = false)
     public Long id;
 
     public Long exampleId;
