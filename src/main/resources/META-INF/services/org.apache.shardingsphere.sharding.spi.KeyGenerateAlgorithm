@@ -1,1 +1,1 @@
-com.ylli.api.config.shardingsphere.CustomIdGenerator
+com.ylli.api.config.shardingsphere.LeafGenerator

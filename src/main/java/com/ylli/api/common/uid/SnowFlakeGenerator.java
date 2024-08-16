@@ -3,7 +3,6 @@ package com.ylli.api.common.uid;
 
 import io.mybatis.provider.EntityColumn;
 import io.mybatis.provider.EntityTable;
-import io.mybatis.provider.keysql.GenId;
 
 /**
  * 雪花❄️算法，生成64位long 整形
@@ -16,7 +15,7 @@ import io.mybatis.provider.keysql.GenId;
  * <p>
  * 缺点，因为基于System.currentTimeMillis() ，当系统时间回拨时会不可用
  */
-public class SnowFlakeGenerator implements IDGenerator<Long>, GenId<Long> {
+public class SnowFlakeGenerator implements IDGenerator<Long> {
 
     /*
      * 开始时间截 (2020-01-01)
@@ -133,7 +132,7 @@ public class SnowFlakeGenerator implements IDGenerator<Long>, GenId<Long> {
     }
 
     @Override
-    public Long nextId() {
+    public Long next() {
         return invoke();
     }
 

@@ -28,15 +28,13 @@ public class ExceptionHandler {
     }
 
 
-    @org.springframework.web.bind.annotation.ExceptionHandler
-    public ResponseEntity<?> exceptionHandler(Exception ex) {
-        String printStackTrace = printStackTrace(ex);
-        logger.error(printStackTrace);
-        //默认503.
-        return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new ResponseBody(HttpStatus.SERVICE_UNAVAILABLE, ex.getMessage(), printStackTrace(ex)));
-    }
+//    @org.springframework.web.bind.annotation.ExceptionHandler
+//    public ResponseEntity<?> exceptionHandler(Exception ex) {
+//        //默认503.
+//        return ResponseEntity
+//                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                .body(new ResponseBody(HttpStatus.SERVICE_UNAVAILABLE, ex.getMessage(), printStackTrace(ex)));
+//    }
 
     private String printStackTrace(Exception ex) {
         try (StringWriter sw = new StringWriter();
