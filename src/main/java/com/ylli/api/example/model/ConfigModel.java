@@ -6,22 +6,27 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
-@Entity.Table("t_example_item")
+@Entity.Table("t_config")
 @Data
 @NoArgsConstructor
-public class ExampleItem {
+public class ConfigModel {
 
-    //@Entity.Column(id = true, updatable = false, genId = RandomLongGenerator.class)
     @Entity.Column(id = true, updatable = false)
     public Long id;
 
-    public Long exampleId;
+    public String name;
+
+    public String value;
+
+    public String desc;
 
     public Timestamp createTime;
 
     public Timestamp updateTime;
 
-    public ExampleItem(Long exampleId) {
-        this.exampleId = exampleId;
+    public ConfigModel(String name, String value, String desc) {
+        this.name = name;
+        this.value = value;
+        this.desc = desc;
     }
 }

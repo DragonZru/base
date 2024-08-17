@@ -5,7 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.ErrorResponseException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.io.IOException;
@@ -28,13 +30,36 @@ public class ExceptionHandler {
     }
 
 
-//    @org.springframework.web.bind.annotation.ExceptionHandler
-//    public ResponseEntity<?> exceptionHandler(Exception ex) {
-//        //默认503.
-//        return ResponseEntity
-//                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                .body(new ResponseBody(HttpStatus.SERVICE_UNAVAILABLE, ex.getMessage(), printStackTrace(ex)));
-//    }
+    @org.springframework.web.bind.annotation.ExceptionHandler
+    public ResponseEntity<?> exceptionHandler(ErrorResponseException ex) {
+        HttpStatusCode statusCode = ex.getStatusCode();
+        return ResponseEntity
+                .status(statusCode)
+                .body(new ResponseBody(statusCode.value(), ex.getMessage(), null));
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler
+    public ResponseEntity<?> exceptionHandler(Exception ex) {
+        HttpStatusCode statusCode = getStatusCode(ex);
+        return ResponseEntity
+                .status(statusCode)
+                .body(new ResponseBody(statusCode.value(), ex.getMessage(), null));
+    }
+
+    /**
+     * 通用异常 return 500.有特殊需要自己添加
+     * 业务异常统一使用GenericException，这里主要针对接入的各种插件
+     */
+    public HttpStatusCode getStatusCode(Exception ex) {
+        if (ex instanceof IllegalArgumentException) {
+            return HttpStatus.BAD_REQUEST;
+        }
+        if (ex instanceof NullPointerException) {
+            return HttpStatus.NOT_FOUND;
+        }
+        logger.error("unexpected exception: ", ex);
+        return HttpStatus.INTERNAL_SERVER_ERROR;
+    }
 
     private String printStackTrace(Exception ex) {
         try (StringWriter sw = new StringWriter();
