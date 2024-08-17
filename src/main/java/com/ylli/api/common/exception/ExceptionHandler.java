@@ -24,11 +24,8 @@ public class ExceptionHandler {
 
     @org.springframework.web.bind.annotation.ExceptionHandler(GenericException.class)
     public ResponseEntity<?> exceptionHandler(GenericException ex) {
-        String printStackTrace = printStackTrace(ex);
-        logger.error(printStackTrace);
-        return ResponseEntity.status(ex.getCode()).body(new ResponseBody(ex.getCode(), ex.getMessage(), debug ? printStackTrace : null));
+        return ResponseEntity.status(ex.getCode()).body(new ResponseBody(ex.getCode(), ex.getMessage(), debug ? printStackTrace(ex) : null));
     }
-
 
     @org.springframework.web.bind.annotation.ExceptionHandler
     public ResponseEntity<?> exceptionHandler(ErrorResponseException ex) {
@@ -40,6 +37,7 @@ public class ExceptionHandler {
 
     @org.springframework.web.bind.annotation.ExceptionHandler
     public ResponseEntity<?> exceptionHandler(Exception ex) {
+        logger.error(printStackTrace(ex));
         HttpStatusCode statusCode = getStatusCode(ex);
         return ResponseEntity
                 .status(statusCode)
@@ -57,7 +55,6 @@ public class ExceptionHandler {
         if (ex instanceof NullPointerException) {
             return HttpStatus.NOT_FOUND;
         }
-        logger.error("unexpected exception: ", ex);
         return HttpStatus.INTERNAL_SERVER_ERROR;
     }
 

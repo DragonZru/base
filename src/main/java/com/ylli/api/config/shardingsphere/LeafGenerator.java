@@ -1,20 +1,22 @@
 package com.ylli.api.config.shardingsphere;
 
 import com.alibaba.csp.sentinel.SphO;
-import com.alibaba.csp.sentinel.slots.block.RuleConstant;
 import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRule;
 import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRuleManager;
+import com.alibaba.csp.sentinel.slots.block.degrade.circuitbreaker.CircuitBreakerStrategy;
 import com.ylli.api.common.uid.SnowFlakeGenerator;
 import jakarta.annotation.PostConstruct;
 import org.apache.shardingsphere.sharding.spi.KeyGenerateAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+@Component
 public class LeafGenerator implements KeyGenerateAlgorithm {
 
     private static final Logger logger = LoggerFactory.getLogger(LeafGenerator.class);
@@ -41,7 +43,7 @@ public class LeafGenerator implements KeyGenerateAlgorithm {
     public void initDegradeRule() {
         List<DegradeRule> degradeRules = new ArrayList<>();
         DegradeRule rule = new DegradeRule("LeafGenerator")
-                .setGrade(RuleConstant.DEGRADE_GRADE_EXCEPTION_RATIO)
+                .setGrade(CircuitBreakerStrategy.SLOW_REQUEST_RATIO.getType())
                 //ms
                 .setCount(50)
                 .setSlowRatioThreshold(0.2)

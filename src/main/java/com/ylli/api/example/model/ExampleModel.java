@@ -1,6 +1,5 @@
 package com.ylli.api.example.model;
 
-import com.ylli.api.common.uid.SnowFlakeGenerator;
 import io.mybatis.provider.Entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,8 +14,10 @@ import java.util.List;
 //broadcast table
 public class ExampleModel {
 
-    @Entity.Column(id = true, updatable = false, genId = SnowFlakeGenerator.class)
-    //@Entity.Column(id = true, updatable = false) = @Id 使用mysql自增
+    @Entity.Column(id = true, updatable = false
+//            , genId = SnowFlakeGenerator.class
+    )
+    //@Entity.Column(id = true, updatable = false) = @Id 使用mysql自增 or 自定义id 生成策略
     public Long id;
 
     public String username;
