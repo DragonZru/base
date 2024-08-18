@@ -6,9 +6,8 @@ import org.springframework.cloud.client.loadbalancer.reactive.DeferringLoadBalan
 import org.springframework.cloud.client.loadbalancer.reactive.ReactorLoadBalancerExchangeFilterFunction;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.client.reactive.ReactorClientHttpConnector;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.netty.http.client.HttpClient;
 
 /**
  * https://docs.spring.io/spring-cloud-commons/docs/current/reference/html/#webflux-with-reactive-loadbalancer
@@ -20,31 +19,30 @@ import reactor.netty.http.client.HttpClient;
 public class WebClientConfiguration {
 
     @Bean
-    @LoadBalanced
-    public WebClient.Builder loadBalancedWebClientBuilder(ObjectProvider<ReactorLoadBalancerExchangeFilterFunction> reactorLoadBalancerExchangeFilterFunctionProvider) {
+    public WebClient.Builder webClientBuilder(ObjectProvider<ReactorLoadBalancerExchangeFilterFunction> reactorLoadBalancerExchangeFilterFunctionProvider) {
         DeferringLoadBalancerExchangeFilterFunction<ReactorLoadBalancerExchangeFilterFunction> filterFunction =
                 new DeferringLoadBalancerExchangeFilterFunction<>(reactorLoadBalancerExchangeFilterFunctionProvider);
 
         return WebClient.builder()
-                .clientConnector(new ReactorClientHttpConnector(HttpClient.create(
-                        //https://stackoverflow.com/questions/68640474/facing-issue-webclientrequestexception-pending-acquire-queue-has-reached-its-m
+//                .clientConnector(new ReactorClientHttpConnector(HttpClient.create(
+//                                //https://stackoverflow.com/questions/68640474/facing-issue-webclientrequestexception-pending-acquire-queue-has-reached-its-m
 //                                ConnectionProvider.builder("connectionPool")
 //                                        .maxConnections(1000)
 //                                        .pendingAcquireMaxCount(Integer.MAX_VALUE)
 //                                        .build()
-                )
-//                        .proxy(proxy -> proxy.type(ProxyProvider.Proxy.HTTP))
-//                        .resolver(spec -> {
-//                            //查询超时时间，默认5s.
-//                            spec.queryTimeout(Duration.ofMillis(2000));
-//                        })
-                ))
+//                        )))
                 .filter(filterFunction);
     }
 
     @Bean
     public WebClient webClient() {
         return WebClient.builder().build();
+    }
+
+    @Bean
+    @LoadBalanced
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 }
 

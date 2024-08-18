@@ -1,7 +1,7 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.3.0'
-    id 'io.spring.dependency-management' version '1.1.5'
+    id 'org.springframework.boot' version '3.3.2'
+    id 'io.spring.dependency-management' version '1.1.6'
     id 'maven-publish'
 }
 
@@ -35,6 +35,7 @@ configurations {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
     runtimeOnly 'com.mysql:mysql-connector-j'
     compileOnly 'org.projectlombok:lombok'
@@ -57,9 +58,6 @@ dependencies {
     // https://mvnrepository.com/artifact/io.mybatis/mybatis-mapper
     implementation 'io.mybatis:mybatis-mapper:2.2.1'
 
-    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-loadbalancer
-    implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer:4.1.2'
-
     // https://mvnrepository.com/artifact/com.github.ben-manes.caffeine/caffeine
     implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8'
 
@@ -75,18 +73,18 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-transaction-base-seata-at
     //implementation 'org.apache.shardingsphere:shardingsphere-transaction-base-seata-at:5.5.0'
 
+    // https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder
+    implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
+
+    //implementation 'com.ylli:any-starter:0.0.1-SNAPSHOT'
+}
+
+dependencies {
     // https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-discovery
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:2023.0.1.2'
 
     // https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-config
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:2023.0.1.2'
-
-    // https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder
-    implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
-
-
-
-    //implementation 'com.ylli:any-starter:0.0.1-SNAPSHOT'
 }
 
 dependencies {
@@ -97,10 +95,16 @@ dependencies {
     implementation 'com.alibaba.csp:sentinel-transport-simple-http:1.8.8'
 }
 
+ext {
+    set('springCloudVersion', "2023.0.3")
+}
 
 dependencyManagement {
     // https://github.com/apache/shardingsphere/issues/28233
     dependencies {
         dependency 'org.yaml:snakeyaml:1.33'
+    }
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
