@@ -64,9 +64,6 @@ dependencies {
     // https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper-spring-boot-starter
     implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:2.1.0'
 
-    // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-jdbc-core-spring-boot-starter
-    implementation 'org.apache.shardingsphere:shardingsphere-jdbc-core-spring-boot-starter:5.2.1'
-
     // https://mvnrepository.com/artifact/io.seata/seata-all
     //implementation 'io.seata:seata-all:2.0.0'
 
@@ -77,6 +74,11 @@ dependencies {
     implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
 
     //implementation 'com.ylli:any-starter:0.0.1-SNAPSHOT'
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-jdbc-core-spring-boot-starter
+    implementation 'org.apache.shardingsphere:shardingsphere-jdbc-core-spring-boot-starter:5.2.1'
 }
 
 dependencies {

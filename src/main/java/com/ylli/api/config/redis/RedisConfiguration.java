@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisClusterConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
-import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 @Configuration
@@ -21,11 +20,12 @@ public class RedisConfiguration {
         return new StringRedisTemplate(lettuceConnectionFactory);
     }
 
-    @Bean
-    @ConditionalOnBean(LettuceConnectionFactory.class)
-    public ReactiveStringRedisTemplate reactiveStringRedisTemplate(LettuceConnectionFactory lettuceConnectionFactory) {
-        return new ReactiveStringRedisTemplate(lettuceConnectionFactory);
-    }
+    // TODO fix ReactiveStringRedisTemplate not working
+//    @Bean
+//    @ConditionalOnBean(LettuceConnectionFactory.class)
+//    public ReactiveStringRedisTemplate reactiveStringRedisTemplate(LettuceConnectionFactory lettuceConnectionFactory) {
+//        return new ReactiveStringRedisTemplate(lettuceConnectionFactory);
+//    }
 
     @Bean
     @ConditionalOnBean(RedisClusterConfiguration.class)
