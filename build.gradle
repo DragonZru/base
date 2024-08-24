@@ -64,12 +64,6 @@ dependencies {
     // https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper-spring-boot-starter
     implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:2.1.0'
 
-    // https://mvnrepository.com/artifact/io.seata/seata-all
-    //implementation 'io.seata:seata-all:2.0.0'
-
-    // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-transaction-base-seata-at
-    //implementation 'org.apache.shardingsphere:shardingsphere-transaction-base-seata-at:5.5.0'
-
     // https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder
     implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
 
@@ -77,8 +71,14 @@ dependencies {
 }
 
 dependencies {
+    // https://mvnrepository.com/artifact/io.seata/seata-spring-boot-starter
+    implementation 'io.seata:seata-spring-boot-starter:2.0.0'
+
     // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-jdbc-core-spring-boot-starter
     implementation 'org.apache.shardingsphere:shardingsphere-jdbc-core-spring-boot-starter:5.2.1'
+
+    // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-transaction-base-seata-at
+    implementation 'org.apache.shardingsphere:shardingsphere-transaction-base-seata-at:5.2.1'
 }
 
 dependencies {

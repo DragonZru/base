@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 @Service
 public class ExampleService {
 
-    final String USERNAME_BLOOM_FILTER_KEY = "username_bloom_filter";
+    final String USERNAME_BLOOM_FILTER_KEY = "t_example_username_bloom_filter";
     ExampleMapper exampleMapper;
     HashOperations<String, String, String> hashOps;
 

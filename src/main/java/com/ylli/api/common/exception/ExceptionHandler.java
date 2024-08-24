@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.ErrorResponseException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,13 +24,21 @@ public class ExceptionHandler {
     boolean debug;
 
     @org.springframework.web.bind.annotation.ExceptionHandler(GenericException.class)
-    public ResponseEntity<?> exceptionHandler(GenericException ex) {
+    public ResponseEntity<?> genericExceptionHandler(GenericException ex) {
         return ResponseEntity.status(ex.getCode()).body(new ResponseBody(ex.getCode(), ex.getMessage(), debug ? printStackTrace(ex) : null));
     }
 
-    @org.springframework.web.bind.annotation.ExceptionHandler
-    public ResponseEntity<?> exceptionHandler(ErrorResponseException ex) {
-        HttpStatusCode statusCode = ex.getStatusCode();
+    @org.springframework.web.bind.annotation.ExceptionHandler(
+            {ErrorResponseException.class, WebClientResponseException.class})
+    public ResponseEntity<?> errorResponseExceptionHandler1(Exception ex) {
+        //default 500
+        HttpStatusCode statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+        if (ex instanceof ErrorResponseException) {
+            statusCode = ((ErrorResponseException) ex).getStatusCode();
+        }
+        if (ex instanceof WebClientResponseException) {
+            statusCode = ((WebClientResponseException) ex).getStatusCode();
+        }
         return ResponseEntity
                 .status(statusCode)
                 .body(new ResponseBody(statusCode.value(), ex.getMessage(), null));

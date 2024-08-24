@@ -40,7 +40,7 @@ public class LeafGenerator implements KeyGenerateAlgorithm {
                 SphO.exit();
             }
         }
-        logger.error("LeafGenerator is blocked");
+        logger.warn("LeafGenerator is blocked");
         return new SnowflakeKeyGenerateAlgorithm().generateKey();
     }
 

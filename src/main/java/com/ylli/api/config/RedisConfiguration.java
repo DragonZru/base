@@ -1,4 +1,4 @@
-package com.ylli.api.config.redis;
+package com.ylli.api.config;
 
 import io.lettuce.core.ReadFrom;
 import org.springframework.beans.factory.ObjectProvider;
