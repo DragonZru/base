@@ -4,8 +4,6 @@ import com.ylli.api.example.model.ExampleModel;
 import com.ylli.api.example.service.ExampleService;
 import io.seata.core.context.RootContext;
 import io.seata.spring.annotation.GlobalTransactional;
-import org.apache.shardingsphere.transaction.annotation.ShardingSphereTransactionType;
-import org.apache.shardingsphere.transaction.core.TransactionType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.MediaType;
@@ -22,13 +20,7 @@ public class SeataController {
     @Autowired
     ExampleService exampleService;
 
-    /**
-     * shardingsphere 集成 seats
-     * 当引入 'org.apache.shardingsphere:shardingsphere-transaction-base-seata-at:5.2.1' 后，在函数上使用 io.seata.spring.annotation.GlobalTransactional 注解，这是不被允许的。（https://shardingsphere.apache.org/document/current/cn/user-manual/shardingsphere-jdbc/special-api/transaction/seata/）
-     *
-     */
-    //@GlobalTransactional
-    @ShardingSphereTransactionType(TransactionType.BASE)
+    @GlobalTransactional
     @PostMapping("/create")
     @Transactional(rollbackFor = Exception.class)
     public Object create(@RequestParam String username, @RequestParam String bizTag) {
@@ -59,6 +51,11 @@ public class SeataController {
                 .bodyToMono(String.class);
     }
 
+    @GetMapping("/test")
+    public Object test(@RequestParam String bizTag) {
+        return rpc(bizTag);
+    }
+
     static class LeafVo {
         public String bizTag;
         public Long idx = 1L;
@@ -68,10 +65,5 @@ public class SeataController {
         public LeafVo(String bizTag) {
             this.bizTag = bizTag;
         }
-    }
-
-    @GetMapping("/test")
-    public Object test(@RequestParam String bizTag) {
-        return rpc(bizTag);
     }
 }

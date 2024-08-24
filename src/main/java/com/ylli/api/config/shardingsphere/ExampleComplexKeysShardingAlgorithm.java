@@ -10,11 +10,6 @@ public class ExampleComplexKeysShardingAlgorithm implements ComplexKeysShardingA
 
 
     @Override
-    public Properties getProps() {
-        return null;
-    }
-
-    @Override
     public void init(Properties props) {
 
     }

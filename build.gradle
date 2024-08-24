@@ -74,11 +74,14 @@ dependencies {
     // https://mvnrepository.com/artifact/io.seata/seata-spring-boot-starter
     implementation 'io.seata:seata-spring-boot-starter:2.0.0'
 
-    // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-jdbc-core-spring-boot-starter
-    implementation 'org.apache.shardingsphere:shardingsphere-jdbc-core-spring-boot-starter:5.2.1'
+    // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-jdbc-core
+    implementation 'org.apache.shardingsphere:shardingsphere-jdbc-core:5.4.1'
+
+    // https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.8'
 
     // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-transaction-base-seata-at
-    implementation 'org.apache.shardingsphere:shardingsphere-transaction-base-seata-at:5.2.1'
+    implementation 'org.apache.shardingsphere:shardingsphere-transaction-base-seata-at:5.4.1'
 }
 
 dependencies {

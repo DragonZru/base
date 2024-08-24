@@ -64,10 +64,10 @@ public class LeafGenerator implements KeyGenerateAlgorithm {
         return "LeafGenerator";
     }
 
-    @Override
-    public Properties getProps() {
-        return props;
-    }
+//    @Override
+//    public Properties getProps() {
+//        return props;
+//    }
 
     @Override
     public void init(Properties props) {
