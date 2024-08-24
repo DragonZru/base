@@ -26,7 +26,8 @@ public class ConfigService {
         if (get(name) != null) {
             throw new GenericException(HttpStatus.BAD_REQUEST, String.format("key %s already exist", name));
         }
-        configMapper.insertSelective(new ConfigModel(name, value, desc));
+        ConfigModel config = new ConfigModel(name, value, desc);
+        configMapper.insertConfig(config);
     }
 
     public ConfigModel get(String name) {
