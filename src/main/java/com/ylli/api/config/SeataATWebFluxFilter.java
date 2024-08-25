@@ -2,6 +2,9 @@ package com.ylli.api.config;
 
 import io.seata.common.util.StringUtils;
 import io.seata.core.context.RootContext;
+import io.seata.tm.api.GlobalTransaction;
+import io.seata.tm.api.GlobalTransactionContext;
+import org.apache.shardingsphere.transaction.base.seata.at.SeataTransactionHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -24,6 +27,7 @@ public class SeataATWebFluxFilter implements WebFilter {
 
         if (StringUtils.isBlank(xid) && StringUtils.isNotBlank(rpcXid)) {
             RootContext.bind(rpcXid);
+            SeataTransactionHolder.set(GlobalTransactionContext.getCurrentOrCreate());
             //logger.debug("bind[{}] to RootContext", rpcXid);
             System.out.println("--------------------------bind[" + rpcXid + "] to RootContext");
         }
@@ -36,6 +40,7 @@ public class SeataATWebFluxFilter implements WebFilter {
                 if (StringUtils.isNotBlank(RootContext.getXID()) && !StringUtils.equalsIgnoreCase(exchange.getRequest().getHeaders().getFirst(RootContext.KEY_XID), unbindXid)) {
                     if (StringUtils.isNotBlank(unbindXid)) {
                         RootContext.bind(unbindXid);
+                        SeataTransactionHolder.set(GlobalTransactionContext.getCurrentOrCreate());
                         //logger.debug("xid[{}] bind to RootContext", unbindXid);
                         System.out.println("---------------------xid[" + unbindXid + "] bind to RootContext");
                     }
