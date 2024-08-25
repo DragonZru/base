@@ -6,6 +6,7 @@ import com.ylli.api.example.model.ConfigModel;
 import com.ylli.api.example.service.ConfigService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ServerWebExchange;
 
 @RestController
 @RequestMapping("/config")
@@ -18,7 +19,7 @@ public class ConfigController {
     }
 
     @PostMapping
-    public void create(@RequestBody ConfigModel config) {
+    public void create(@RequestBody ConfigModel config, ServerWebExchange exchange) {
         if (Strings.isNullOrEmpty(config.name)) {
             throw new GenericException(HttpStatus.BAD_REQUEST, "name not be null");
         }

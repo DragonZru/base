@@ -7,13 +7,13 @@ dataSources:
   ds_0:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    jdbcUrl: "jdbc:mysql://127.0.0.1:3306/base-1?useUnicode=true&useJDBCCompliantTimezoneShift=true&serverTimezone=Asia/Shanghai"
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/base-1?useUnicode=true&useJDBCCompliantTimezoneShift=true&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
   ds_1:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    jdbcUrl: "jdbc:mysql://127.0.0.1:3306/base-2?useUnicode=true&useJDBCCompliantTimezoneShift=true&serverTimezone=Asia/Shanghai"
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/base-2?useUnicode=true&useJDBCCompliantTimezoneShift=true&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
 
@@ -27,7 +27,7 @@ rules:
       actualDataNodes: ds_${0..1}.t_example_${0..9}
       databaseStrategy:
         standard:
-          shardingColumn: username
+          shardingColumn: id
           shardingAlgorithmName: database_inline
       tableStrategy:
         standard:
@@ -58,13 +58,18 @@ rules:
       type: INLINE
       props:
         algorithm-expression: t_example_${id % 10}
+    test_class_based:
+      type: CLASS_BASED
+      props:
+        strategy: STANDARD
+        algorithmClassName: com.ylli.api.config.shardingsphere.ClassBasedStandardShardingAlgorithmFixture
   keyGenerators:
     snowflake:
       type: SNOWFLAKE
     leaf:
       type: LeafGenerator
       props:
-        uri: http://127.0.0.1:18080/leaf?bizTag=${spring.application.name}
+        uri: http://127.0.0.1:18080/leaf?bizTag=base
 
 props:
   sql-show: false

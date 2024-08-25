@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class ConfigModel {
 
-    @Entity.Column(id = true, updatable = false)
+    @Entity.Column(id = true, updatable = false, useGeneratedKeys = true)
     public Long id;
 
     public String name;

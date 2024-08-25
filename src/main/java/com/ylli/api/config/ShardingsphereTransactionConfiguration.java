@@ -12,9 +12,13 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 public class ShardingsphereTransactionConfiguration {
 
-    //https://shardingsphere.apache.org/document/5.2.1/cn/dev-manual/transaction/
+    // todo 注释 看下 是否工作
+    // seata.conf 是否必须存在 和以下参数重叠
+    //seata.application-id=${spring.application.name}
+    //seata.tx-service-group=default-tx-group
+
 //    @Bean
-//    public ShardingSphereTransactionManager shardingSphereTransactionManager() {
+//    public SeataATShardingSphereTransactionManager shardingSphereTransactionManager() {
 //        return new SeataATShardingSphereTransactionManager();
 //    }
 
