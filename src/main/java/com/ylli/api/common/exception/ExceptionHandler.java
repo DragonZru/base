@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.ErrorResponseException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpStatusCodeException;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,16 +29,18 @@ public class ExceptionHandler {
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(
-            {ErrorResponseException.class, WebClientResponseException.class, HttpStatusCodeException.class})
+            {ErrorResponseException.class,
+                    //WebClientResponseException.class,
+                    HttpStatusCodeException.class})
     public ResponseEntity<?> errorResponseExceptionHandler1(Exception ex) {
         //default 500
         HttpStatusCode statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
         if (ex instanceof ErrorResponseException) {
             statusCode = ((ErrorResponseException) ex).getStatusCode();
         }
-        if (ex instanceof WebClientResponseException) {
-            statusCode = ((WebClientResponseException) ex).getStatusCode();
-        }
+//        if (ex instanceof WebClientResponseException) {
+//            statusCode = ((WebClientResponseException) ex).getStatusCode();
+//        }
         if (ex instanceof HttpStatusCodeException) {
             statusCode = ((HttpStatusCodeException) ex).getStatusCode();
         }
