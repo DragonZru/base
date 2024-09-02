@@ -104,6 +104,10 @@ public class ExampleService {
         }
         //查询指定字段
 //        exampleWrapper.select(ExampleModel::getId, ExampleModel::getUsername, ExampleModel::getPassword);
+
+        // 分页查询优化
+        // select t_example.* from t_example right join ( select id from t_example limit offsetValue,limitValue) as tmp on t_example.id = tmp.id
+        // select * from t_example where id > (select id from t_example limit offsetValue,1 ) limit limitValue
         PageHelper.offsetPage(offset, limit);
         return exampleMapper.selectByExample(exampleWrapper.example());
 
