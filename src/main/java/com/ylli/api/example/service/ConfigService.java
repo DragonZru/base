@@ -22,11 +22,11 @@ public class ConfigService {
 
 
     @Transactional(rollbackFor = Exception.class)
-    public void create(@NonNull String name, String value, String desc) {
+    public int create(@NonNull String name, String value, String desc) {
         if (get(name) != null) {
             throw new GenericException(HttpStatus.BAD_REQUEST, String.format("key %s already exist", name));
         }
-        configMapper.insertSelective(new ConfigModel(name, value, desc));
+       return configMapper.insertSelective(new ConfigModel(name, value, desc));
     }
 
     public ConfigModel get(String name) {

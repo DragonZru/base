@@ -97,6 +97,11 @@ dependencies {
     implementation 'com.alibaba.csp:sentinel-transport-simple-http:1.8.8'
 }
 
+dependencies {
+    // https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-client
+    implementation 'org.apache.rocketmq:rocketmq-client:5.1.4'
+}
+
 ext {
     set('springCloudVersion', "2023.0.3")
 }
