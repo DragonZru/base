@@ -86,39 +86,6 @@ public class MQConsumer {
 
     }
 
-
-    /**
-     * tags tag1 || tag2
-     */
-    interface Consumer {
-
-        default boolean syncConsumer() {
-            return true;
-        }
-
-        default void asyncConsumer() {
-        }
-
-        //集群模式，默认
-        //每条消息只被一个消费者处理，失败从投不一定会路由到同一个消费者
-        default void clusterConsumer(String topic, String tags) throws MQClientException {
-
-        }
-
-        //广播模式不支持顺序消息，不支持重置消费位点
-        //消息会发送给每一个订阅topic的consumer；但是对失败的消息并不会失败从投
-        //启动时只会从当前开始消息消费，对客户端关闭期间消息会丢弃
-        //替代方案：在集群模式下，使用不同consumerGroup 订阅相同topic 即可
-        default void broadcastConsumer(String topic, String tags) throws MQClientException {
-
-        }
-
-        void start() throws MQClientException;
-
-        void shutDown();
-
-    }
-
     /**
      * DefaultMQPullConsumer V 4.7 之后被弃用 （需要手动维护偏移量）
      * 使用 DefaultLitePullConsumer 替代
