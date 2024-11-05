@@ -1,8 +1,7 @@
-package com.ylli.api.config;
+package com.ylli.api.config.seata;
 
 import io.seata.common.util.StringUtils;
 import io.seata.core.context.RootContext;
-import io.seata.tm.api.GlobalTransaction;
 import io.seata.tm.api.GlobalTransactionContext;
 import org.apache.shardingsphere.transaction.base.seata.at.SeataTransactionHolder;
 import org.slf4j.Logger;
