@@ -1,6 +1,8 @@
 package com.ylli.api.config.rocketmq;
 
 import lombok.Data;
+import org.apache.rocketmq.client.producer.DefaultMQProducer;
+import org.apache.rocketmq.client.producer.MQProducer;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.List;
@@ -20,12 +22,8 @@ public class RocketMQProperties {
     @Data
     static class ProducerProperties {
 
-        //事物消息和其他producer 不一样
-        public static final String NORMAL = "normal";
-        public static final String TRANSACTION = "transaction";
-
         // normal or transaction
-        public String type = NORMAL;
+        public Class<? extends MQProducer> cls = DefaultMQProducer.class;
 
         public String group;
     }

@@ -19,8 +19,6 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 
-import static com.ylli.api.config.rocketmq.RocketMQProperties.ProducerProperties.TRANSACTION;
-
 @Configuration
 @EnableConfigurationProperties(RocketMQProperties.class)
 @ConditionalOnProperty(prefix = "rocketmq", value = "enable", havingValue = "true")
@@ -49,7 +47,7 @@ public class RocketMQConfiguration implements DisposableBean, ApplicationContext
                 }
                 BeanDefinitionBuilder beanDefinitionBuilder = null;
                 //动态注册bean.
-                if (TRANSACTION.equals(entry.getValue().getType())) {
+                if (entry.getValue().getCls().isAssignableFrom(TransactionMQProducer.class)) {
                     beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(TransactionMQProducer.class);
                 } else {
                     beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(DefaultMQProducer.class);

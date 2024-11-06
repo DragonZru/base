@@ -21,14 +21,36 @@ import java.util.function.Function;
 @Component
 public class RocketMQ implements ApplicationContextAware {
 
-    private static ApplicationContext applicationContext;
-
     //save transaction producer
     //注意：当rocketmq producer配置更新后，需要同步更新这里的缓存-外部监听器，否则会导致消息无法正常发送
-    Cache<String, TransactionMQProducer> cache = Caffeine.newBuilder().build();
+    static Cache<String, TransactionMQProducer> cache = Caffeine.newBuilder().build();
+    private static ApplicationContext applicationContext;
+    RocketMQProperties rocketMQProperties;
+
+    public RocketMQ(RocketMQProperties rocketMQProperties) {
+        this.rocketMQProperties = rocketMQProperties;
+    }
+
+    public RocketMQ() {
+    }
 
     public static TransactionSendResult sendTransactionMessage(Message message, Function<String, Boolean> transaction, Function<String, Boolean> check) throws MQClientException {
-        return new RocketMQ().sendTransactionMessage("defaultTransactionProducer", message, transaction, check);
+        return new RocketMQ().sendTransactionMessage(getTransactionMQProducer("defaultTransactionProducer"), message, transaction, check);
+    }
+
+    public static TransactionSendResult sendTransactionMessage(String transactionGroup, Message message, Function<String, Boolean> transaction, Function<String, Boolean> check) throws MQClientException {
+        return new RocketMQ().sendTransactionMessage(getTransactionMQProducer(transactionGroup), message, transaction, check);
+    }
+
+    public static TransactionMQProducer getTransactionMQProducer(String beanName) {
+        if (cache.getIfPresent(beanName) != null) {
+            return cache.getIfPresent(beanName);
+        }
+
+        TransactionMQProducer transactionMQProducer = Optional.ofNullable(applicationContext.getBean(beanName, TransactionMQProducer.class))
+                .orElseThrow(() -> new NoSuchBeanDefinitionException(beanName));
+        cache.put(beanName, transactionMQProducer);
+        return transactionMQProducer;
     }
 
     public ApplicationContext getApplicationContext() {
@@ -40,16 +62,14 @@ public class RocketMQ implements ApplicationContextAware {
         this.applicationContext = applicationContext;
     }
 
-    public TransactionSendResult sendTransactionMessage(String beanName,
+    public TransactionSendResult sendTransactionMessage(TransactionMQProducer transactionMQProducer,
                                                         Message message,
                                                         Function<String, Boolean> saveTransaction,
                                                         Function<String, Boolean> localCheck) throws MQClientException {
 
-        TransactionMQProducer transactionMQProducer = getTransactionMQProducer(beanName);
         transactionMQProducer.setTransactionListener(new TransactionListener() {
             @Override
             public LocalTransactionState executeLocalTransaction(Message msg, Object arg) {
-
                 //执行本地事物
                 if (saveTransaction != null && saveTransaction.apply(new String(msg.getBody()))) {
                     return LocalTransactionState.COMMIT_MESSAGE;
@@ -69,16 +89,5 @@ public class RocketMQ implements ApplicationContextAware {
             }
         });
         return transactionMQProducer.sendMessageInTransaction(message, null);
-    }
-
-    public TransactionMQProducer getTransactionMQProducer(String beanName) {
-        if (cache.getIfPresent(beanName) != null) {
-            return cache.getIfPresent(beanName);
-        }
-
-        TransactionMQProducer transactionMQProducer = Optional.ofNullable(applicationContext.getBean(beanName, TransactionMQProducer.class))
-                .orElseThrow(() -> new NoSuchBeanDefinitionException(beanName));
-        cache.put(beanName, transactionMQProducer);
-        return transactionMQProducer;
     }
 }
