@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.ErrorResponseException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.client.HttpStatusCodeException;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,39 +19,26 @@ public class ExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(ExceptionHandler.class);
 
-    @Value("${debugMsg.enable:false}")
-    boolean debug;
+    @Value("${exceptionHandler.logger.enable:false}")
+    boolean loggerEnable;
 
     @org.springframework.web.bind.annotation.ExceptionHandler(GenericException.class)
-    public ResponseEntity<?> genericExceptionHandler(GenericException ex) {
-        return ResponseEntity.status(ex.getCode()).body(new ResponseBody(ex.getCode(), ex.getMessage(), debug ? printStackTrace(ex) : null));
+    public ResponseEntity<?> exceptionHandler(GenericException ex) {
+        return ResponseEntity.status(ex.getCode()).body(new ResponseBody(ex.getCode(), ex.getMessage(), loggerEnable ? printStackTrace(ex) : null));
     }
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(
-            {ErrorResponseException.class,
-                    //WebClientResponseException.class,
-                    HttpStatusCodeException.class})
-    public ResponseEntity<?> errorResponseExceptionHandler(Exception ex) {
-        //default 500
-        HttpStatusCode statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
-        if (ex instanceof ErrorResponseException) {
-            statusCode = ((ErrorResponseException) ex).getStatusCode();
-        }
-//        if (ex instanceof WebClientResponseException) {
-//            statusCode = ((WebClientResponseException) ex).getStatusCode();
-//        }
-        if (ex instanceof HttpStatusCodeException) {
-            statusCode = ((HttpStatusCodeException) ex).getStatusCode();
-        }
+    @org.springframework.web.bind.annotation.ExceptionHandler
+    public ResponseEntity<?> exceptionHandler(Exception ex) {
+        if (loggerEnable) logger.error(printStackTrace(ex));
+        HttpStatusCode statusCode = getStatusCode(ex);
         return ResponseEntity
                 .status(statusCode)
                 .body(new ResponseBody(statusCode.value(), ex.getMessage(), null));
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler
-    public ResponseEntity<?> exceptionHandler(Exception ex) {
-        logger.error(printStackTrace(ex));
-        HttpStatusCode statusCode = getStatusCode(ex);
+    public ResponseEntity<?> exceptionHandler(ErrorResponseException ex) {
+        HttpStatusCode statusCode = ex.getStatusCode();
         return ResponseEntity
                 .status(statusCode)
                 .body(new ResponseBody(statusCode.value(), ex.getMessage(), null));
@@ -85,26 +71,26 @@ public class ExceptionHandler {
     public static class ResponseBody {
         public int code;
         public String message;
-        public String debugMsg;
+        public String stackTrace;
 
-        public ResponseBody(int code, String message, String debugMsg) {
+        public ResponseBody(int code, String message, String stackTrace) {
             this.code = code;
             this.message = message;
-            this.debugMsg = debugMsg;
+            this.stackTrace = stackTrace;
         }
 
-        public ResponseBody(HttpStatus httpStatus, String message, String debugMsg) {
+        public ResponseBody(HttpStatus httpStatus, String message, String stackTrace) {
             this.code = httpStatus.value();
             this.message = message;
-            this.debugMsg = debugMsg;
+            this.stackTrace = stackTrace;
         }
 
         /*
          * debugMsg excluded in json response when debugMsg is null
          */
         @JsonInclude(JsonInclude.Include.NON_NULL)
-        public String getDebugMsg() {
-            return debugMsg;
+        public String getStackTrace() {
+            return stackTrace;
         }
     }
 }
