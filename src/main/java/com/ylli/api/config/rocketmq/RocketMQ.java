@@ -1,7 +1,5 @@
 package com.ylli.api.config.rocketmq;
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.LocalTransactionState;
 import org.apache.rocketmq.client.producer.TransactionListener;
@@ -9,57 +7,35 @@ import org.apache.rocketmq.client.producer.TransactionMQProducer;
 import org.apache.rocketmq.client.producer.TransactionSendResult;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.common.message.MessageExt;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 import java.util.function.Function;
 
 @Component
-public class RocketMQ implements ApplicationContextAware {
+public class RocketMQ {
 
-    //save transaction producer
-    //注意：当rocketmq producer配置更新后，需要同步更新这里的缓存-外部监听器，否则会导致消息无法正常发送
-    static Cache<String, TransactionMQProducer> cache = Caffeine.newBuilder().build();
-    private static ApplicationContext applicationContext;
-    RocketMQProperties rocketMQProperties;
-
-    public RocketMQ(RocketMQProperties rocketMQProperties) {
-        this.rocketMQProperties = rocketMQProperties;
-    }
+    @Autowired
+    ObjectProvider<TransactionMQProducer> transactionProducerProvider;
 
     public RocketMQ() {
     }
 
-    public static TransactionSendResult sendTransactionMessage(Message message, Function<String, Boolean> transaction, Function<String, Boolean> check) throws MQClientException {
-        return new RocketMQ().sendTransactionMessage(getTransactionMQProducer("defaultTransactionProducer"), message, transaction, check);
+    public TransactionSendResult sendTransactionMessage(Message message, Function<String, Boolean> transaction, Function<String, Boolean> check) throws MQClientException {
+        return sendTransactionMessage(getTransactionMQProducer(null), message, transaction, check);
     }
 
-    public static TransactionSendResult sendTransactionMessage(String transactionGroup, Message message, Function<String, Boolean> transaction, Function<String, Boolean> check) throws MQClientException {
-        return new RocketMQ().sendTransactionMessage(getTransactionMQProducer(transactionGroup), message, transaction, check);
+    public TransactionSendResult sendTransactionMessage(String group, Message message, Function<String, Boolean> transaction, Function<String, Boolean> check) throws MQClientException {
+        return sendTransactionMessage(getTransactionMQProducer(group), message, transaction, check);
     }
 
-    public static TransactionMQProducer getTransactionMQProducer(String beanName) {
-        if (cache.getIfPresent(beanName) != null) {
-            return cache.getIfPresent(beanName);
-        }
-
-        TransactionMQProducer transactionMQProducer = Optional.ofNullable(applicationContext.getBean(beanName, TransactionMQProducer.class))
-                .orElseThrow(() -> new NoSuchBeanDefinitionException(beanName));
-        cache.put(beanName, transactionMQProducer);
-        return transactionMQProducer;
-    }
-
-    public ApplicationContext getApplicationContext() {
-        return applicationContext;
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
+    public TransactionMQProducer getTransactionMQProducer(String group) {
+        return transactionProducerProvider.stream().filter(producer ->
+        {
+            return (Optional.ofNullable(group).orElse("defaultTransactionProducerGroup")).equals(producer.getProducerGroup());
+        }).findFirst().get();
     }
 
     public TransactionSendResult sendTransactionMessage(TransactionMQProducer transactionMQProducer,

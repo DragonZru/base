@@ -47,7 +47,7 @@ public class RocketMQConfiguration implements DisposableBean, ApplicationContext
                 }
                 BeanDefinitionBuilder beanDefinitionBuilder = null;
                 //动态注册bean.
-                if (entry.getValue().getCls().isAssignableFrom(TransactionMQProducer.class)) {
+                if (entry.getValue().getCls().equals(TransactionMQProducer.class)) {
                     beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(TransactionMQProducer.class);
                 } else {
                     beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(DefaultMQProducer.class);
@@ -63,7 +63,7 @@ public class RocketMQConfiguration implements DisposableBean, ApplicationContext
                     producer.start();
                 } catch (MQClientException e) {
                     //throw new RuntimeException(e);
-                    log.error("DefaultMQProducer: {}start failed, {}", beanName, e.getErrorMessage());
+                    log.error("MQProducer: {}start failed, {}", beanName, e.getErrorMessage());
                 }
             });
         }

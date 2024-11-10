@@ -20,6 +20,8 @@ import java.util.Properties;
 @Component
 public class LeafGenerator implements KeyGenerateAlgorithm {
 
+    static final String SENTINEL_RESOURCE = "LeafGenerator";
+
     private static final Logger logger = LoggerFactory.getLogger(LeafGenerator.class);
 
     RestTemplate restTemplate = new RestTemplate();
@@ -28,7 +30,7 @@ public class LeafGenerator implements KeyGenerateAlgorithm {
 
     @Override
     public Comparable<Long> generateKey() {
-        if (SphO.entry("LeafGenerator")) {
+        if (SphO.entry(SENTINEL_RESOURCE)) {
             try {
                 return restTemplate.getForObject(props.getProperty("uri"), Long.class);
             } catch (Throwable t) {
@@ -47,7 +49,7 @@ public class LeafGenerator implements KeyGenerateAlgorithm {
     @PostConstruct
     public void initDegradeRule() {
         List<DegradeRule> degradeRules = new ArrayList<>();
-        DegradeRule rule = new DegradeRule("LeafGenerator")
+        DegradeRule rule = new DegradeRule(SENTINEL_RESOURCE)
                 .setGrade(CircuitBreakerStrategy.SLOW_REQUEST_RATIO.getType())
                 //ms
                 .setCount(200)

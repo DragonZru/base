@@ -32,7 +32,7 @@ public class ExceptionHandler {
             {ErrorResponseException.class,
                     //WebClientResponseException.class,
                     HttpStatusCodeException.class})
-    public ResponseEntity<?> errorResponseExceptionHandler1(Exception ex) {
+    public ResponseEntity<?> errorResponseExceptionHandler(Exception ex) {
         //default 500
         HttpStatusCode statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
         if (ex instanceof ErrorResponseException) {
