@@ -47,7 +47,7 @@ public class RocketMQConfiguration implements DisposableBean, ApplicationContext
                 }
                 BeanDefinitionBuilder beanDefinitionBuilder = null;
                 //动态注册bean.
-                if (entry.getValue().getCls().equals(TransactionMQProducer.class)) {
+                if (entry.getValue().getCls() == TransactionMQProducer.class) {
                     beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(TransactionMQProducer.class);
                 } else {
                     beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(DefaultMQProducer.class);

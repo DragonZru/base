@@ -25,4 +25,19 @@ public class GenericException extends RuntimeException {
         this.code = code;
     }
 
+    /**
+     * If true do nothing,  otherwise throws GenericException.
+     */
+    public static GenericThrowable isTrue(boolean expression) {
+        return (httpStatus, message) -> {
+            if (!expression) {
+                throw new GenericException(httpStatus, message);
+            }
+        };
+    }
+
+    @FunctionalInterface
+    public interface GenericThrowable {
+        void orElseThrow(HttpStatus httpStatus, String message);
+    }
 }
