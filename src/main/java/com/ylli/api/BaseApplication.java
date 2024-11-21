@@ -20,5 +20,4 @@ public class BaseApplication {
     void defaultTimeZone() {
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
     }
-
 }
