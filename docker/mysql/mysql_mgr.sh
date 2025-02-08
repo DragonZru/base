@@ -57,7 +57,7 @@ plugin_load_add='group_replication.so'
 loose-group_replication_group_name="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
 loose-group_replication_start_on_boot=OFF
 loose-group_replication_local_address=${container_name}${seq}:33061
-loose-group_replication_group_seeds=${container_name}1:33061,${container_name}2:33061,${container_name}3:33061
+loose-group_replication_group_seeds=$(for i in $(seq 1 $cluster_number); do echo -n "${container_name}${i}:33061,"; done | sed 's/,$//')
 loose-group_replication_bootstrap_group=OFF
 loose-group_replication_recovery_get_public_key=TRUE
 # 是否开启单主模式
@@ -73,9 +73,25 @@ EOF
 # [Warning: World-writable config file is ignored](https://stackoverflow.com/questions/53741107/mysql-in-docker-on-ubuntu-warning-world-writable-config-file-is-ignored)
 chmod 0444 ./node${seq}.cnf
 done
+# -------------------------------------------------------------------------
+## 创建 docker-entrypoint-initdb.d/init.sql
+cat << EOF > ./init.sql
 
-## -----------------------------------------------------------------------------
-# 创建docker-compose.yml
+set SQL_LOG_BIN=0;
+CREATE USER repl@'%' IDENTIFIED BY '123456';
+GRANT REPLICATION SLAVE ON *.* TO repl@'%';
+GRANT CONNECTION_ADMIN ON *.* TO repl@'%';
+GRANT BACKUP_ADMIN ON *.* TO repl@'%';
+GRANT GROUP_REPLICATION_STREAM ON *.* TO repl@'%';
+FLUSH PRIVILEGES;
+SET SQL_LOG_BIN=1;
+CHANGE MASTER TO MASTER_USER='repl', MASTER_PASSWORD='123456' FOR CHANNEL 'group_replication_recovery';
+
+EOF
+chmod +x ./init.sql
+
+# -----------------------------------------------------------------------------
+## 创建docker-compose.yml
 cat << EOF > ./mgr.yml
 # MGR 组复制
 services:
@@ -89,6 +105,7 @@ cat << INNER
       - ${port}:3306
     volumes:
       - ./node${seq}.cnf:/etc/mysql/conf.d/my.cnf
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       MYSQL_ROOT_PASSWORD: 123456
       TZ: Asia/Shanghai
@@ -119,16 +136,6 @@ do
         echo "Waiting for MySQL... ($i seconds left)"
         sleep 1
     done
-
-    docker exec ${container_name}${seq} mysql -uroot -p123456 -e "set SQL_LOG_BIN=0;
-    CREATE USER repl@'%' IDENTIFIED BY '123456';
-    GRANT REPLICATION SLAVE ON *.* TO repl@'%';
-    GRANT CONNECTION_ADMIN ON *.* TO repl@'%';
-    GRANT BACKUP_ADMIN ON *.* TO repl@'%';
-    GRANT GROUP_REPLICATION_STREAM ON *.* TO repl@'%';
-    FLUSH PRIVILEGES;
-    SET SQL_LOG_BIN=1;
-    CHANGE MASTER TO MASTER_USER='repl', MASTER_PASSWORD='123456' FOR CHANNEL 'group_replication_recovery';"
 
     if [ "$seq" -eq 1 ]; then
         docker exec ${container_name}${seq} mysql -uroot -p123456 -e "SET GLOBAL group_replication_bootstrap_group=ON;
