@@ -3,7 +3,7 @@ package com.ylli.api.example.service;
 
 import com.ylli.api.example.mapper.ConfigMapper;
 import com.ylli.api.example.model.ConfigModel;
-import com.ylli.api.exception.GenericException;
+import com.ylli.api.base.exception.GenericException;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;

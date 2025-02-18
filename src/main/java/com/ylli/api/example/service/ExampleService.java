@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import com.ylli.api.example.mapper.ExampleMapper;
 import com.ylli.api.example.model.ExampleInfo;
 import com.ylli.api.example.model.ExampleModel;
-import com.ylli.api.exception.GenericException;
+import com.ylli.api.base.exception.GenericException;
 import io.mybatis.mapper.example.ExampleWrapper;
 import io.mybatis.mapper.fn.Fn;
 import org.apache.logging.log4j.util.Strings;

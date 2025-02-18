@@ -1,4 +1,4 @@
-package com.ylli.api.exception;
+package com.ylli.api.base.exception;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.slf4j.Logger;

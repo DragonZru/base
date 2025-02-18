@@ -92,6 +92,11 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-config
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:2023.0.1.2'
+
+    // https://mvnrepository.com/artifact/org.yaml/snakeyaml
+    // nacos 使用yaml 格式时需要使用.
+//    implementation 'org.yaml:snakeyaml:2.4'
+
 }
 
 dependencies {
