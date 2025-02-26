@@ -95,7 +95,7 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.yaml/snakeyaml
     // nacos 使用yaml 格式时需要使用.
-//    implementation 'org.yaml:snakeyaml:2.4'
+    implementation 'org.yaml:snakeyaml:2.4'
 
 }
 
