@@ -6,14 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.util.Assert;
-// import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ExampleTest {
-
     // @Autowired
     // WebClient.Builder webClientBuilder;
 
@@ -31,4 +29,5 @@ public class ExampleTest {
 
     //     Assert.isTrue(mono.block().equals("1"), "failed");
     // }
+
 }

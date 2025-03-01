@@ -21,7 +21,7 @@ public class ListTypeHandler<T> extends BaseTypeHandler<List<T>> {
             .create();
 
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i, List parameter, JdbcType jdbcType) throws SQLException {
+    public void setNonNullParameter(PreparedStatement ps, int i, List<T> parameter, JdbcType jdbcType) throws SQLException {
         ps.setString(i, gson.toJson(parameter));
     }
 
