@@ -1,4 +1,4 @@
-package com.ylli.api.example.model;
+package com.ylli.api.config.model;
 
 import io.mybatis.provider.Entity;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.ylli.api.config.mybatis;
+package com.ylli.api.base.configuration.mybatis;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

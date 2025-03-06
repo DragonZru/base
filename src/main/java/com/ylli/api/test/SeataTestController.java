@@ -1,6 +1,6 @@
-package com.ylli.api.example;
+package com.ylli.api.test;
 
-import com.ylli.api.example.model.ConfigModel;
+import com.ylli.api.config.model.ConfigModel;
 import com.ylli.api.example.model.ExampleModel;
 import com.ylli.api.example.service.ExampleService;
 import io.seata.core.context.RootContext;
@@ -16,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/seata")
-public class SeataController {
+public class SeataTestController {
 
     @Autowired
     ExampleService exampleService;

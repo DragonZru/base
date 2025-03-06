@@ -1,4 +1,4 @@
-package com.ylli.api.config.mybatis;
+package com.ylli.api.base.configuration.mybatis;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;

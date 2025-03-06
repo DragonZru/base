@@ -1,4 +1,4 @@
-package com.ylli.api.config.rocketmq;
+package com.ylli.api.base.configuration.rocketmq;
 
 import lombok.Data;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;

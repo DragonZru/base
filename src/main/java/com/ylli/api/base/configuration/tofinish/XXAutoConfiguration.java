@@ -1,4 +1,4 @@
-package com.ylli.api.config.tofinish;
+package com.ylli.api.base.configuration.tofinish;
 
 //@AutoConfiguration(before = {FlywayAutoConfiguration.class})
 //@EnableConfigurationProperties(ShardingFlywayProperties.class)

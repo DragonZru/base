@@ -1,4 +1,4 @@
-package com.ylli.api.config.rocketmq;
+package com.ylli.api.base.configuration.rocketmq;
 
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.LocalTransactionState;

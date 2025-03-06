@@ -15,4 +15,4 @@
 # limitations under the License.
 #
 
-com.ylli.api.config.shardingsphere.ClassBasedStandardShardingAlgorithmFixture
+com.ylli.api.base.configuration.shardingsphere.ClassBasedStandardShardingAlgorithmFixture

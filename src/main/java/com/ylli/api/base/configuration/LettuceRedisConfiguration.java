@@ -1,7 +1,6 @@
-package com.ylli.api.config;
+package com.ylli.api.base.configuration;
 
 import io.lettuce.core.ReadFrom;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;

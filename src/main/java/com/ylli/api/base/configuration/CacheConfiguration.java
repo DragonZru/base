@@ -1,4 +1,4 @@
-package com.ylli.api.config;
+package com.ylli.api.base.configuration;
 
 import com.github.benmanes.caffeine.cache.AsyncCacheLoader;
 import com.github.benmanes.caffeine.cache.AsyncLoadingCache;

@@ -1,4 +1,4 @@
-package com.ylli.api.config;
+package com.ylli.api.base.configuration;
 
 import org.springframework.context.annotation.Configuration;
 

@@ -1,8 +1,8 @@
-package com.ylli.api.example;
+package com.ylli.api.config;
 
 import com.google.common.base.Strings;
-import com.ylli.api.example.model.ConfigModel;
-import com.ylli.api.example.service.ConfigService;
+import com.ylli.api.config.model.ConfigModel;
+import com.ylli.api.config.service.ConfigService;
 import com.ylli.api.base.exception.GenericException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

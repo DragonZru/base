@@ -1,4 +1,4 @@
-package com.ylli.api.config.seata;
+package com.ylli.api.base.configuration.seata;
 
 import io.seata.common.util.StringUtils;
 import io.seata.core.context.RootContext;

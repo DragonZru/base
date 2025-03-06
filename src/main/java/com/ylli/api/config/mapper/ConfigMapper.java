@@ -1,6 +1,6 @@
-package com.ylli.api.example.mapper;
+package com.ylli.api.config.mapper;
 
-import com.ylli.api.example.model.ConfigModel;
+import com.ylli.api.config.model.ConfigModel;
 import io.mybatis.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
