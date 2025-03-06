@@ -44,9 +44,9 @@ public class LettuceRedisConfiguration {
 
     @Bean
     public RedisConfiguration redisConfiguration(ObjectProvider<RedisProperties> redisPropertiesProvider) {
-        RedisProperties redisProperties = redisPropertiesProvider.getIfAvailable(() -> {
-            throw new NoSuchBeanDefinitionException("redis properties");
-        });
+        // getIfAvailable return instance if exists, otherwise return null
+        // RedisProperties host(default 127.0.0.1) and port(default 6379) has value, so it must obtain an instance.
+        RedisProperties redisProperties = redisPropertiesProvider.getIfAvailable();
 
         if (redisProperties.getCluster() != null) {
             RedisProperties.Cluster cluster = redisProperties.getCluster();
