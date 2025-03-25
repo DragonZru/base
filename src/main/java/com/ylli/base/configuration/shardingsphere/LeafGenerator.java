@@ -1,4 +1,4 @@
-package com.ylli.api.base.configuration.shardingsphere;
+package com.ylli.base.configuration.shardingsphere;
 
 import com.alibaba.csp.sentinel.SphO;
 import com.alibaba.csp.sentinel.slots.block.BlockException;

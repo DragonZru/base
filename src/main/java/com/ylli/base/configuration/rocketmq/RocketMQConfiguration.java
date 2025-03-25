@@ -1,4 +1,4 @@
-package com.ylli.api.base.configuration.rocketmq;
+package com.ylli.base.configuration.rocketmq;
 
 import jakarta.annotation.PostConstruct;
 import org.apache.rocketmq.client.exception.MQClientException;

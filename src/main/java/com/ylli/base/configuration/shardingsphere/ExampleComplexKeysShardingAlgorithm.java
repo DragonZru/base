@@ -1,4 +1,4 @@
-package com.ylli.api.base.configuration.shardingsphere;
+package com.ylli.base.configuration.shardingsphere;
 
 import org.apache.shardingsphere.sharding.api.sharding.complex.ComplexKeysShardingAlgorithm;
 import org.apache.shardingsphere.sharding.api.sharding.complex.ComplexKeysShardingValue;
