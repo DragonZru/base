@@ -11,13 +11,13 @@ import org.springframework.stereotype.Component;
 @EnableAsync
 public class EventListener {
 
-    @Async
+//    @Async
 //    @org.springframework.context.event.EventListener(condition = "#event.name.equals('ylli')")
     @org.springframework.context.event.EventListener
     @Order(1)
     public void onEvent(ConfigModel event) {
-//        throw new RuntimeException("test");
-        System.out.println(Thread.currentThread().getName() + ", event1:" + new Gson().toJson(event));
+        throw new RuntimeException("test");
+//        System.out.println(Thread.currentThread().getName() + ", event1:" + new Gson().toJson(event));
     }
 
     @Async

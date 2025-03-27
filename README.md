@@ -10,6 +10,15 @@
 
 ## maven 私服
 [nexus](https://hub.docker.com/r/sonatype/nexus3?uuid=F523A7E2-1684-416A-AED6-EEF3021A7F49)
+```yaml
+services:
+  nexus:
+    image: sonatype/nexus3:latest
+    ports:
+      - 8081:8081
+    volumes:
+      - ./data:/nexus-data
+```
 初始密码: cat nexus-data/admin.password
 
 ## mybatis mapper 
