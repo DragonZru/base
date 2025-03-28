@@ -7,13 +7,13 @@ dataSources:
   ds_0:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    jdbcUrl: jdbc:mysql://124.70.186.54:3306/base-1?useUnicode=true&useJDBCCompliantTimezoneShift=true&serverTimezone=Asia/Shanghai
+    jdbcUrl: jdbc:mysql://124.70.186.54:13306/base-1?useUnicode=true&useJDBCCompliantTimezoneShift=true&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
   ds_1:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    jdbcUrl: jdbc:mysql://124.70.186.54:3306/base-2?useUnicode=true&useJDBCCompliantTimezoneShift=true&serverTimezone=Asia/Shanghai
+    jdbcUrl: jdbc:mysql://124.70.186.54:13306/base-2?useUnicode=true&useJDBCCompliantTimezoneShift=true&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
 

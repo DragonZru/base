@@ -10,8 +10,8 @@ import io.mybatis.mapper.example.ExampleWrapper;
 import io.mybatis.mapper.fn.Fn;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.StringRedisTemplate;
+//import org.springframework.data.redis.core.HashOperations;
+//import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,16 +30,15 @@ public class ExampleService {
 
     final String USERNAME_BLOOM_FILTER_KEY = "t_example_username_bloom_filter";
     ExampleMapper exampleMapper;
-    HashOperations<String, String, String> hashOps;
+//    HashOperations<String, String, String> hashOps;
 
-    public ExampleService(ExampleMapper exampleMapper, StringRedisTemplate stringRedisTemplate) {
+    public ExampleService(ExampleMapper exampleMapper) {
         this.exampleMapper = exampleMapper;
-        this.hashOps = stringRedisTemplate.opsForHash();
     }
 
-    public boolean usernamePreCheck(String username) {
-        return hashOps.hasKey(USERNAME_BLOOM_FILTER_KEY, username);
-    }
+//    public boolean usernamePreCheck(String username) {
+//        return hashOps.hasKey(USERNAME_BLOOM_FILTER_KEY, username);
+//    }
 
 //    public String hashKey(String username) {
 //        //自定义countingBloomFilter 时可以使用这个hash函数
@@ -52,11 +51,11 @@ public class ExampleService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void create(ExampleModel model) {
-        if (usernamePreCheck(model.username) && exampleMapper.wrapper().eq(ExampleModel::getUsername, model.username).count() != 0) {
-            throw new GenericException(HttpStatus.BAD_REQUEST, String.format("username %s already exists", model.username));
-        }
+//        if (usernamePreCheck(model.username) && exampleMapper.wrapper().eq(ExampleModel::getUsername, model.username).count() != 0) {
+//            throw new GenericException(HttpStatus.BAD_REQUEST, String.format("username %s already exists", model.username));
+//        }
         exampleMapper.insertSelective(model);
-        hashOps.put(USERNAME_BLOOM_FILTER_KEY, model.username, "1");
+//        hashOps.put(USERNAME_BLOOM_FILTER_KEY, model.username, "1");
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -66,7 +65,7 @@ public class ExampleService {
 //            throw new GenericException(HttpStatus.NOT_FOUND, String.format("id %s not exists", id));
 //        }
         exampleMapper.deleteByPrimaryKey(id);
-        hashOps.delete(USERNAME_BLOOM_FILTER_KEY, model.username);
+//        hashOps.delete(USERNAME_BLOOM_FILTER_KEY, model.username);
     }
 
     /*
@@ -136,13 +135,13 @@ public class ExampleService {
     @Transactional(rollbackFor = Exception.class)
     public void update(ExampleModel source) {
         ExampleModel target = selectByPrimaryKey(source.id);
-        hashOps.delete(USERNAME_BLOOM_FILTER_KEY, target.username);
+//        hashOps.delete(USERNAME_BLOOM_FILTER_KEY, target.username);
         copyPropertiesIgnoreNull(source, target);
         target.version = target.version + 1;
         target.updateTime = Timestamp.from(Instant.now());
         //更新非空字段
         exampleMapper.updateByPrimaryKeySelective(target);
-        hashOps.put(USERNAME_BLOOM_FILTER_KEY, target.username, "1");
+//        hashOps.put(USERNAME_BLOOM_FILTER_KEY, target.username, "1");
     }
 
     public ExampleModel selectByPrimaryKey(Long id) {
