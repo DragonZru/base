@@ -1,17 +1,17 @@
 package com.ylli.api.config.model;
 
-import io.mybatis.provider.Entity;
+//import io.mybatis.provider.Entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
-@Entity.Table("t_config")
+//@Entity.Table("t_config")
 @Data
 @NoArgsConstructor
 public class ConfigModel {
 
-    @Entity.Column(id = true, updatable = false, useGeneratedKeys = true)
+//    @Entity.Column(id = true, updatable = false, useGeneratedKeys = true)
     public Long id;
 
     public String name;

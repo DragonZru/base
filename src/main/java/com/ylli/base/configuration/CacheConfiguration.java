@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-@Configuration
-@EnableCaching
+//@Configuration
+//@EnableCaching
 public class CacheConfiguration {
 
     AsyncLoadingCache<String, Object> caffeine = Caffeine.newBuilder()

@@ -72,7 +72,7 @@ rules:
         uri: http://127.0.0.1:18080/leaf?bizTag=base
 
 props:
-  sql-show: false
+  sql-show: true
 
 #transaction:
 #  defaultType: BASE
