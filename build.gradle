@@ -32,10 +32,9 @@ configurations {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-//    runtimeOnly 'com.mysql:mysql-connector-j'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
@@ -50,39 +49,33 @@ dependencies {
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
     implementation 'com.google.code.gson:gson:2.10.1'
 
-    // https://mvnrepository.com/artifact/io.mybatis/mybatis-mapper
-//    implementation 'io.mybatis:mybatis-mapper:2.2.1'
-
     // https://mvnrepository.com/artifact/com.github.ben-manes.caffeine/caffeine
     implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8'
-
-    // https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper-spring-boot-starter
-//    implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:2.1.0'
 
     // https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder
     implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
 
     implementation 'com.ylli:common:0.0.1'
 
-//    implementation 'com.ylli:persistence-infrastructure-starter:0.0.1-SNAPSHOT'
+    implementation 'com.ylli:persistence-infrastructure-starter:0.0.1-SNAPSHOT'
 
     // https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-client
     implementation 'org.apache.rocketmq:rocketmq-client:5.1.4'
 }
 
-dependencies {
-    // https://mvnrepository.com/artifact/io.seata/seata-spring-boot-starter
-    implementation 'io.seata:seata-spring-boot-starter:2.0.0'
-
-    // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-jdbc-core
-    implementation 'org.apache.shardingsphere:shardingsphere-jdbc-core:5.4.1'
-
-    // https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime
-    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.8'
-
-    // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-transaction-base-seata-at
-    implementation 'org.apache.shardingsphere:shardingsphere-transaction-base-seata-at:5.4.1'
-}
+//dependencies {
+//    // https://mvnrepository.com/artifact/io.seata/seata-spring-boot-starter
+//    implementation 'io.seata:seata-spring-boot-starter:2.0.0'
+//
+//    // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-jdbc-core
+//    implementation 'org.apache.shardingsphere:shardingsphere-jdbc-core:5.4.1'
+//
+//    // https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime
+//    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.8'
+//
+//    // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-transaction-base-seata-at
+//    implementation 'org.apache.shardingsphere:shardingsphere-transaction-base-seata-at:5.4.1'
+//}
 
 dependencies {
     // https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-discovery
