@@ -1,7 +1,7 @@
 package com.ylli.api.test;
 
 import com.google.gson.Gson;
-import com.ylli.api.config.model.ConfigModel;
+import com.ylli.api.example.model.ExampleModel;
 import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -15,7 +15,7 @@ public class EventListener {
 //    @org.springframework.context.event.EventListener(condition = "#event.name.equals('ylli')")
     @org.springframework.context.event.EventListener
     @Order(1)
-    public void onEvent(ConfigModel event) {
+    public void onEvent(ExampleModel event) {
 //        throw new RuntimeException("test");
         System.out.println(Thread.currentThread().getName() + ", event1:" + new Gson().toJson(event));
     }
