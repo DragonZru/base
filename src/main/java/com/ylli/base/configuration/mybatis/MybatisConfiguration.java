@@ -36,7 +36,7 @@ public class MybatisConfiguration {
         bean.setConfiguration(configuration);
 
         //bean.setTypeHandlers(new ListTypeHandler());
-        bean.setTypeHandlersPackage("com.ylli.api.config.mybatis");
+        bean.setTypeHandlersPackage("com.ylli.base.configuration.mybatis");
 
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         bean.setMapperLocations(resolver.getResources("classpath:/db/mapper/*.xml"));
