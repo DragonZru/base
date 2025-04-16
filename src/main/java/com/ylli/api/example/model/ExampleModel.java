@@ -1,5 +1,6 @@
 package com.ylli.api.example.model;
 
+import com.ylli.base.configuration.mybatis.JsonTypeHandler;
 import io.mybatis.provider.Entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,9 @@ import lombok.NoArgsConstructor;
 import java.sql.Timestamp;
 import java.util.List;
 
+/**
+ * @author ylli
+ */
 @Entity.Table("t_example")
 @Data
 @NoArgsConstructor
@@ -34,6 +38,9 @@ public class ExampleModel {
 
     // fullText search.
     public String value;
+
+    @Entity.Column(typeHandler = JsonTypeHandler.class)
+    public ExampleInfo info;
 
     public Timestamp createTime;
 

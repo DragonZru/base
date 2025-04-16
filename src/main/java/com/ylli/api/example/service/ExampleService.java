@@ -10,8 +10,6 @@ import io.mybatis.mapper.example.ExampleWrapper;
 import io.mybatis.mapper.fn.Fn;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,7 +52,9 @@ public class ExampleService {
 //        if (usernamePreCheck(model.username) && exampleMapper.wrapper().eq(ExampleModel::getUsername, model.username).count() != 0) {
 //            throw new GenericException(HttpStatus.BAD_REQUEST, String.format("username %s already exists", model.username));
 //        }
+        model.info = new ExampleInfo("342501199310231774", "ylli", "sbl");
         exampleMapper.insertSelective(model);
+
 //        hashOps.put(USERNAME_BLOOM_FILTER_KEY, model.username, "1");
     }
 
