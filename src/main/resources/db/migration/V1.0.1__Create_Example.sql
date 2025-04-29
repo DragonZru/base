@@ -38,6 +38,7 @@ BEGIN
     `status`      tinyint         NOT NULL DEFAULT 1,
     `extras`      JSON            NULL,
     `value`       LONGTEXT        NULL,
+    `info`        JSON            NULL,
     `create_time` TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `update_time` TIMESTAMP       NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),

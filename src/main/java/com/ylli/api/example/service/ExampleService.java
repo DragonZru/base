@@ -52,7 +52,7 @@ public class ExampleService {
 //        if (usernamePreCheck(model.username) && exampleMapper.wrapper().eq(ExampleModel::getUsername, model.username).count() != 0) {
 //            throw new GenericException(HttpStatus.BAD_REQUEST, String.format("username %s already exists", model.username));
 //        }
-        model.info = new ExampleInfo("342501199310231774", "ylli", "sbl");
+        model.info = new ExampleInfo(null, "ylli", "sbl");
         exampleMapper.insertSelective(model);
 
 //        hashOps.put(USERNAME_BLOOM_FILTER_KEY, model.username, "1");

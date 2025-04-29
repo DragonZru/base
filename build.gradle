@@ -32,8 +32,6 @@ configurations {
 }
 
 dependencies {
-    implementation 'com.ylli:common:0.0.2'
-    implementation 'com.ylli:persistence-infrastructure-starter:0.1.3-SNAPSHOT'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
     compileOnly 'org.projectlombok:lombok'
@@ -43,6 +41,11 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+dependencies {
+    implementation 'com.ylli:common:0.0.2'
+    implementation 'com.ylli:persistence-infrastructure-starter:0.1.4-SNAPSHOT'
 }
 
 dependencies {
@@ -56,26 +59,21 @@ dependencies {
     // https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder
     implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
 
-
-
     // https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-client
     implementation 'org.apache.rocketmq:rocketmq-client:5.1.4'
 
 }
 
-//dependencies {
+dependencies {
 //    // https://mvnrepository.com/artifact/io.seata/seata-spring-boot-starter
 //    implementation 'io.seata:seata-spring-boot-starter:2.0.0'
-//
-//    // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-jdbc-core
-//    implementation 'org.apache.shardingsphere:shardingsphere-jdbc-core:5.4.1'
-//
-//    // https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime
-//    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.8'
+
+    // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-jdbc
+    implementation 'org.apache.shardingsphere:shardingsphere-jdbc:5.5.2'
 //
 //    // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-transaction-base-seata-at
 //    implementation 'org.apache.shardingsphere:shardingsphere-transaction-base-seata-at:5.4.1'
-//}
+}
 
 dependencies {
     // https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-discovery
@@ -103,10 +101,6 @@ ext {
 }
 
 dependencyManagement {
-    // https://github.com/apache/shardingsphere/issues/28233
-    dependencies {
-        dependency 'org.yaml:snakeyaml:1.33'
-    }
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
