@@ -1,6 +1,6 @@
-package com.ylli.api.example.mapper;
+package com.ylli.base.api.example.mapper;
 
-import com.ylli.api.example.model.ExampleModel;
+import com.ylli.base.api.example.model.ExampleModel;
 import io.mybatis.mapper.BaseMapper;
 import io.mybatis.mapper.list.ListMapper;
 

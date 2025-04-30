@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(basePackages = "com.ylli.api.*.mapper")
+@MapperScan(basePackages = "com.ylli.base.api.*.mapper")
 @EnableTransactionManagement
 public class MybatisConfiguration {
 

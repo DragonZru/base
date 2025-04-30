@@ -1,10 +1,10 @@
-package com.ylli.api.example.service;
+package com.ylli.base.api.example.service;
 
 import com.github.pagehelper.PageHelper;
 import com.google.gson.Gson;
-import com.ylli.api.example.mapper.ExampleMapper;
-import com.ylli.api.example.model.ExampleInfo;
-import com.ylli.api.example.model.ExampleModel;
+import com.ylli.base.api.example.mapper.ExampleMapper;
+import com.ylli.base.api.example.model.ExampleInfo;
+import com.ylli.base.api.example.model.ExampleModel;
 import com.ylli.common.exception.GenericException;
 import io.mybatis.mapper.example.ExampleWrapper;
 import io.mybatis.mapper.fn.Fn;

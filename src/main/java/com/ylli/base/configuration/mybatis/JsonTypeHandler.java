@@ -2,7 +2,7 @@ package com.ylli.base.configuration.mybatis;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.ylli.api.example.model.ExampleInfo;
+import com.ylli.base.api.example.model.ExampleInfo;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;

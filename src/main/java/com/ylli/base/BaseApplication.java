@@ -1,4 +1,4 @@
-package com.ylli;
+package com.ylli.base;
 
 //import io.seata.spring.boot.autoconfigure.SeataAutoConfiguration;
 import jakarta.annotation.PostConstruct;

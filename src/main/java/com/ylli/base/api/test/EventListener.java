@@ -1,7 +1,7 @@
-package com.ylli.api.test;
+package com.ylli.base.api.test;
 
 import com.google.gson.Gson;
-import com.ylli.api.example.model.ExampleModel;
+import com.ylli.base.api.example.model.ExampleModel;
 import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;

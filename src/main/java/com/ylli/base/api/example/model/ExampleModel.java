@@ -1,4 +1,4 @@
-package com.ylli.api.example.model;
+package com.ylli.base.api.example.model;
 
 import com.ylli.base.configuration.mybatis.JsonTypeHandler;
 import io.mybatis.provider.Entity;

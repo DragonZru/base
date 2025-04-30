@@ -1,7 +1,5 @@
 mode:
   type: Standalone
-  repository:
-    type: JDBC
 
 dataSources:
   ds_0:
@@ -9,7 +7,7 @@ dataSources:
     driverClassName: com.mysql.cj.jdbc.Driver
     jdbcUrl: jdbc:mysql://124.70.186.54:3306/shardingsphere?useUnicode=true&useJDBCCompliantTimezoneShift=true&serverTimezone=Asia/Shanghai
     username: root
-    password: 123456
+    password: GLzr.TFWyR.m
 #  ds_1:
 #    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
 #    driverClassName: com.mysql.cj.jdbc.Driver
@@ -74,6 +72,7 @@ rules:
 
 props:
   sql-show: true
+  sql-simple: true
 
 #transaction:
 #  defaultType: BASE

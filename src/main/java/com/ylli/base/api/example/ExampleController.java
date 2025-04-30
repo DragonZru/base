@@ -1,9 +1,9 @@
-package com.ylli.api.example;
+package com.ylli.base.api.example;
 
 import com.github.pagehelper.PageInfo;
-import com.ylli.api.example.model.ExampleInfo;
-import com.ylli.api.example.model.ExampleModel;
-import com.ylli.api.example.service.ExampleService;
+import com.ylli.base.api.example.model.ExampleInfo;
+import com.ylli.base.api.example.model.ExampleModel;
+import com.ylli.base.api.example.service.ExampleService;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;

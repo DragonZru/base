@@ -1,4 +1,4 @@
-package com.ylli.api.example.model;
+package com.ylli.base.api.example.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
