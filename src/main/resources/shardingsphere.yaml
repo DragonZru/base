@@ -1,5 +1,6 @@
-mode:
-  type: Standalone
+#mode:
+#  type: Standalone
+
 
 dataSources:
   ds_0:
@@ -34,7 +35,7 @@ rules:
           shardingAlgorithmName: t_example_inline
       keyGenerateStrategy:
         column: id
-        keyGeneratorName: snowflake
+        keyGeneratorName: leaf
   defaultDatabaseStrategy:
     none:
 #  autoTables:
@@ -65,10 +66,10 @@ rules:
   keyGenerators:
     snowflake:
       type: SNOWFLAKE
-#    leaf:
-#      type: LeafGenerator
-#      props:
-#        uri: http://127.0.0.1:18080/leaf?bizTag=base
+    leaf:
+      type: LeafGenerator
+      props:
+        uri: http://leaf/uid
 
 props:
   sql-show: true

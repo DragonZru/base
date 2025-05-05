@@ -1,14 +1,20 @@
 package com.ylli.base.configuration.shardingsphere;
 
+import com.alibaba.csp.sentinel.SphO;
+import com.alibaba.csp.sentinel.SphU;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRule;
 import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRuleManager;
 import com.alibaba.csp.sentinel.slots.block.degrade.circuitbreaker.CircuitBreakerStrategy;
+import com.ylli.base.configuration.SpringContextHolder;
+import com.ylli.common.exception.GenericException;
 import jakarta.annotation.PostConstruct;
 import org.apache.shardingsphere.infra.algorithm.core.context.AlgorithmSQLContext;
 import org.apache.shardingsphere.infra.algorithm.keygen.core.KeyGenerateAlgorithm;
+import org.apache.shardingsphere.infra.algorithm.keygen.snowflake.SnowflakeKeyGenerateAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
@@ -16,36 +22,16 @@ import java.util.*;
 /**
  * @author ylli
  */
-@Component
 public class LeafGenerator implements KeyGenerateAlgorithm {
 
     static final String SENTINEL_RESOURCE = "LeafGenerator";
 
     private static final Logger logger = LoggerFactory.getLogger(LeafGenerator.class);
 
-    RestTemplate restTemplate = new RestTemplate();
+    private RestTemplate restTemplate;
 
     private Properties props;
 
-//    @Override
-//    public Comparable<Long> generateKey() {
-//        if (SphO.entry(SENTINEL_RESOURCE)) {
-//            try {
-//                return restTemplate.getForObject(props.getProperty("uri"), Long.class);
-//            } catch (Throwable t) {
-//                if (!BlockException.isBlockException(t)) {
-//                    logger.error("LeafServer An unexpected exception occurred:{}", t.getMessage());
-//                    return new SnowflakeKeyGenerateAlgorithm().generateKey();
-//                }
-//            } finally {
-//                SphO.exit();
-//            }
-//        }
-//        logger.warn("LeafGenerator is blocked");
-//        return new SnowflakeKeyGenerateAlgorithm().generateKey();
-//    }
-
-    @PostConstruct
     public void initDegradeRule() {
         List<DegradeRule> degradeRules = new ArrayList<>();
         DegradeRule rule = new DegradeRule(SENTINEL_RESOURCE)
@@ -65,14 +51,11 @@ public class LeafGenerator implements KeyGenerateAlgorithm {
         return SENTINEL_RESOURCE;
     }
 
-//    @Override
-//    public Properties getProps() {
-//        return props;
-//    }
-
     @Override
     public void init(Properties props) {
         this.props = props;
+        this.restTemplate = SpringContextHolder.getBean(RestTemplate.class);
+        initDegradeRule();
     }
 
     @Override
@@ -84,7 +67,21 @@ public class LeafGenerator implements KeyGenerateAlgorithm {
         return result;
     }
 
-    public Long generateKey() {
-        return 0L;
+        public Long generateKey() {
+        if (SphO.entry(SENTINEL_RESOURCE)) {
+            try {
+                return restTemplate.getForObject(props.getProperty("uri"), Long.class);
+            } catch (Throwable t) {
+                if (!BlockException.isBlockException(t)) {
+                    logger.error("LeafServer An unexpected exception occurred:{}", t.getMessage());
+//                    return new SnowflakeKeyGenerateAlgorithm().generateKey();
+                    throw new GenericException(HttpStatus.INTERNAL_SERVER_ERROR, "LeafGenerator is blocked");
+                }
+            } finally {
+                SphO.exit();
+            }
+        }
+        logger.warn("LeafGenerator is blocked");
+        throw new GenericException(HttpStatus.INTERNAL_SERVER_ERROR, "LeafGenerator is blocked");
     }
 }
