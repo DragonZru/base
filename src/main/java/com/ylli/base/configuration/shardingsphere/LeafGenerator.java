@@ -1,17 +1,14 @@
 package com.ylli.base.configuration.shardingsphere;
 
 import com.alibaba.csp.sentinel.SphO;
-import com.alibaba.csp.sentinel.SphU;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRule;
 import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRuleManager;
 import com.alibaba.csp.sentinel.slots.block.degrade.circuitbreaker.CircuitBreakerStrategy;
 import com.ylli.base.configuration.SpringContextHolder;
 import com.ylli.common.exception.GenericException;
-import jakarta.annotation.PostConstruct;
 import org.apache.shardingsphere.infra.algorithm.core.context.AlgorithmSQLContext;
 import org.apache.shardingsphere.infra.algorithm.keygen.core.KeyGenerateAlgorithm;
-import org.apache.shardingsphere.infra.algorithm.keygen.snowflake.SnowflakeKeyGenerateAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -61,13 +58,13 @@ public class LeafGenerator implements KeyGenerateAlgorithm {
     @Override
     public Collection<Long> generateKeys(AlgorithmSQLContext context, int i) {
         Collection<Long> result = new LinkedList<>();
-        for(int index = 0; index < i; ++index) {
+        for (int index = 0; index < i; ++index) {
             result.add(generateKey());
         }
         return result;
     }
 
-        public Long generateKey() {
+    public Long generateKey() {
         if (SphO.entry(SENTINEL_RESOURCE)) {
             try {
                 return restTemplate.getForObject(props.getProperty("uri"), Long.class);

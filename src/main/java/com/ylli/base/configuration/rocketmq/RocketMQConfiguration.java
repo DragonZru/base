@@ -1,5 +1,6 @@
 package com.ylli.base.configuration.rocketmq;
 
+import jakarta.annotation.Nonnull;
 import jakarta.annotation.PostConstruct;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
@@ -19,6 +20,9 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 
+/**
+ * @author ylli
+ */
 @Configuration
 @EnableConfigurationProperties(RocketMQProperties.class)
 @ConditionalOnProperty(prefix = "rocketmq", value = "enable", havingValue = "true")
@@ -79,7 +83,7 @@ public class RocketMQConfiguration implements DisposableBean, ApplicationContext
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(@Nonnull ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
 }
