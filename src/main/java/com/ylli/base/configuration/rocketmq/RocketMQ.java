@@ -8,17 +8,22 @@ import org.apache.rocketmq.client.producer.TransactionSendResult;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 import java.util.function.Function;
 
+/**
+ * @author ylli
+ */
 @Component
 public class RocketMQ {
 
-    @Autowired
     ObjectProvider<TransactionMQProducer> transactionProducerProvider;
+
+    public RocketMQ(ObjectProvider<TransactionMQProducer> transactionProducerProvider) {
+        this.transactionProducerProvider = transactionProducerProvider;
+    }
 
     public RocketMQ() {
     }
@@ -35,7 +40,7 @@ public class RocketMQ {
         return transactionProducerProvider.stream().filter(producer ->
         {
             return (Optional.ofNullable(group).orElse("defaultTransactionProducerGroup")).equals(producer.getProducerGroup());
-        }).findFirst().orElse(null);
+        }).findFirst().orElseThrow(() -> new RuntimeException(group + " not found"));
     }
 
     public TransactionSendResult sendTransactionMessage(TransactionMQProducer transactionMQProducer,

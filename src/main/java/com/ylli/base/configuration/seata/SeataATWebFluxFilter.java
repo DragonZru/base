@@ -5,7 +5,6 @@ package com.ylli.base.configuration.seata;
 //import io.seata.tm.api.GlobalTransactionContext;
 //import org.apache.shardingsphere.transaction.base.seata.at.SeataTransactionHolder;
 
-import jakarta.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -23,7 +22,7 @@ public class SeataATWebFluxFilter implements WebFilter {
     private static final Logger logger = LoggerFactory.getLogger(SeataATWebFluxFilter.class);
 
     @Override
-    public Mono<Void> filter(@Nonnull ServerWebExchange exchange,@Nonnull WebFilterChain chain) {
+    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         return chain.filter(exchange);
     }
 
