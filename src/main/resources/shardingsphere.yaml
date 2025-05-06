@@ -1,0 +1,80 @@
+#mode:
+#  type: Standalone
+
+
+dataSources:
+  ds_0:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://124.70.186.54:3306/shardingsphere?useUnicode=true&useJDBCCompliantTimezoneShift=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: GLzr.TFWyR.m
+#  ds_1:
+#    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+#    driverClassName: com.mysql.cj.jdbc.Driver
+#    jdbcUrl: jdbc:mysql://124.70.186.54:3306/base-2?useUnicode=true&useJDBCCompliantTimezoneShift=true&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: 123456
+
+rules:
+#- !BROADCAST
+#  tables:
+#    - t_config
+- !SHARDING
+  tables:
+    t_example:
+#      actualDataNodes: ds_${0..1}.t_example_${0..9}
+      actualDataNodes: ds_0.t_example_${0..9}
+#      databaseStrategy:
+#        standard:
+#          shardingColumn: id
+#          shardingAlgorithmName: database_inline
+      tableStrategy:
+        standard:
+          shardingColumn: id
+          shardingAlgorithmName: t_example_inline
+      keyGenerateStrategy:
+        column: id
+        keyGeneratorName: leaf
+  defaultDatabaseStrategy:
+    none:
+#  autoTables:
+#    t_example_auto:
+#      actualDataSources: ds_${0..1}
+#      shardingStrategy:
+#        standard:
+#          shardingColumn: username
+#          shardingAlgorithmName: database_hash_mod
+  shardingAlgorithms:
+#    database_hash_mod:
+#      type: HASH_MOD
+#      props:
+#        sharding-count: 2
+#    database_inline:
+#      type: INLINE
+#      props:
+#        algorithm-expression: ds_${id % 2}
+    t_example_inline:
+      type: INLINE
+      props:
+        algorithm-expression: t_example_${id % 10}
+#    test_class_based:
+#      type: CLASS_BASED
+#      props:
+#        strategy: STANDARD
+#        algorithmClassName: com.ylli.api.config.shardingsphere.ClassBasedStandardShardingAlgorithmFixture
+  keyGenerators:
+    snowflake:
+      type: SNOWFLAKE
+    leaf:
+      type: LeafGenerator
+      props:
+        uri: http://leaf/uid
+
+props:
+  sql-show: true
+  sql-simple: true
+
+#transaction:
+#  defaultType: BASE
+#  providerType: Seata
