@@ -49,7 +49,7 @@ public class RocketMQConfiguration implements DisposableBean, ApplicationContext
                 if (Arrays.asList(beanDefinitionNames).contains(beanName)) {
                     throw new BeanCreationException(beanName, "There is already defined in the context.");
                 }
-                BeanDefinitionBuilder beanDefinitionBuilder = null;
+                BeanDefinitionBuilder beanDefinitionBuilder;
                 //动态注册bean.
                 if (entry.getValue().getCls() == TransactionMQProducer.class) {
                     beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(TransactionMQProducer.class);

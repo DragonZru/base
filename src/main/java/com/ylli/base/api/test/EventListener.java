@@ -20,10 +20,10 @@ public class EventListener {
         System.out.println(Thread.currentThread().getName() + ", event1:" + new Gson().toJson(event));
     }
 
-//    @Async
-//    @org.springframework.context.event.EventListener
-//    @Order(2)
-//    public void onEvent1(ConfigModel event) {
-//        System.out.println(Thread.currentThread().getName() + ", event2:" + new Gson().toJson(event));
-//    }
+/*    @Async
+    @org.springframework.context.event.EventListener
+    @Order(2)
+    public void onEvent1(ConfigModel event) {
+        System.out.println(Thread.currentThread().getName() + ", event2:" + new Gson().toJson(event));
+    }*/
 }

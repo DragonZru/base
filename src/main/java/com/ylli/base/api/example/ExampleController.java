@@ -37,7 +37,6 @@ public class ExampleController {
      * @param status    精准查询
      * @param leftTime  >= leftTime
      * @param rightTime <= rightTime
-     * @return
      */
     @GetMapping
     public PageInfo<ExampleModel> get(@RequestParam(required = false) Long id,

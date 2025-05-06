@@ -35,7 +35,7 @@ public class RocketMQ {
         return transactionProducerProvider.stream().filter(producer ->
         {
             return (Optional.ofNullable(group).orElse("defaultTransactionProducerGroup")).equals(producer.getProducerGroup());
-        }).findFirst().get();
+        }).findFirst().orElse(null);
     }
 
     public TransactionSendResult sendTransactionMessage(TransactionMQProducer transactionMQProducer,
