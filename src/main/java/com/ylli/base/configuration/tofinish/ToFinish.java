@@ -17,9 +17,9 @@ public class ToFinish {
         eh.setCallback(new MethodInterceptor() {
             @Override
             public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
-                if (true) {
+/*                if (true) {
                     // do something
-                }
+                }*/
                 return proxy.invokeSuper(obj, args);
             }
         });

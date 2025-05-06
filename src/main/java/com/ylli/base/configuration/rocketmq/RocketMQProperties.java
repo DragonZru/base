@@ -8,6 +8,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author ylli
+ */
 @ConfigurationProperties(prefix = "rocketmq")
 @Data
 public class RocketMQProperties {
@@ -20,7 +23,7 @@ public class RocketMQProperties {
     public Map<String, ConsumerProperties> consumer;
 
     @Data
-    static class ProducerProperties {
+    public static class ProducerProperties {
 
         // normal or transaction
         public Class<? extends MQProducer> cls = DefaultMQProducer.class;
@@ -29,7 +32,7 @@ public class RocketMQProperties {
     }
 
     @Data
-    static class ConsumerProperties {
+   public static class ConsumerProperties {
 
         public String group;
 

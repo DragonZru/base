@@ -1,6 +1,6 @@
 package com.ylli.base.api.example.service;
 
-import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageRowBounds;
 import com.google.gson.Gson;
 import com.ylli.base.api.example.mapper.ExampleMapper;
 import com.ylli.base.api.example.model.ExampleInfo;
@@ -49,9 +49,9 @@ public class ExampleService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void create(ExampleModel model) {
-//        if (usernamePreCheck(model.username) && exampleMapper.wrapper().eq(ExampleModel::getUsername, model.username).count() != 0) {
-//            throw new GenericException(HttpStatus.BAD_REQUEST, String.format("username %s already exists", model.username));
-//        }
+/*        if (usernamePreCheck(model.username) && exampleMapper.wrapper().eq(ExampleModel::getUsername, model.username).count() != 0) {
+            throw new GenericException(HttpStatus.BAD_REQUEST, String.format("username %s already exists", model.username));
+        }*/
         model.info = new ExampleInfo(null, "ylli", "sbl");
         exampleMapper.insertSelective(model);
 
@@ -60,11 +60,10 @@ public class ExampleService {
 
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long id) {
-        ExampleModel model = selectByPrimaryKey(id);
-//        if (exampleMapper.deleteByPrimaryKey(id) != 1) {
-//            throw new GenericException(HttpStatus.NOT_FOUND, String.format("id %s not exists", id));
-//        }
-//        exampleMapper.deleteByPrimaryKey(id);
+//        ExampleModel model = selectByPrimaryKey(id);
+        if (exampleMapper.deleteByPrimaryKey(id) != 1) {
+            throw new GenericException(HttpStatus.NOT_FOUND, String.format("id %s not exists", id));
+        }
 //        hashOps.delete(USERNAME_BLOOM_FILTER_KEY, model.username);
     }
 
@@ -107,12 +106,10 @@ public class ExampleService {
         // 分页查询优化
         // select t_example.* from t_example right join ( select id from t_example limit offsetValue,limitValue) as tmp on t_example.id = tmp.id
         // select * from t_example where id > (select id from t_example limit offsetValue,1 ) limit limitValue
-        PageHelper.offsetPage(offset, limit);
-        return exampleMapper.selectByExample(exampleWrapper.example());
-
 //        return exampleMapper.selectByExample(exampleWrapper.example()
 //                        .selectColumns(ExampleModel::getId, ExampleModel::getUsername, ExampleModel::getPassword),
 //                new RowBounds(offset, limit));
+        return exampleMapper.selectByExample(exampleWrapper.example(), new PageRowBounds(offset, limit));
     }
 
     //todo 分区表不支持全文索引 & 分区表后对分页查询的影响。
@@ -167,11 +164,12 @@ public class ExampleService {
         copyPropertiesIgnoreNull(source, target);
         target.version = target.version + 1;
         target.updateTime = Timestamp.from(Instant.now());
-        if (true) { //执行需要更新为null的逻辑
-            target.extras = null;
-        }
-        //Fn.of(ExampleModel::getId, ExampleModel::getExtras);
-        //Fn.of(ExampleModel.class, "id", "extras");
+        target.extras = null;
+
+        /*
+            Fn.of(ExampleModel::getId, ExampleModel::getExtras);
+            Fn.of(ExampleModel.class, "id", "extras");
+         */
         exampleMapper.updateByPrimaryKeySelectiveWithForceFields(target, Fn.of(ExampleModel::getExtras));
     }
 

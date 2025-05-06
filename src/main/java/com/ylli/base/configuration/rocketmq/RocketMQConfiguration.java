@@ -25,25 +25,25 @@ import java.util.Arrays;
  */
 @Configuration
 @EnableConfigurationProperties(RocketMQProperties.class)
-@ConditionalOnProperty(prefix = "rocketmq", value = "enable", havingValue = "true")
+@ConditionalOnProperty(name = "rocketmq.enabled", havingValue = "true")
 public class RocketMQConfiguration implements DisposableBean, ApplicationContextAware {
 
     public static final Logger log = LoggerFactory.getLogger(RocketMQConfiguration.class);
 
-    RocketMQProperties rocketMQProperties;
+    RocketMQProperties properties;
     private ApplicationContext applicationContext;
 
-    public RocketMQConfiguration(RocketMQProperties rocketMQProperties) {
-        this.rocketMQProperties = rocketMQProperties;
+    public RocketMQConfiguration(RocketMQProperties properties) {
+        this.properties = properties;
     }
 
     @PostConstruct
     public void init() {
         String[] beanDefinitionNames = applicationContext.getBeanDefinitionNames();
 
-        if (!rocketMQProperties.getProducer().isEmpty()) {
+        if (!properties.getProducer().isEmpty()) {
             DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory) applicationContext.getAutowireCapableBeanFactory();
-            rocketMQProperties.getProducer().entrySet().forEach(entry -> {
+            properties.getProducer().entrySet().forEach(entry -> {
                 String beanName = entry.getKey();
 
                 if (Arrays.asList(beanDefinitionNames).contains(beanName)) {
@@ -60,7 +60,7 @@ public class RocketMQConfiguration implements DisposableBean, ApplicationContext
                 defaultListableBeanFactory.registerBeanDefinition(beanName, beanDefinitionBuilder.getBeanDefinition());
                 //TransactionMQProducer extends DefaultMQProducer
                 DefaultMQProducer producer = (DefaultMQProducer) applicationContext.getBean(beanName);
-                producer.setNamesrvAddr(rocketMQProperties.getNameServer());
+                producer.setNamesrvAddr(properties.getNameServer());
                 producer.setProducerGroup(entry.getValue().getGroup());
 
                 try {
@@ -75,8 +75,8 @@ public class RocketMQConfiguration implements DisposableBean, ApplicationContext
 
     @Override
     public void destroy() throws Exception {
-        rocketMQProperties.getProducer().entrySet().stream()
-                .map(entry -> applicationContext.getBean(entry.getKey()))
+        properties.getProducer().keySet().stream()
+                .map(producerProperties -> applicationContext.getBean(producerProperties))
                 .filter(entry -> entry instanceof DefaultMQProducer)
                 .map(DefaultMQProducer.class::cast)
                 .forEach(DefaultMQProducer::shutdown);
