@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/seata")
 public class SeataTestController {
 
-/*    @Autowired
+/*
+   @Autowired
     ExampleService exampleService;
 
     //@GlobalTransactional
@@ -28,11 +29,11 @@ public class SeataTestController {
         rpcRestTemplate(configName);
         exampleService.create(new ExampleModel(username, "seata"));
         return "success";
-    }*/
+    }
+    */
 
     // TODO fix 行为不一致 是不是 KEY_XID 的原因 KEY_XID 传递失败？
-    // 测试是否传递成功
-/*    public Object rpcRestTemplate(String configName) {
+/* public Object rpcRestTemplate(String configName) {
         RestTemplate restTemplate = new RestTemplateBuilder().additionalInterceptors((request, body, execution) -> {
                     String xid = RootContext.getXID();
                     if (null != xid) {
@@ -42,5 +43,6 @@ public class SeataTestController {
                 })
                 .build();
         return restTemplate.postForObject("http://192.168.10.8:8080/config", new ConfigModel(configName, "wsy", "2020"), Void.class);
-    }*/
+    }
+    */
 }
