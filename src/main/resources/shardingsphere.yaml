@@ -1,6 +1,12 @@
-#mode:
-#  type: Standalone
-
+mode:
+  type: Standalone
+  repository:
+    type: JDBC
+    props:
+      provider: MySQL
+      jdbc_url: jdbc:mysql://124.70.186.54:13306/shardingsphere
+      username: root
+      password: 123456
 
 dataSources:
   ds_0:
@@ -75,6 +81,6 @@ props:
   sql-show: true
   sql-simple: true
 
-#transaction:
-#  defaultType: BASE
-#  providerType: Seata
+transaction:
+  defaultType: BASE
+  providerType: Seata
