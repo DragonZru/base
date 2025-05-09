@@ -66,17 +66,14 @@ dependencies {
 }
 
 dependencies {
-//    // https://mvnrepository.com/artifact/io.seata/seata-spring-boot-starter
-//    implementation 'io.seata:seata-spring-boot-starter:2.0.0'
+    // https://mvnrepository.com/artifact/io.seata/seata-spring-boot-starter
+    implementation 'org.apache.seata:seata-spring-boot-starter:2.3.0'
 
     // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-jdbc
     implementation 'org.apache.shardingsphere:shardingsphere-jdbc:5.5.2'
 
-    // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-cluster-mode-repository-nacos
-//    implementation 'org.apache.shardingsphere:shardingsphere-cluster-mode-repository-nacos:5.4.0'
-
-//    // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-transaction-base-seata-at
-//    implementation 'org.apache.shardingsphere:shardingsphere-transaction-base-seata-at:5.4.1'
+    // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-transaction-base-seata-at
+    implementation 'org.apache.shardingsphere:shardingsphere-transaction-base-seata-at:5.5.2'
 }
 
 dependencies {
