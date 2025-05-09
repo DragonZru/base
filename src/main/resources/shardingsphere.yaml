@@ -2,11 +2,6 @@ mode:
   type: Standalone
   repository:
     type: JDBC
-    props:
-      provider: MySQL
-      jdbc_url: jdbc:mysql://124.70.186.54:13306/shardingsphere
-      username: root
-      password: 123456
 
 dataSources:
   ds_0:
