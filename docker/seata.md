@@ -1,23 +1,25 @@
 # [SEATA](https://seata.apache.org/zh-cn/docs/ops/deploy-by-docker-compose) 参考
-可以先复制配置文件夹查看配置示例 docker cp seata-seata-server-1:/seata-server/resources ./resources
+可以先复制配置文件夹查看配置示例 docker cp seata-1:/seata-server/resources ./resources
 
 ## docker-compose.yml
 ```yaml
 services:
-  seata-server:
-    image: seataio/seata-server:latest
+  seata-server-1:
+    image: seataio/seata-server:2.0.0
+    container_name: seata-1
     ports:
       - "7091:7091"
       - "8091:8091"
     environment:
-      - STORE_MODE=db
-      # 以SEATA_IP作为host注册seata server
-      - SEATA_IP=127.0.0.1
+      # 不能配置为127.0.0.1，否则注册rm时会超时(可选，指定seata-server启动的IP，该IP用于向注册中心注册时使用，如eureka等.)
+      #      - SEATA_IP=192.168.10.10
+      - SEATA_IP=192.168.100.15
       - SEATA_PORT=8091
     volumes:
       - "/usr/share/zoneinfo/Asia/Shanghai:/etc/localtime"        #设置系统时区
       - "/usr/share/zoneinfo/Asia/Shanghai:/etc/timezone"  #设置时区
       - "./resources:/seata-server/resources"
+      - "./logs:/root/logs/seata"
 ```
 
 ## nacos 配置
@@ -26,9 +28,12 @@ store.mode=db
 #-----db-----
 store.db.datasource=druid
 store.db.dbType=mysql
+# 需要根据mysql的版本调整driverClassName
+# mysql8及以上版本对应的driver：com.mysql.cj.jdbc.Driver
+# mysql8以下版本的driver：com.mysql.jdbc.Driver
 store.db.driverClassName=com.mysql.cj.jdbc.Driver
-store.db.url=jdbc:mysql://192.168.10.10:3306/seata?useUnicode=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false
-store.db.user=root
+store.db.url=jdbc:mysql:loadbalance://124.70.186.54:13306,124.70.186.54:13307,124.70.186.54:13308/seata?useUnicode=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false
+store.db.user= root
 store.db.password=123456
 # 数据库初始连接数
 store.db.minConn=1
@@ -64,6 +69,8 @@ server.recovery.asynCommittingRetryPeriod=1000
 server.recovery.rollbackingRetryPeriod=1000
 # 超时状态检测重试线程间隔时间 默认1000，单位毫秒，检测出超时将全局事务置入回滚会话管理器
 server.recovery.timeoutRetryPeriod=1000
+
+service.vgroupMapping.default_tx_group=default
 ```
 
 ## application.yml
@@ -83,31 +90,42 @@ spring:
 logging:
   config: classpath:logback-spring.xml
   file:
-    path: ${log.home:${user.home}/logs/seata}
-  extend:
-    logstash-appender:
-      destination: 192.168.10.10:4560
+    path: /logs/seata
+#  extend:
+#    logstash-appender:
+#      destination: 127.0.0.1:4560
+#    kafka-appender:
+#      bootstrap-servers: 127.0.0.1:9092
+#      topic: logback_to_logstash
 
 seata:
   config:
     type: nacos
     nacos:
-      server-addr: 192.168.10.10:8848
-      namespace: public
-      group: DEFAULT_GROUP
+      server-addr: 124.70.186.54:8848
+      namespace: seata
+      group: SEATA_GROUP
       username: nacos
-      password: nacos
+      password: Guyuefangyuan6
+      context-path:
+      ##if use MSE Nacos with auth, mutex with username/password attribute
+      #access-key:
+      #secret-key:
       data-id: seata.properties
   registry:
     type: nacos
     nacos:
       application: seata-server
-      server-addr: 192.168.10.10:8848
-      group: DEFAULT_GROUP
-      namespace: public
+      server-addr: 124.70.186.54:8848
+      group: SEATA_GROUP
+      namespace: seata
       cluster: default
       username: nacos
-      password: nacos
+      password: Guyuefangyuan6
+      context-path:
+      ##if use MSE Nacos with auth, mutex with username/password attribute
+      #access-key:
+      #secret-key:
   server:
     service-port: 8091 #If not configured, the default is '${server.port} + 1000'
     max-commit-retry-timeout: -1
@@ -129,6 +147,20 @@ seata:
     session:
       branch-async-queue-size: 5000 #branch async remove queue size
       enable-branch-async-remove: false #enable to asynchronous remove branchSession
+  metrics:
+    enabled: false
+    registry-type: compact
+    exporter-list: prometheus
+    exporter-prometheus-port: 9898
+  transport:
+    rpc-tc-request-timeout: 15000
+    enable-tc-server-batch-send-response: false
+    shutdown:
+      wait: 3
+    thread-factory:
+      boss-thread-prefix: NettyBoss
+      worker-thread-prefix: NettyServerNIOWorker
+      boss-thread-size: 1
   security:
     secretKey: SeataSecretKey0c382ef121d778043159209298fd40bf3850a017
     tokenValidityInMilliseconds: 1800000
