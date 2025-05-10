@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
 /**
  * @author ylli
  */
-@Component
+//@Component
 public class SeataATWebFluxFilter implements WebFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(SeataATWebFluxFilter.class);

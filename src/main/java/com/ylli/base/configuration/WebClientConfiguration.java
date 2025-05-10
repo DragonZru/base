@@ -1,10 +1,15 @@
 package com.ylli.base.configuration;
 
+import com.ylli.base.configuration.seata.rest.SeataRestTemplateInterceptor;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <a href="https://docs.spring.io/spring-cloud-commons/docs/current/reference/html/#webflux-with-reactive-loadbalancer">webflux-with-reactive-loadbalancer</a>
@@ -35,6 +40,16 @@ public class WebClientConfiguration {
     @LoadBalanced
     public RestTemplate restTemplate() {
         return new RestTemplate();
+    }
+
+    @Bean
+    @LoadBalanced
+    RestTemplate seataRestTemplate(SeataRestTemplateInterceptor seataRestTemplateInterceptor) {
+        RestTemplate restTemplate = new RestTemplate();
+        List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>(restTemplate.getInterceptors());
+        interceptors.add(seataRestTemplateInterceptor);
+        restTemplate.setInterceptors(interceptors);
+        return restTemplate;
     }
 }
 
