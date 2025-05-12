@@ -1,6 +1,5 @@
 package com.ylli.base.api.test;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +14,6 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/test")
 @RefreshScope
 public class TestController {
-
-    @Value("${ylli.value}")
-    private String value;
 
     private final WebClient.Builder webClientBuilder;
 

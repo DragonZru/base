@@ -29,6 +29,8 @@ public class LeafGenerator implements KeyGenerateAlgorithm {
 
     private Properties props;
 
+    private static final String DEFAULT_REST_TEMPLATE = "restTemplate";
+
     public void initDegradeRule() {
         List<DegradeRule> degradeRules = new ArrayList<>();
         DegradeRule rule = new DegradeRule(SENTINEL_RESOURCE)
@@ -51,7 +53,7 @@ public class LeafGenerator implements KeyGenerateAlgorithm {
     @Override
     public void init(Properties props) {
         this.props = props;
-        this.restTemplate = SpringContextHolder.getBean(RestTemplate.class);
+        this.restTemplate = SpringContextHolder.getBean(DEFAULT_REST_TEMPLATE, RestTemplate.class);
         initDegradeRule();
     }
 
