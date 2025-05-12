@@ -10,10 +10,12 @@ import io.mybatis.mapper.example.ExampleWrapper;
 import io.mybatis.mapper.fn.Fn;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.web.client.RestTemplate;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -25,6 +27,9 @@ import java.util.stream.Stream;
 
 @Service
 public class ExampleService {
+
+    @Autowired
+    RestTemplate seataRestTemplate;
 
     final String USERNAME_BLOOM_FILTER_KEY = "t_example_username_bloom_filter";
     ExampleMapper exampleMapper;
@@ -52,8 +57,12 @@ public class ExampleService {
 /*        if (usernamePreCheck(model.username) && exampleMapper.wrapper().eq(ExampleModel::getUsername, model.username).count() != 0) {
             throw new GenericException(HttpStatus.BAD_REQUEST, String.format("username %s already exists", model.username));
         }*/
+
+
         model.info = new ExampleInfo(null, "ylli", "sbl");
         exampleMapper.insertSelective(model);
+
+        seataRestTemplate.getForObject("http://base-ex/test/exception", String.class);
 
 //        hashOps.put(USERNAME_BLOOM_FILTER_KEY, model.username, "1");
     }
