@@ -46,7 +46,7 @@ tasks.named('test') {
 
 dependencies {
     implementation 'com.ylli:common:0.0.5'
-    implementation 'com.ylli:persistence-infra-starter:0.1.4'
+    implementation 'com.ylli:persistence-infra-starter:0.1.5'
 }
 
 dependencies {
