@@ -99,6 +99,12 @@ dependencies {
     implementation 'com.alibaba.csp:sentinel-transport-simple-http:1.8.8'
 }
 
+dependencies {
+    // 加密工具
+    // https://mvnrepository.com/artifact/com.github.ulisesbocchio/jasypt-spring-boot-starter
+    implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5")
+}
+
 ext {
     set('springCloudVersion', "2023.0.3")
 }
