@@ -16,7 +16,7 @@ repositories {
     mavenCentral()
 
     maven {
-        url "http://127.0.0.1:8081/repository/maven-public/"
+        url "http://124.70.186.54:8081/repository/maven-public/"
         credentials {
             username 'admin'
             password 'Guyuefangyuan6'
