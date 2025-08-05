@@ -16,6 +16,6 @@ public class SeataHandlerInterceptorAutoConfiguration implements WebMvcConfigure
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new SeataHandlerInterceptor()).addPathPatterns(new String[]{"/**"});
+        registry.addInterceptor(new SeataHandlerInterceptor()).addPathPatterns(new String[]{"/**/seata/**"});
     }
 }
