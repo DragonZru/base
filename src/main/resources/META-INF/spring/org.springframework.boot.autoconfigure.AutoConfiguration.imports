@@ -1,3 +1,4 @@
 com.ylli.base.configuration.tofinish.XXAutoConfiguration
 com.ylli.base.configuration.seata.rest.SeataRestTemplateAutoConfiguration
 com.ylli.base.configuration.seata.web.SeataHandlerInterceptorAutoConfiguration
+com.ylli.base.configuration.redis.LettuceRedisAutoConfiguration

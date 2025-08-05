@@ -38,6 +38,8 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+    implementation 'com.mysql:mysql-connector-j'
 }
 
 tasks.named('test') {
@@ -46,7 +48,17 @@ tasks.named('test') {
 
 dependencies {
     implementation 'com.ylli:common:0.0.6'
-    implementation 'com.ylli:persistence-infra-starter:0.1.5'
+}
+
+dependencies {
+
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+
+    // https://mvnrepository.com/artifact/io.mybatis/mybatis-mapper
+    implementation 'io.mybatis:mybatis-mapper:2.2.1'
+
+    implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:2.1.0'
+
 }
 
 dependencies {
