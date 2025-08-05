@@ -1,0 +1,31 @@
+[mysqld]
+disabled_storage_engines="MyISAM,BLACKHOLE,FEDERATED,ARCHIVE,MEMORY"
+
+server_id=1
+gtid_mode=ON
+enforce_gtid_consistency=ON
+binlog_checksum=NONE
+
+log_bin=binlog
+log_slave_updates=ON
+binlog_format=ROW
+master_info_repository=TABLE
+relay_log_info_repository=TABLE
+transaction_write_set_extraction=XXHASH64
+
+plugin_load_add='group_replication.so'
+loose-group_replication_group_name="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+loose-group_replication_start_on_boot=OFF
+loose-group_replication_local_address=mgr1:33061
+loose-group_replication_group_seeds=mgr1:33061,mgr2:33061,mgr3:33061
+loose-group_replication_bootstrap_group=OFF
+loose-group_replication_recovery_get_public_key=TRUE
+# 是否开启单主模式
+loose-group_replication_single_primary_mode=OFF
+
+#report_host=127.0.0.1
+
+# 1-每次事物提交时立即将日志缓冲区刷新到磁盘；0-事物提交时只会写入日志，刷盘由系统决定；2-事物提交时写入日志，刷盘/s 系统
+innodb_flush_log_at_trx_commit=1
+# binlog过期时间 = 15x86400
+binlog_expire_logs_seconds=1296000

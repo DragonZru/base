@@ -1,0 +1,67 @@
+services:
+  # MySQL 服务
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+
+  # MySQL Exporter
+  mysql-exporter:
+    image: prom/mysqld-exporter:latest
+    environment:
+      DATA_SOURCE_NAME: "root:root@(mysql:3306)/"
+    depends_on:
+      - mysql
+    ports:
+      - "9104:9104"
+
+  # ClickHouse 服务
+  clickhouse:
+    image: clickhouse/clickhouse-server
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+
+  # ClickHouse Exporter
+  clickhouse-exporter:
+    image: f1yegor/clickhouse-exporter
+    environment:
+      CH_ADDRESS: clickhouse:8123
+    depends_on:
+      - clickhouse
+    ports:
+      - "9116:9116"
+
+  # Node Exporter（监控宿主机）
+  node-exporter:
+    image: bitnami/node-exporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    ports:
+      - "9100:9100"
+
+  # Prometheus
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    depends_on:
+      - mysql-exporter
+      - clickhouse-exporter
+      - node-exporter
+
+  # Grafana
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    depends_on:
+      - prometheus

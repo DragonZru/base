@@ -1,0 +1,18 @@
+services:
+  seata-server-1:
+    image: seataio/seata-server:2.0.0
+    container_name: seata-1
+    ports:
+      - "7091:7091"
+      - "8091:8091"
+    environment:
+#      - STORE_MODE=db
+      # 不能配置为127.0.0.1，否则注册rm时会超时(可选，指定seata-server启动的IP，该IP用于向注册中心注册时使用，如eureka等.)
+#      - SEATA_IP=192.168.10.10
+      - SEATA_IP=192.168.100.15
+      - SEATA_PORT=8091
+    volumes:
+      - "/usr/share/zoneinfo/Asia/Shanghai:/etc/localtime"        #设置系统时区
+      - "/usr/share/zoneinfo/Asia/Shanghai:/etc/timezone"  #设置时区
+      - "./resources:/seata-server/resources"
+      - "./logs:/root/logs/seata"

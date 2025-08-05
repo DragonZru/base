@@ -1,0 +1,81 @@
+# 1. docker compose up -d
+
+#--------------------------------------master--------------------------------------------
+# 2.登陆主服务器，创建授权账户
+#                 @'ip' % 表示任何ip
+CREATE USER 'repl'@'%' IDENTIFIED BY '123456';
+#                           database.table   *.*表示所有数据库。表
+GRANT REPLICATION SLAVE,REPLICATION CLIENT ON *.* TO 'repl'@'%';
+
+# mysql8 兼容老插件，或者在配置文件修改 default_authentication_plugin=mysql_native_password
+## ALTER USER 'repl'@'%' IDENTIFIED WITH mysql_native_password BY 'x@CrB%7&';
+
+# --刷新权限
+flush privileges;
+
+# 查看master的状态
+show master status;
+#---------------------------------------slave---------------------------------------------
+
+# 3.登陆从服务器，连接至master
+mysql -u root -p
+# 连接主服务器,文件 master_log_file 与 master_log_pos 见 show master status；
+# 若使用mysql8,密码插件caching_sha2_password，change master 需要+ GET_MASTER_PUBLIC_KEY=1;
+# docker 容器创建的mysql需使用容器内网络才能正常通信 docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <container_name_or_id>，直接localhost可能会访问失败
+change master to master_host='192.168.144.2',master_user='repl',master_password='123456',master_port=3306,master_log_file='master-bin.000003',master_log_pos=1900,GET_MASTER_PUBLIC_KEY=1;
+
+# GTID 所有节点新增配置
+gtid_mode = ON
+enforce_gtid_consistency = ON
+
+change master to master_host='192.168.10.4',master_user='repl',master_password='123456',master_port=3306,master_auto_position=1,GET_MASTER_PUBLIC_KEY=1;
+
+
+# 启动slave
+start slave;
+# 查看slave的状态
+show slave status\G;
+
+# 其他
+master 需开启binlog; SHOW VARIABLES LIKE 'log_bin';
+若 OFF 修改 MySQL 配置文件 (如 my.cnf 或 my.ini)设置 log_bin = ON 重启mysql master
+密码可能会用到
+install plugin validate_password soname 'validate_password.so';
+set global validate_password_policy=0;
+set global validate_password_length=1;
+server-id 需要唯一（配置文件）
+
+# 全同步复制
+master 配置文件my.cnf新增
+sync_binlog = 1
+
+slave:
+CHANGE MASTER TO MASTER_HOST='master_ip_address', MASTER_USER='replication_user', MASTER_PASSWORD='replication_password', MASTER_SYNC=1;
+
+# 半同步复制
+安装插件：
+INSTALL PLUGIN rpl_semi_sync_master SONAME 'semisync_master.so';
+INSTALL PLUGIN rpl_semi_sync_slave SONAME 'semisync_slave.so';
+SET GLOBAL rpl_semi_sync_master_enabled = 1;
+SET GLOBAL rpl_semi_sync_slave_enabled = 1;
+可选，设置超时时间：
+SET GLOBAL rpl_semi_sync_master_timeout = xxx; #主服务器等待从服务器确认的超时时间（以毫秒为单位）
+SET GLOBAL rpl_semi_sync_slave_timeout = xxx;  #从服务器等待主服务器发送数据的超时时间（以毫秒为单位）
+
+master my.cnf
+plugin-load = "rpl_semi_sync_master=semisync_master.so"
+slave my.cnf
+plugin-load = "rpl_semi_sync_slave=semisync_slave.so"
+
+CHANGE MASTER TO MASTER_HOST='master_ip_address', MASTER_USER='replication_user', MASTER_PASSWORD='replication_password', MASTER_AUTO_POSITION = 1 FOR CHANNEL 'group_replication_recovery';
+
+SHOW GLOBAL STATUS LIKE 'Rpl_semi_sync%';
+检查输出中 Rpl_semi_sync_master_status 和 Rpl_semi_sync_slave_status 的值是否为 ON，以确认半同步复制已启用且正常工作。
+
+# 组复制
+
+https://help.aliyun.com/zh/rds/apsaradb-rds-for-mysql/introduction-to-the-mgr-mode
+
+
+# -------- 参考
+https://www.cnblogs.com/rickiyang/p/13856388.html

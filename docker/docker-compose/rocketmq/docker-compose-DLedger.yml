@@ -1,0 +1,81 @@
+services:
+  namesrv:
+    image: apache/rocketmq:4.9.6
+    hostname: rocketmqNamesrv
+    environment:
+      MAX_POSSIBLE_HEAP: 100000000
+    ports:
+      - 9876:9876
+    command: sh mqnamesrv
+
+  broker-1:
+    image: apache/rocketmq:4.9.6
+    hostname: broker-DLeger-1
+    ports:
+      - 10909:10909
+      - 10911:10911
+    #这里对应dLegerPeers=d0-192.168.10.7:40911;d1-192.168.10.7:40912;d2-192.168.10.7:40913
+    #不暴露DLeger 无法选举通信（因为是docker环境）
+      - 40911:40911
+    environment:
+      MAX_POSSIBLE_HEAP: 200000000
+      NAMESRV_ADDR: namesrv:9876
+      BROKER_ROLE: ASYNC_MASTER
+      FLUSH_DISK_TYPE: ASYNC_FLUSH
+      BROKER_NAME: broker-DLeger
+    volumes: 
+      - ./broker_1.conf:/opt/rocketmq/conf/broker.conf
+    links: 
+      - namesrv:namesrv
+    command: sh mqbroker -c /opt/rocketmq/conf/broker.conf
+    
+  broker-2:
+    image: apache/rocketmq:4.9.6
+    hostname: broker-DLeger-2
+    ports:
+      - 10910:10909
+      - 10912:10911
+      - 40912:40912
+    environment:
+      MAX_POSSIBLE_HEAP: 200000000
+      NAMESRV_ADDR: namesrv:9876
+      BROKER_ROLE: ASYNC_MASTER
+      FLUSH_DISK_TYPE: ASYNC_FLUSH
+      BROKER_NAME: broker-DLeger
+
+    volumes: 
+      - ./broker_2.conf:/opt/rocketmq/conf/broker.conf
+    links: 
+      - namesrv:namesrv
+    command: sh mqbroker -c /opt/rocketmq/conf/broker.conf
+    
+  broker-3:
+    image: apache/rocketmq:4.9.6
+    hostname: broker-DLeger-3
+    ports:
+      - 10913:10909
+      - 10915:10911
+      - 40913:40913
+    environment:
+      MAX_POSSIBLE_HEAP: 200000000
+      NAMESRV_ADDR: namesrv:9876
+      BROKER_ROLE: ASYNC_MASTER
+      FLUSH_DISK_TYPE: ASYNC_FLUSH
+      BROKER_NAME: broker-DLeger
+      
+    volumes: 
+      - ./broker_3.conf:/opt/rocketmq/conf/broker.conf
+    links: 
+      - namesrv:namesrv
+    command: sh mqbroker -c /opt/rocketmq/conf/broker.conf
+
+  console:
+    image: apacherocketmq/rocketmq-dashboard:2.0.0
+    #restart: always
+    hostname: rocketmqDashboard
+    ports:
+      - 9090:8080
+    environment:
+      - "JAVA_OPTS=-Drocketmq.namesrv.addr=namesrv:9876" 
+    links: 
+      - namesrv:namesrv

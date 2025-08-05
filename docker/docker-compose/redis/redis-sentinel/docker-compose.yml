@@ -1,0 +1,65 @@
+#version: '20.10.24'
+services:
+    redis-master:
+        image: redis:7.2.7
+        container_name: master-6379
+        ports:
+            - "6379:6379"
+        volumes:
+            - ./redis.conf:/etc/redis/redis.conf
+        command: redis-server /etc/redis/redis.conf --bind 0.0.0.0 --protected-mode no --requirepass 123456
+        
+    redis-slave1:
+        image: redis:7.2.7
+        container_name: slave-8001
+        ports:
+            - "8001:6379"
+        volumes:
+            - ./redis.conf:/etc/redis/redis.conf
+        command: redis-server /etc/redis/redis.conf --replicaof master 6379  --bind 0.0.0.0 --protected-mode no --requirepass 123456 --masterauth 123456
+        links: 
+            - redis-master:master
+            
+    redis-slave2:
+        image: redis:7.2.7
+        container_name: slave-8002
+        ports:
+            - "8002:6379"
+        volumes:
+            - ./redis.conf:/etc/redis/redis.conf
+        command: redis-server /etc/redis/redis.conf --replicaof master 6379 --bind 0.0.0.0 --protected-mode no --requirepass 123456 --masterauth 123456
+        links: 
+            - redis-master:master
+            
+    redis-sentinel-master:
+        image: redis:7.2.7
+        container_name: sentinel-26379
+        ports:
+            - "26379:26379"
+        depends_on:
+            - redis-master
+        volumes:
+            - ./:/etc/redis
+        command: redis-sentinel /etc/redis/sentinel.conf
+            
+    redis-sentinel-slave1:
+        image: redis:7.2.7
+        container_name: sentinel-28001
+        ports:
+            - "28001:26379"
+        depends_on:
+            - redis-master
+        volumes:
+            - ./:/etc/redis
+        command: redis-sentinel /etc/redis/sentinel.conf
+    
+    redis-sentinel-slave2:
+        image: redis:7.2.7
+        container_name: sentinel-28002
+        ports:
+            - "28002:26379"
+        depends_on:
+            - redis-master
+        volumes:
+            - ./:/etc/redis
+        command: redis-sentinel /etc/redis/sentinel.conf

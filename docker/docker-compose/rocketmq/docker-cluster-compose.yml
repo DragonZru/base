@@ -1,0 +1,75 @@
+services:
+  namesrv-1:
+    image: apache/rocketmq:4.9.6
+    hostname: rocketmqNamesrv-1
+    environment:
+      MAX_POSSIBLE_HEAP: 100000000
+    ports:
+      - 9876:9876
+    command: sh mqnamesrv
+
+  namesrv-2:
+    image: apache/rocketmq:4.9.6
+    hostname: rocketmqNamesrv-2
+    environment:
+      MAX_POSSIBLE_HEAP: 100000000
+    ports:
+      - 9877:9876
+    command: sh mqnamesrv
+
+  broker-1:
+    image: apache/rocketmq:4.9.6
+    #restart: always
+    hostname: rocketmqBroker-1
+    ports:
+      - 10909:10909
+      - 10911:10911
+    environment:
+      MAX_POSSIBLE_HEAP: 200000000
+      NAMESRV_ADDR: namesrv-1:9876;namesrv-2:9876
+      BROKER_ROLE: ASYNC_MASTER
+      FLUSH_DISK_TYPE: ASYNC_FLUSH
+      # ID:0 表示 master
+      BROKER_ID: 0
+    volumes: 
+      - ./broker.conf:/opt/rocketmq/conf/broker.conf
+    links: 
+      - namesrv-1:namesrv-1
+      - namesrv-2:namesrv-2
+    command: sh mqbroker -c /opt/rocketmq/conf/broker.conf
+    
+  broker-2:
+    image: apache/rocketmq:4.9.6
+    #restart: always
+    hostname: rocketmqBroker-2
+    ports:
+      - 10999:10909
+      - 10991:10911
+    environment:
+      MAX_POSSIBLE_HEAP: 200000000
+      NAMESRV_ADDR: namesrv-1:9876;namesrv-2:9876
+      BROKER_ROLE: ASYNC_MASTER
+      FLUSH_DISK_TYPE: ASYNC_FLUSH
+      # ID:0 表示 master
+      BROKER_ID: 0
+    volumes: 
+      - ./broker.conf:/opt/rocketmq/conf/broker.conf
+    links: 
+      - namesrv-1:namesrv-1
+      - namesrv-2:namesrv-2
+    command: sh mqbroker -c /opt/rocketmq/conf/broker.conf
+    #command: ["sh","mqbroker","-c","/etc/rocketmq/broker.conf","-n","rocketmq-namesrv:9876","autoCreateTopicEnable=true"]
+
+
+  console:
+    image: apacherocketmq/rocketmq-dashboard:2.0.0
+    #restart: always
+    hostname: rocketmqDashboard
+    ports:
+      - 9090:8080
+    environment:
+      - "JAVA_OPTS=-Drocketmq.namesrv.addr=namesrv-1:9876;namesrv-2:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=true" 
+      #JAVA_OPTS: -Drocketmq.namesrv.addr=mqnamesrv:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=falses
+    links: 
+      - namesrv-1:namesrv-1
+      - namesrv-2:namesrv-2

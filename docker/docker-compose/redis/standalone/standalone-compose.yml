@@ -1,0 +1,11 @@
+services:
+  redis:
+    image: redis:8
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      # 挂载数据目录（包含 AOF 和 RDB 文件）
+      - ./data:/data
+      - ./redis.conf:/etc/redis/redis.conf
+    command: sh -c "redis-server /etc/redis/redis.conf"

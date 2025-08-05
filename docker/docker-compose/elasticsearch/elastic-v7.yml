@@ -1,0 +1,77 @@
+services:
+  elasticsearch:
+    image: elasticsearch:7.8.1
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - logger.level=warn
+#      - xpack.security.enrollment.enabled=true
+#      - xpack.security.http.ssl.enabled=false
+#      - xpack.security.enabled=false
+      - http.cors.enabled=true
+      - http.cors.allow-origin="*"
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+     - elasticsearch-data:/usr/share/elasticsearch/data
+     # - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - 9200:9200
+    networks:
+      - elastic
+    
+  logstash:
+    image: logstash:7.8.1
+    container_name: logstash
+    ports:
+      - 5044:5044
+#    environment:
+#      - xpack.monitoring.elasticsearch.username=elastic
+#      - xpack.monitoring.elasticsearch.password=yPhxGjZ0qgmll*SDPgPc
+    volumes:
+      - ./pipelines.yml:/usr/share/logstash/config/pipelines.yml
+      # - ./springboot.conf:/usr/share/logstash/pipeline/springboot.conf
+    depends_on:
+      - elasticsearch
+    networks:
+      - elastic
+    
+  kibana:
+    image: kibana:7.8.1
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - I18N_LOCALE=zh-CN
+    # volumes:
+    #   - ./kibana.yml:/usr/share/kibana/config/kibana.yml
+    ports:
+      - 5601:5601 
+    depends_on:
+      - elasticsearch
+    networks:
+      - elastic
+
+  filebeat:
+    image: elastic/filebeat:7.8.1
+    container_name: filebeat
+    volumes:
+      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+    ports:
+      - 4560:4560 
+    depends_on:
+      - elasticsearch
+      - kibana
+    networks:
+      - elastic
+      
+networks:
+  elastic:
+    external: true
+
+volumes:
+  elasticsearch-data:
+    driver: local

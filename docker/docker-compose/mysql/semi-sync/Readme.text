@@ -1,0 +1,8 @@
+# 半同步复制
+# 主库 see mgr. 授权账户 see mgr readme.
+
+
+stop slave;
+change master to master_host='192.168.32.2',master_user='repl',master_password='123456',master_auto_position=1,GET_MASTER_PUBLIC_KEY=1;
+start slave;
+show slave status;

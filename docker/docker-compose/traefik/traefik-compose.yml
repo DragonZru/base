@@ -1,0 +1,27 @@
+services:    
+  traefik:
+    image: traefik:v3.3.4
+    container_name: traefik
+    networks:
+      - traefik_default
+    command:
+      - "--log.level=DEBUG"
+      - "--api=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+    ports:
+      # HTTP 流量入口
+      - "80:80"
+      # Traefik Web UI/API 入口
+      - "28080:8080"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      #- /var/run/docker.sock:/var/run/docker.sock
+      # 使用只读挂载
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik.yml:/etc/traefik/traefik.yml
+
+# 定义网络
+networks:
+  traefik_default:
+    driver: bridge

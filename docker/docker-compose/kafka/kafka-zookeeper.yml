@@ -1,0 +1,129 @@
+version: '20.10.24'
+
+services:
+  kafka-0:
+    image: bitnami/kafka:latest
+    hostname: kafka-0
+    ports:
+      - 9092:9092
+    networks:
+     - kafka-zookeeper
+    environment:
+    # 
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper1:2181,zookeeper2:2181,zookeeper3:2181"
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 0@kafka-0:9093,1@kafka-1:9093,2@kafka-2:9093
+      KAFKA_CFG_NODE_ID: 0
+
+    # listeners
+      KAFKA_CFG_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_CFG_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093,UI://0.0.0.0:9094
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,UI://kafka-0:9094
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,UI:PLAINTEXT
+      ALLOW_PLAINTEXT_LISTENER: yes
+      
+    # cluster
+      KAFKA_KRAFT_CLUSTER_ID: LelM2dIFQkiUFvXCEcqRWA
+    # 
+      KAFKA_HEAP_OPTS: -Xmx512M -Xms256M
+      
+  kafka-1:
+    image: bitnami/kafka:latest
+    hostname: kafka-1
+    ports:
+      - 9192:9092
+    networks:
+     - kafka-zookeeper
+    environment:
+    # 
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper1:2181,zookeeper2:2181,zookeeper3:2181"
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 0@kafka-0:9093,1@kafka-1:9093,2@kafka-2:9093
+      KAFKA_CFG_NODE_ID: 1
+      
+    # listeners
+      KAFKA_CFG_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_CFG_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093,UI://0.0.0.0:9094
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9192,UI://kafka-1:9094
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,UI:PLAINTEXT
+      ALLOW_PLAINTEXT_LISTENER: yes
+      
+    # cluster
+      KAFKA_KRAFT_CLUSTER_ID: LelM2dIFQkiUFvXCEcqRWA
+    # 
+      KAFKA_HEAP_OPTS: -Xmx512M -Xms256M
+      
+  kafka-2:
+    image: bitnami/kafka:latest
+    hostname: kafka-2
+    ports:
+      - 9292:9092
+    networks:
+     - kafka-zookeeper
+    environment:
+    # 
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper1:2181,zookeeper2:2181,zookeeper3:2181"
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 0@kafka-0:9093,1@kafka-1:9093,2@kafka-2:9093
+      KAFKA_CFG_NODE_ID: 2
+
+    # listeners
+      KAFKA_CFG_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_CFG_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093,UI://:9094
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9292,UI://kafka-2:9094
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,UI:PLAINTEXT
+      ALLOW_PLAINTEXT_LISTENER: yes
+      
+    # cluster
+      KAFKA_KRAFT_CLUSTER_ID: LelM2dIFQkiUFvXCEcqRWA
+    # 
+      KAFKA_HEAP_OPTS: -Xmx512M -Xms256M
+      
+  zookeeper1:
+    image: zookeeper:latest
+    hostname: zookeeper1
+    privileged: true
+    ports:
+      - 2181:2181
+    networks:
+     - kafka-zookeeper
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=zookeeper1:2888:3888;2181 server.2=zookeeper2:2888:3888;2181 server.3=zookeeper3:2888:3888;2181
+      
+  zookeeper2:
+    image: zookeeper:latest
+    hostname: zookeeper2
+    privileged: true
+    ports:
+      - 2182:2181
+    networks:
+     - kafka-zookeeper
+    environment:
+      ZOO_MY_ID: 2
+      ZOO_SERVERS: server.1=zookeeper1:2888:3888;2181 server.2=zookeeper2:2888:3888;2181 server.3=zookeeper3:2888:3888;2181
+      
+  zookeeper3:
+    image: zookeeper:latest
+    hostname: zookeeper3
+    privileged: true
+    ports:
+      - 2183:2181
+    networks:
+     - kafka-zookeeper
+    environment:
+      ZOO_MY_ID: 3
+      ZOO_SERVERS: server.1=zookeeper1:2888:3888;2181 server.2=zookeeper2:2888:3888;2181 server.3=zookeeper3:2888:3888;2181
+  
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    networks:
+     - kafka-zookeeper
+    container_name: kafka-ui
+    ports:
+      - 9000:8080
+    environment:
+      # 集群名称
+      - KAFKA_CLUSTERS_0_NAME=local
+      # 集群地址
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka-0:9094,kafka-1:9094,kafka-2:9094
+      
+networks:
+  kafka-zookeeper:

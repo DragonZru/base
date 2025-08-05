@@ -1,0 +1,81 @@
+services:
+  kafka-0:
+    image: bitnami/kafka:4.0
+    hostname: kafka-0
+    ports:
+      - 9092:9092
+#    networks:
+#     - kafka-zookeeper
+    environment:
+    # 使用Kraft代替zookeeper
+      KAFKA_ENABLE_KRAFT: true
+      KAFKA_CFG_PROCESS_ROLES: broker,controller
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 0@kafka-0:9093,1@kafka-1:9093,2@kafka-2:9093
+      KAFKA_CFG_NODE_ID: 0
+      
+    # listeners
+      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CFG_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_CFG_LISTENERS: PLAINTEXT://:9092,CONTROLLER://kafka-0:9093
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      ALLOW_PLAINTEXT_LISTENER: yes
+      
+    # cluster
+      KAFKA_KRAFT_CLUSTER_ID: LelM2dIFQkiUFvXCEcqRWA
+    # 
+      KAFKA_HEAP_OPTS: -Xmx512M -Xms256M
+      
+  kafka-1:
+    image: bitnami/kafka:4.0
+    hostname: kafka-1
+    ports:
+      - 9192:9092
+#    networks:
+#     - kafka-zookeeper
+    environment:
+    # 使用Kraft代替zookeeper
+      KAFKA_ENABLE_KRAFT: true
+      KAFKA_CFG_PROCESS_ROLES: broker,controller
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 0@kafka-0:9093,1@kafka-1:9093,2@kafka-2:9093
+      KAFKA_CFG_NODE_ID: 1
+      
+    # listeners
+      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CFG_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_CFG_LISTENERS: PLAINTEXT://:9092,CONTROLLER://kafka-1:9093
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      ALLOW_PLAINTEXT_LISTENER: yes
+      
+    # cluster
+      KAFKA_KRAFT_CLUSTER_ID: LelM2dIFQkiUFvXCEcqRWA
+    # 
+      KAFKA_HEAP_OPTS: -Xmx512M -Xms256M
+
+  kafka-2:
+    image: bitnami/kafka:4.0
+    hostname: kafka-2
+    ports:
+      - 9292:9092
+#    networks:
+#     - kafka-zookeeper
+    environment:
+    # 使用Kraft代替zookeeper
+      KAFKA_ENABLE_KRAFT: true
+      KAFKA_CFG_PROCESS_ROLES: broker,controller
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 0@kafka-0:9093,1@kafka-1:9093,2@kafka-2:9093
+      KAFKA_CFG_NODE_ID: 2
+      
+    # listeners
+      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CFG_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_CFG_LISTENERS: PLAINTEXT://:9092,CONTROLLER://kafka-2:9093
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      ALLOW_PLAINTEXT_LISTENER: yes
+      
+    # cluster
+      KAFKA_KRAFT_CLUSTER_ID: LelM2dIFQkiUFvXCEcqRWA
+    # 
+      KAFKA_HEAP_OPTS: -Xmx512M -Xms256M

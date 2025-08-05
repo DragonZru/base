@@ -1,0 +1,9 @@
+filebeat.inputs:
+- type: tcp
+  host: "0.0.0.0:4560"
+
+output.elasticsearch:
+  hosts: ["http://elasticsearch:9200"]
+
+setup.kibana:
+  host: "kibana:5601"

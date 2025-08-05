@@ -1,0 +1,46 @@
+## traefik.yml
+
+# Docker configuration backend
+providers:
+  docker:
+    defaultRule: "Host(`{{ trimPrefix `/` .Name }}.docker.localhost`)"
+
+# API and dashboard configuration
+# 关闭安全校验
+api:
+  insecure: true
+
+# Configuring Multiple Filters
+accessLog:
+  filePath: "./access.log"
+  format: json
+
+log:
+  filePath: "./traefik.log"
+
+#metrics:
+#  influxdb:
+#    address: localhost:8086
+
+http:
+  services:
+    nexus-cluster:
+      loadBalancer:
+        servers:
+          - url: "http://124.70.186.54:8081"
+          - url: "http://124.70.186.54:8082"
+          #- url: "http://x.x.x.x:6003"
+        #passHostHeader: true
+        healthCheck:
+          path: "/service/rest/v1/system/health"  # Nexus 健康检查路径
+          interval: "10s"
+          timeout: "3s"
+          healthyThreshold: 1
+          unhealthyThreshold: 3
+
+  routers:
+    nexus-router:
+      rule: "PathPrefix(`/repository`)"
+      entryPoints:
+        - web
+      service: nexus-cluster

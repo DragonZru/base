@@ -1,0 +1,21 @@
+[mysqld]
+server-id=1
+
+#binlog
+log-bin=master-bin
+#默认statement 语句模式，记录对应的DML(数据操作语言)到二进制文件binary log 中
+#row 行模式下，会记录修改的行到二进制文件
+#mixed 混合模式，大多数情况下会自适应语句级别，但某些非确定情况下会切换行模式
+binlog-format=row
+#可选012
+#0不刷新日志缓存区，操作系统每秒同步一次log buffer到磁盘（系统崩溃可能会丢失1s内数据）
+#1每次事物操作会刷新日志缓存区到磁盘
+#2每次事物操作会刷新日志缓存区到操作系统缓存区，由操作系统缓存区每秒提交到磁盘
+innodb_flush_log_at_trx_commit=1
+
+#二进制文件保留时间，过期删除，不设置会一直保留，拥有更多的历史节点可恢复但会占用更多磁盘空间
+expire_logs_days=7
+
+#GTID
+gtid_mode=on
+enforce_gtid_consistency=on

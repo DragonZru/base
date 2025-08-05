@@ -1,0 +1,51 @@
+#version: '20.10.24'
+
+# MGR 组复制
+services:
+  MGR1:
+    image: mysql:8.0.32
+    container_name: mgr1
+    ports:
+      - 13306:3306
+    volumes:
+      - ./node1.cnf:/etc/mysql/conf.d/my.cnf
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      TZ: Asia/Shanghai
+    networks:
+      - mysql_mgr
+
+  MGR2:
+    image: mysql:8.0.32
+    container_name: mgr2
+    ports:
+      - 13307:3306
+    volumes:
+      - ./node2.cnf:/etc/mysql/conf.d/my.cnf
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      TZ: Asia/Shanghai
+    depends_on:
+      - MGR1
+    networks:
+      - mysql_mgr
+      
+  MGR3:
+    image: mysql:8.0.32
+    container_name: mgr3
+    ports:
+      - 13308:3306      
+    volumes:
+      - ./node3.cnf:/etc/mysql/conf.d/my.cnf
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      TZ: Asia/Shanghai
+    depends_on:
+      - MGR2
+    networks:
+      - mysql_mgr
+      
+networks:
+  mysql_mgr:
+    external: true
+

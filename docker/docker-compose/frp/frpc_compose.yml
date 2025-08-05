@@ -1,0 +1,10 @@
+services:
+  frpc:
+    image: snowdreamtech/frpc:0.62
+    container_name: frpc
+#    restart: always
+    ports:
+      # web ui
+      - "7400:7400"
+    volumes:
+      - ./frpc.toml:/etc/frp/frpc.toml

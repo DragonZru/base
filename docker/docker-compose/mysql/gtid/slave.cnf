@@ -1,0 +1,15 @@
+[mysqld]
+server-id=2
+log-bin=slave-bin
+binlog-format=row
+innodb_flush_log_at_trx_commit=1
+relay-log=slave-relay-bin
+read-only=1
+
+#开启的话将记录自己本身的复制更改操作到二进制文件中（用于联级复制架构，从服务器可作为其他下级从服务器的master
+#log_slave_updates=ON
+
+
+#GTID
+gtid_mode=on
+enforce_gtid_consistency=on

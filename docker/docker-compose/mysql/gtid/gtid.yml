@@ -1,0 +1,23 @@
+# GTID 主从示例
+services:
+  master:
+    image: mysql:8.0.32
+    command: mysqld --server-id=1 --log-bin=master-bin --binlog-format=row --innodb_flush_log_at_trx_commit=1 --gtid_mode=on --enforce_gtid_consistency=on --expire_logs_days=7 --sync-master-info=1
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+#    volumes:
+#      - ./master.cnf:/etc/mysql/master.cnf
+      
+  salve:
+    image: mysql:8.0.32
+    command: mysqld --server-id=2 --log-bin=slave-bin --binlog-format=row --innodb_flush_log_at_trx_commit=1 --relay-log=slave-relay-bin --read-only=1 --gtid_mode=on --enforce_gtid_consistency=on --expire_logs_days=7
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+#    volumes:
+#      - ./slave.cnf:/etc/mysql/slave.cnf
+    depends_on:
+      - master
