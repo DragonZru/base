@@ -48,6 +48,7 @@ tasks.named('test') {
 
 dependencies {
     implementation 'com.ylli:common:0.0.6'
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 }
 
 dependencies {

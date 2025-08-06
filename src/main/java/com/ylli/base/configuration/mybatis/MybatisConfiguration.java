@@ -20,10 +20,10 @@ public class MybatisConfiguration {
 
 //    //单数据源下事物管理
 //    //集成shardingsphere+seata -> ShardingsphereTransactionConfiguration
-    @Bean
-    public PlatformTransactionManager transactionManager(DataSource dataSource) {
-        return new DataSourceTransactionManager(dataSource);
-    }
+//    @Bean
+//    public PlatformTransactionManager transactionManager(DataSource dataSource) {
+//        return new DataSourceTransactionManager(dataSource);
+//    }
 
     @Bean
     public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {

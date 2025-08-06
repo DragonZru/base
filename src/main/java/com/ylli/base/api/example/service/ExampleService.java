@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.ylli.base.api.example.mapper.ExampleMapper;
 import com.ylli.base.api.example.model.ExampleInfo;
 import com.ylli.base.api.example.model.ExampleModel;
+import com.ylli.base.feign.ExampleFeignClient;
 import com.ylli.common.exception.GenericException;
 import io.mybatis.mapper.example.ExampleWrapper;
 import io.mybatis.mapper.fn.Fn;
@@ -48,6 +49,9 @@ public class ExampleService {
 //        return Hashing.murmur3_128().hashString(username, UTF_8).toString();
 //    }
 
+    @Autowired
+    ExampleFeignClient exampleFeignClient;
+
     /**
      * insert          插入all fields
      * insertSelective 插入给定字段，其余使用mysql default
@@ -62,7 +66,11 @@ public class ExampleService {
         model.info = new ExampleInfo(null, "ylli", "sbl");
         exampleMapper.insertSelective(model);
 
-        seataRestTemplate.getForObject("http://base-ex/test/exception", String.class);
+//        seataRestTemplate.getForObject("http://base-test/test/exception", String.class);
+        System.out.println(new Gson().toJson( model));
+//        seataRestTemplate.postForObject("http://base-test/seata/example", model, Void.class);
+        exampleFeignClient.createExample(model);
+        throw new RuntimeException("test");
 
 //        hashOps.put(USERNAME_BLOOM_FILTER_KEY, model.username, "1");
     }
