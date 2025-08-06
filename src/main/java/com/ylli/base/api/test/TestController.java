@@ -46,12 +46,12 @@ public class TestController {
 
 //        SendResult sendResult = defaultMQProducer.send(new Message("TestTopic", "TagA", ("Hello RocketMQ").getBytes()));
 //        return sendResult;
-//        return webClientBuilder.build()
-//                .get()
-//                .uri("http://leaf/uid")
-//                .retrieve()
-//                .bodyToMono(Long.class);
+        return webClientBuilder.build()
+                .get()
+                .uri("http://leaf/uid")
+                .retrieve()
+                .bodyToMono(Long.class);
 
-        return password;
+//        return password;
     }
 }
