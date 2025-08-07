@@ -13,7 +13,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
+//import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 /**
@@ -24,11 +24,11 @@ import reactor.core.publisher.Mono;
 @RefreshScope
 public class TestController {
 
-    private final WebClient.Builder webClientBuilder;
+//    private final WebClient.Builder webClientBuilder;
 
-    public TestController(WebClient.Builder webClientBuilder) {
-        this.webClientBuilder = webClientBuilder;
-    }
+//    public TestController(WebClient.Builder webClientBuilder) {
+//        this.webClientBuilder = webClientBuilder;
+//    }
 
 //    @Autowired
 //    DefaultMQProducer defaultMQProducer;
@@ -46,12 +46,12 @@ public class TestController {
 
 //        SendResult sendResult = defaultMQProducer.send(new Message("TestTopic", "TagA", ("Hello RocketMQ").getBytes()));
 //        return sendResult;
-        return webClientBuilder.build()
-                .get()
-                .uri("http://leaf/uid")
-                .retrieve()
-                .bodyToMono(Long.class);
+//        return webClientBuilder.build()
+//                .get()
+//                .uri("http://leaf/uid")
+//                .retrieve()
+//                .bodyToMono(Long.class);
 
-//        return password;
+        return password;
     }
 }

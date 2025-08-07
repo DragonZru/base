@@ -4,7 +4,7 @@ import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.reactive.function.client.WebClient;
+//import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * <a href="https://docs.spring.io/spring-cloud-commons/docs/current/reference/html/#webflux-with-reactive-loadbalancer">webflux-with-reactive-loadbalancer</a>
@@ -16,11 +16,11 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 public class ClientHttpConfiguration {
 
-    @Bean
-    @LoadBalanced
-    public WebClient.Builder webClientBuilder() {
-        return WebClient.builder();
-    }
+//    @Bean
+//    @LoadBalanced
+//    public WebClient.Builder webClientBuilder() {
+//        return WebClient.builder();
+//    }
 
     // 或者手动添加 lb filter
 //    @Bean
