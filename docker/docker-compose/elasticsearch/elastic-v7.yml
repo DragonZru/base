@@ -10,9 +10,11 @@ services:
 #      - xpack.security.enabled=false
       - http.cors.enabled=true
       - http.cors.allow-origin="*"
+      # 禁用swap，内存交换
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ulimits:
+      # 内存锁定权限
       memlock:
         soft: -1
         hard: -1
@@ -20,7 +22,9 @@ services:
      - elasticsearch-data:/usr/share/elasticsearch/data
      # - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     ports:
-      - 9200:9200
+#      - 9200:9200
+      # only be accessible from the host machine itself.
+      - 127.0.0.1:9200:9200
     networks:
       - elastic
     
