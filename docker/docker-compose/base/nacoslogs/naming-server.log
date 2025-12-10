@@ -1,295 +1,272 @@
-2025-06-05 10:15:13,761 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:13:21,802 ERROR [TASK-FAILED] java.lang.InterruptedException
 
 java.lang.InterruptedException: null
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
 	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
 	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:15:13,761 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:13:21,803 ERROR [TASK-FAILED] java.lang.InterruptedException
 
 java.lang.InterruptedException: null
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
 	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
 	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:15:13,761 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:13:21,803 ERROR [TASK-FAILED] java.lang.InterruptedException
 
 java.lang.InterruptedException: null
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
 	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
 	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:15:24,138 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:13:21,803 ERROR [TASK-FAILED] java.lang.InterruptedException
 
 java.lang.InterruptedException: null
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
 	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
 	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:15:24,138 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:13:21,803 ERROR [TASK-FAILED] java.lang.InterruptedException
 
 java.lang.InterruptedException: null
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
 	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
 	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:15:24,138 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:13:21,803 ERROR [TASK-FAILED] java.lang.InterruptedException
 
 java.lang.InterruptedException: null
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
 	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
 	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:15:33,397 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:13:21,806 ERROR [TASK-FAILED] java.lang.InterruptedException
 
 java.lang.InterruptedException: null
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
 	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
 	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:15:33,398 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:13:21,807 ERROR [TASK-FAILED] java.lang.InterruptedException
 
 java.lang.InterruptedException: null
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
 	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
 	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:15:33,398 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:16:55,790 INFO [SelectorManager] Load SelectorContextBuilder(class com.alibaba.nacos.naming.selector.context.CmdbSelectorContextBuilder) contextType(CMDB) successfully.
+
+2025-12-10 15:16:55,792 INFO [SelectorManager] Load SelectorContextBuilder(class com.alibaba.nacos.naming.selector.context.NoneSelectorContextBuilder) contextType(NONE) successfully.
+
+2025-12-10 15:16:55,794 INFO [SelectorManager] Load Selector(class com.alibaba.nacos.naming.selector.LabelSelector) type(label) contextType(CMDB) successfully.
+
+2025-12-10 15:16:55,794 INFO [SelectorManager] Load Selector(class com.alibaba.nacos.naming.selector.NoneSelector) type(none) contextType(NONE) successfully.
+
+2025-12-10 15:16:56,530 INFO Load instance extension handler []
+
+2025-12-10 15:20:20,329 INFO [NamingServerHttpClientManager] Start destroying HTTP-Client
+
+2025-12-10 15:20:20,353 INFO [NamingServerHttpClientManager] Completed destruction of HTTP-Client
+
+2025-12-10 15:21:50,079 ERROR [TASK-FAILED] java.lang.InterruptedException
 
 java.lang.InterruptedException: null
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
 	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
 	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:15:43,347 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:21:50,080 ERROR [TASK-FAILED] java.lang.InterruptedException
 
 java.lang.InterruptedException: null
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
 	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
 	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:15:43,347 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:21:50,080 ERROR [TASK-FAILED] java.lang.InterruptedException
 
 java.lang.InterruptedException: null
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
 	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
 	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:15:43,347 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:21:50,082 ERROR [TASK-FAILED] java.lang.InterruptedException
 
 java.lang.InterruptedException: null
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
 	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
 	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:15:53,097 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:21:50,079 ERROR [TASK-FAILED] java.lang.InterruptedException
 
 java.lang.InterruptedException: null
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
 	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
 	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:15:53,097 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:21:50,079 ERROR [TASK-FAILED] java.lang.InterruptedException
 
 java.lang.InterruptedException: null
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
 	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
 	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:15:53,097 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:21:50,079 ERROR [TASK-FAILED] java.lang.InterruptedException
 
 java.lang.InterruptedException: null
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
 	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
 	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:15:53,097 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:21:50,079 ERROR [TASK-FAILED] java.lang.InterruptedException
 
 java.lang.InterruptedException: null
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
 	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
 	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:16:02,960 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:25:01,370 ERROR [TASK-FAILED] java.lang.InterruptedException
 
 java.lang.InterruptedException: null
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
 	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
 	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:16:02,960 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:25:01,370 ERROR [TASK-FAILED] java.lang.InterruptedException
 
 java.lang.InterruptedException: null
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
 	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
 	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:16:02,960 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:25:01,370 ERROR [TASK-FAILED] java.lang.InterruptedException
 
 java.lang.InterruptedException: null
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
 	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
 	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:16:02,960 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:25:01,376 ERROR [TASK-FAILED] java.lang.InterruptedException
 
 java.lang.InterruptedException: null
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
 	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
 	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:16:13,871 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:25:01,370 ERROR [TASK-FAILED] java.lang.InterruptedException
 
 java.lang.InterruptedException: null
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
 	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
 	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:16:13,871 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:25:01,376 ERROR [TASK-FAILED] java.lang.InterruptedException
 
 java.lang.InterruptedException: null
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
 	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
 	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:16:13,871 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:25:01,377 ERROR [TASK-FAILED] java.lang.InterruptedException
 
 java.lang.InterruptedException: null
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
 	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
 	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:16:25,391 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:25:01,379 ERROR [TASK-FAILED] java.lang.InterruptedException
 
 java.lang.InterruptedException: null
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
 	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
 	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:16:25,394 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:25:44,548 INFO [SelectorManager] Load SelectorContextBuilder(class com.alibaba.nacos.naming.selector.context.CmdbSelectorContextBuilder) contextType(CMDB) successfully.
 
-java.lang.InterruptedException: null
-	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
-	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
-	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
-	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:16:25,394 ERROR [TASK-FAILED] java.lang.InterruptedException
+2025-12-10 15:25:44,548 INFO [SelectorManager] Load SelectorContextBuilder(class com.alibaba.nacos.naming.selector.context.NoneSelectorContextBuilder) contextType(NONE) successfully.
 
-java.lang.InterruptedException: null
-	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
-	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2048)
-	at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
-	at com.alibaba.nacos.common.task.engine.TaskExecuteWorker$InnerWorker.run(TaskExecuteWorker.java:118)
-2025-06-05 10:16:49,613 INFO [SelectorManager] Load SelectorContextBuilder(class com.alibaba.nacos.naming.selector.context.CmdbSelectorContextBuilder) contextType(CMDB) successfully.
+2025-12-10 15:25:44,549 INFO [SelectorManager] Load Selector(class com.alibaba.nacos.naming.selector.LabelSelector) type(label) contextType(CMDB) successfully.
 
-2025-06-05 10:16:49,614 INFO [SelectorManager] Load SelectorContextBuilder(class com.alibaba.nacos.naming.selector.context.NoneSelectorContextBuilder) contextType(NONE) successfully.
+2025-12-10 15:25:44,550 INFO [SelectorManager] Load Selector(class com.alibaba.nacos.naming.selector.NoneSelector) type(none) contextType(NONE) successfully.
 
-2025-06-05 10:16:49,616 INFO [SelectorManager] Load Selector(class com.alibaba.nacos.naming.selector.LabelSelector) type(label) contextType(CMDB) successfully.
+2025-12-10 15:25:45,191 INFO Load instance extension handler []
 
-2025-06-05 10:16:49,616 INFO [SelectorManager] Load Selector(class com.alibaba.nacos.naming.selector.NoneSelector) type(none) contextType(NONE) successfully.
+2025-12-10 15:29:51,295 INFO [NamingServerHttpClientManager] Start destroying HTTP-Client
 
-2025-06-05 10:16:50,371 INFO Load instance extension handler []
+2025-12-10 15:29:51,308 INFO [NamingServerHttpClientManager] Completed destruction of HTTP-Client
 
-2025-06-05 10:16:54,542 INFO Client connection 172.23.0.4:8091#true connect
+2025-12-10 15:30:19,190 INFO [SelectorManager] Load SelectorContextBuilder(class com.alibaba.nacos.naming.selector.context.CmdbSelectorContextBuilder) contextType(CMDB) successfully.
 
-2025-06-05 10:16:54,553 INFO Client change for service Service{namespace='seata', group='SEATA_GROUP', name='seata-server', ephemeral=true, revision=0}, 172.23.0.4:8091#true
+2025-12-10 15:30:19,190 INFO [SelectorManager] Load SelectorContextBuilder(class com.alibaba.nacos.naming.selector.context.NoneSelectorContextBuilder) contextType(NONE) successfully.
 
-2025-06-05 10:34:51,596 INFO Client remove for service Service{namespace='seata', group='SEATA_GROUP', name='seata-server', ephemeral=true, revision=1}, 172.23.0.4:8091#true
+2025-12-10 15:30:19,194 INFO [SelectorManager] Load Selector(class com.alibaba.nacos.naming.selector.LabelSelector) type(label) contextType(CMDB) successfully.
 
-2025-06-05 10:34:56,378 INFO [NamingServerHttpClientManager] Start destroying HTTP-Client
+2025-12-10 15:30:19,194 INFO [SelectorManager] Load Selector(class com.alibaba.nacos.naming.selector.NoneSelector) type(none) contextType(NONE) successfully.
 
-2025-06-05 10:34:56,404 INFO [NamingServerHttpClientManager] Completed destruction of HTTP-Client
+2025-12-10 15:30:20,203 INFO Load instance extension handler []
 
-2025-06-05 11:08:07,841 INFO [SelectorManager] Load SelectorContextBuilder(class com.alibaba.nacos.naming.selector.context.CmdbSelectorContextBuilder) contextType(CMDB) successfully.
+2025-12-10 15:30:25,923 INFO Client connection 172.19.0.4:8091#true connect
 
-2025-06-05 11:08:07,841 INFO [SelectorManager] Load SelectorContextBuilder(class com.alibaba.nacos.naming.selector.context.NoneSelectorContextBuilder) contextType(NONE) successfully.
+2025-12-10 15:30:25,936 INFO Client change for service Service{namespace='seata', group='SEATA_GROUP', name='seata-server', ephemeral=true, revision=0}, 172.19.0.4:8091#true
 
-2025-06-05 11:08:07,842 INFO [SelectorManager] Load Selector(class com.alibaba.nacos.naming.selector.LabelSelector) type(label) contextType(CMDB) successfully.
+2025-12-10 15:37:47,319 INFO Client remove for service Service{namespace='seata', group='SEATA_GROUP', name='seata-server', ephemeral=true, revision=1}, 172.19.0.4:8091#true
 
-2025-06-05 11:08:07,842 INFO [SelectorManager] Load Selector(class com.alibaba.nacos.naming.selector.NoneSelector) type(none) contextType(NONE) successfully.
+2025-12-10 15:37:57,192 INFO Client change for service Service{namespace='seata', group='SEATA_GROUP', name='seata-server', ephemeral=true, revision=2}, 172.19.0.4:8091#true
 
-2025-06-05 11:08:08,271 INFO Load instance extension handler []
+2025-12-10 16:04:50,760 INFO Client connection 1765353865301_192.168.65.1_26880 disconnect, remove instances and subscribers
 
-2025-06-05 11:08:11,724 INFO Client connection 172.23.0.6:8091#true connect
+2025-12-10 16:06:27,201 INFO Client connection 1765353986341_192.168.65.1_56627 disconnect, remove instances and subscribers
 
-2025-06-05 11:08:11,732 INFO Client change for service Service{namespace='seata', group='SEATA_GROUP', name='seata-server', ephemeral=true, revision=0}, 172.23.0.6:8091#true
+2025-12-10 16:06:27,203 INFO Client connection 1765353984099_192.168.65.1_37343 disconnect, remove instances and subscribers
 
-2025-06-05 11:19:19,924 INFO Client remove for service Service{namespace='seata', group='SEATA_GROUP', name='seata-server', ephemeral=true, revision=1}, 172.23.0.6:8091#true
+2025-12-10 16:07:36,124 INFO [NamingServerHttpClientManager] Start destroying HTTP-Client
 
-2025-06-05 11:19:24,607 INFO [NamingServerHttpClientManager] Start destroying HTTP-Client
+2025-12-10 16:07:36,153 INFO [NamingServerHttpClientManager] Completed destruction of HTTP-Client
 
-2025-06-05 11:19:24,668 INFO [NamingServerHttpClientManager] Completed destruction of HTTP-Client
+2025-12-10 16:08:01,046 INFO [SelectorManager] Load SelectorContextBuilder(class com.alibaba.nacos.naming.selector.context.CmdbSelectorContextBuilder) contextType(CMDB) successfully.
 
-2025-06-05 14:16:42,185 INFO [SelectorManager] Load SelectorContextBuilder(class com.alibaba.nacos.naming.selector.context.CmdbSelectorContextBuilder) contextType(CMDB) successfully.
+2025-12-10 16:08:01,046 INFO [SelectorManager] Load SelectorContextBuilder(class com.alibaba.nacos.naming.selector.context.NoneSelectorContextBuilder) contextType(NONE) successfully.
 
-2025-06-05 14:16:42,186 INFO [SelectorManager] Load SelectorContextBuilder(class com.alibaba.nacos.naming.selector.context.NoneSelectorContextBuilder) contextType(NONE) successfully.
+2025-12-10 16:08:01,047 INFO [SelectorManager] Load Selector(class com.alibaba.nacos.naming.selector.LabelSelector) type(label) contextType(CMDB) successfully.
 
-2025-06-05 14:16:42,187 INFO [SelectorManager] Load Selector(class com.alibaba.nacos.naming.selector.LabelSelector) type(label) contextType(CMDB) successfully.
+2025-12-10 16:08:01,047 INFO [SelectorManager] Load Selector(class com.alibaba.nacos.naming.selector.NoneSelector) type(none) contextType(NONE) successfully.
 
-2025-06-05 14:16:42,187 INFO [SelectorManager] Load Selector(class com.alibaba.nacos.naming.selector.NoneSelector) type(none) contextType(NONE) successfully.
+2025-12-10 16:08:01,736 INFO Load instance extension handler []
 
-2025-06-05 14:16:43,035 INFO Load instance extension handler []
+2025-12-10 16:08:05,880 INFO Client connection 172.19.0.2:8091#true connect
 
-2025-06-05 14:16:46,766 INFO Client connection 172.23.0.6:8091#true connect
+2025-12-10 16:08:05,889 INFO Client change for service Service{namespace='seata', group='SEATA_GROUP', name='seata-server', ephemeral=true, revision=0}, 172.19.0.2:8091#true
 
-2025-06-05 14:16:46,777 INFO Client change for service Service{namespace='seata', group='SEATA_GROUP', name='seata-server', ephemeral=true, revision=0}, 172.23.0.6:8091#true
+2025-12-10 16:09:05,496 INFO Client connection 1765354144470_192.168.65.1_52156 disconnect, remove instances and subscribers
 
-2025-06-05 14:23:50,619 INFO Client remove for service Service{namespace='seata', group='SEATA_GROUP', name='seata-server', ephemeral=true, revision=1}, 172.23.0.6:8091#true
+2025-12-10 16:09:05,499 INFO Client connection 1765354142364_192.168.65.1_60338 disconnect, remove instances and subscribers
 
-2025-06-05 14:23:56,285 INFO [NamingServerHttpClientManager] Start destroying HTTP-Client
+2025-12-10 16:11:03,517 INFO Client connection 1765354262539_192.168.65.1_47272 disconnect, remove instances and subscribers
 
-2025-06-05 14:23:56,315 INFO [NamingServerHttpClientManager] Completed destruction of HTTP-Client
+2025-12-10 16:11:03,522 INFO Client connection 1765354260063_192.168.65.1_44201 disconnect, remove instances and subscribers
 
-2025-06-05 14:24:33,312 INFO [SelectorManager] Load SelectorContextBuilder(class com.alibaba.nacos.naming.selector.context.CmdbSelectorContextBuilder) contextType(CMDB) successfully.
+2025-12-10 16:12:48,406 INFO Client connection 1765354367619_192.168.65.1_42288 disconnect, remove instances and subscribers
 
-2025-06-05 14:24:33,312 INFO [SelectorManager] Load SelectorContextBuilder(class com.alibaba.nacos.naming.selector.context.NoneSelectorContextBuilder) contextType(NONE) successfully.
+2025-12-10 16:12:48,407 INFO Client connection 1765354365098_192.168.65.1_36847 disconnect, remove instances and subscribers
 
-2025-06-05 14:24:33,314 INFO [SelectorManager] Load Selector(class com.alibaba.nacos.naming.selector.LabelSelector) type(label) contextType(CMDB) successfully.
+2025-12-10 16:15:33,860 INFO Client connection 1765354533155_192.168.65.1_24811 disconnect, remove instances and subscribers
 
-2025-06-05 14:24:33,314 INFO [SelectorManager] Load Selector(class com.alibaba.nacos.naming.selector.NoneSelector) type(none) contextType(NONE) successfully.
+2025-12-10 16:15:33,864 INFO Client connection 1765354531189_192.168.65.1_49774 disconnect, remove instances and subscribers
 
-2025-06-05 14:24:33,768 INFO Load instance extension handler []
+2025-12-10 16:17:45,930 INFO Client connection 1765354663190_192.168.65.1_28181 disconnect, remove instances and subscribers
 
-2025-06-05 14:24:37,681 INFO Client connection 172.23.0.6:8091#true connect
+2025-12-10 16:17:45,931 INFO Client connection 1765354665232_192.168.65.1_62845 disconnect, remove instances and subscribers
 
-2025-06-05 14:24:37,699 INFO Client change for service Service{namespace='seata', group='SEATA_GROUP', name='seata-server', ephemeral=true, revision=0}, 172.23.0.6:8091#true
+2025-12-10 16:18:58,097 INFO Client connection 1765354738089_192.168.65.1_26494 connect
 
-2025-06-05 14:34:45,408 INFO Client remove for service Service{namespace='seata', group='SEATA_GROUP', name='seata-server', ephemeral=true, revision=1}, 172.23.0.6:8091#true
+2025-12-10 16:18:58,116 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='base', ephemeral=true, revision=0}, 1765354738089_192.168.65.1_26494
 
-2025-06-05 14:34:50,115 INFO [NamingServerHttpClientManager] Start destroying HTTP-Client
+2025-12-10 16:20:03,405 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='base', ephemeral=true, revision=1}, 1765354738089_192.168.65.1_26494
 
-2025-06-05 14:34:50,144 INFO [NamingServerHttpClientManager] Completed destruction of HTTP-Client
+2025-12-10 16:20:03,419 INFO Client connection 1765354738089_192.168.65.1_26494 disconnect, remove instances and subscribers
 
-2025-06-05 14:37:22,603 INFO [SelectorManager] Load SelectorContextBuilder(class com.alibaba.nacos.naming.selector.context.CmdbSelectorContextBuilder) contextType(CMDB) successfully.
+2025-12-10 16:20:03,888 INFO Client connection 1765354732592_192.168.65.1_31973 disconnect, remove instances and subscribers
 
-2025-06-05 14:37:22,603 INFO [SelectorManager] Load SelectorContextBuilder(class com.alibaba.nacos.naming.selector.context.NoneSelectorContextBuilder) contextType(NONE) successfully.
+2025-12-10 16:20:17,331 INFO Client connection 1765354817324_192.168.65.1_63413 connect
 
-2025-06-05 14:37:22,604 INFO [SelectorManager] Load Selector(class com.alibaba.nacos.naming.selector.LabelSelector) type(label) contextType(CMDB) successfully.
+2025-12-10 16:20:17,346 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='base', ephemeral=true, revision=2}, 1765354817324_192.168.65.1_63413
 
-2025-06-05 14:37:22,604 INFO [SelectorManager] Load Selector(class com.alibaba.nacos.naming.selector.NoneSelector) type(none) contextType(NONE) successfully.
-
-2025-06-05 14:37:23,068 INFO Load instance extension handler []
-
-2025-06-05 14:38:12,091 INFO Client connection 172.23.0.6:8091#true connect
-
-2025-06-05 14:38:12,098 INFO Client change for service Service{namespace='seata', group='SEATA_GROUP', name='seata-server', ephemeral=true, revision=0}, 172.23.0.6:8091#true
-
-2025-06-05 14:39:28,416 INFO Client remove for service Service{namespace='seata', group='SEATA_GROUP', name='seata-server', ephemeral=true, revision=1}, 172.23.0.6:8091#true
-
-2025-06-05 14:39:32,444 INFO [NamingServerHttpClientManager] Start destroying HTTP-Client
-
-2025-06-05 14:39:32,474 INFO [NamingServerHttpClientManager] Completed destruction of HTTP-Client
-
-2025-06-05 14:39:33,678 ERROR [HEALTH-CHECK-V2] error while processing NIO task
-
-java.lang.InterruptedException: null
-	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
-	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2088)
-	at java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:467)
-	at com.alibaba.nacos.naming.healthcheck.v2.processor.TcpHealthCheckProcessor.processTask(TcpHealthCheckProcessor.java:122)
-	at com.alibaba.nacos.naming.healthcheck.v2.processor.TcpHealthCheckProcessor.run(TcpHealthCheckProcessor.java:139)
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:750)

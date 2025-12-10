@@ -1,4 +1,0 @@
-2025-06-04 17:24:39,790|7|null|172.23.0.4|get|transport.shutdown.wait|SEATA_GROUP|seata||unknown
-2025-06-04 23:23:36,855|22|null|172.23.0.4|get|server.raft.group|SEATA_GROUP|seata||unknown
-2025-06-04 23:23:36,874|40|null|172.23.0.4|get|server.enableParallelRequestHandle|SEATA_GROUP|seata||unknown
-2025-06-04 23:23:36,913|2|null|172.23.0.4|get|server.enableCheckAuth|SEATA_GROUP|seata||unknown

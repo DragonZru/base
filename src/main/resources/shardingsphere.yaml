@@ -7,7 +7,7 @@ dataSources:
   ds_0:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    jdbcUrl: jdbc:mysql://124.70.186.54:3306/shardingsphere?useUnicode=true&useJDBCCompliantTimezoneShift=true&serverTimezone=Asia/Shanghai
+    jdbcUrl: jdbc:mysql://43.139.232.30:3306/shardingsphere?useUnicode=true&useJDBCCompliantTimezoneShift=true&serverTimezone=Asia/Shanghai
     username: root
     password: Guyuefangyuan6
 #  ds_1:

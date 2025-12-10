@@ -4,18 +4,13 @@ function usage() {
     echo "Usage:"
     echo "  run.sh [CONFIG]"
     echo "example 1 :"
-    echo "  run.sh -e canal.instance.master.address=127.0.0.1:3306 \\"
+    echo "  run.sh -e canal.instance.master.address=43.139.232.30:3306 \\"
     echo "         -e canal.instance.dbUsername=canal \\"
     echo "         -e canal.instance.dbPassword=canal \\"
     echo "         -e canal.instance.connectionCharset=UTF-8 \\"
     echo "         -e canal.instance.tsdb.enable=true \\"
-    echo "         -e canal.instance.gtidon=false \\"
+    echo "         -e canal.instance.gtidon=true \\"
     echo "         -e canal.instance.filter.regex=.*\\\\\\..* "
-    echo "example 2 :"
-    echo "  run.sh -e canal.admin.manager=127.0.0.1:8089 \\"
-    echo "         -e canal.admin.port=11110 \\"
-    echo "         -e canal.admin.user=admin \\"
-    echo "         -e canal.admin.passwd=4ACFE3202A5FF5CF467898FC58AAB1D615029441"
     exit
 }
 
@@ -100,3 +95,13 @@ LOCALHOST=`getMyIp`
 cmd="docker run -d -it -h $LOCALHOST $CONFIG --name=canal-server $VOLUMNS $NET_MODE $PORTS $MEMORY canal/canal-server"
 echo $cmd
 eval $cmd
+
+
+
+#sh run.sh -e canal.instance.master.address=43.139.232.30:3306 \
+#         -e canal.instance.dbUsername=canal \
+#         -e canal.instance.dbPassword=canal \
+#         -e canal.instance.connectionCharset=UTF-8 \
+#         -e canal.instance.tsdb.enable=true \
+#         -e canal.instance.gtidon=true \
+#         -e canal.zkServers=host.docker.internal:2181
