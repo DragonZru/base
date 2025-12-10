@@ -16,8 +16,8 @@ services:
   nacos:
     image: nacos/nacos-server:v2.5.0
     container_name: nacos
-    volumes:
-      - ./nacoslogs/:/home/nacos/logs
+#    volumes:
+#      - ./nacoslogs/:/home/nacos/logs
 #    restart: always
     ports:
       - "8848:8848"
@@ -46,7 +46,7 @@ services:
       - "7091:7091"
       - "8091:8091"
     environment:
-#      - SEATA_IP=124.70.186.54
+      - SEATA_IP=host.docker.internal
       - SEATA_PORT=8091
     volumes:
       - "/usr/share/zoneinfo/Asia/Shanghai:/etc/localtime"        #设置系统时区
