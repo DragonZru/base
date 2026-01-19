@@ -1,5 +1,5 @@
 # frpc.toml
-serverAddr = "124.70.186.54"
+serverAddr = "43.139.232.30"
 serverPort = 7000
 
 # 安全认证配置
@@ -11,17 +11,24 @@ webServer.port = 7400
 webServer.user = "admin"    
 webServer.password = "admin"
 
-[[proxies]]             # 自定义服务名称
-name = "nexus"
-type = "tcp"             # 协议类型（支持 tcp/udp/http/https）
-localIp = "host.docker.internal"  # 宿主机地址（Docker 特殊 DNS）
-localPort = 8081         # nexus 服务端口
-remotePort = 8081
-#customDomains = ["124.70.186.54"]  # 可选：绑定域名（需解析到云服务器 IP
+#[[proxies]]             # 自定义服务名称
+#name = "nexus"
+#type = "tcp"             # 协议类型（支持 tcp/udp/http/https）
+#localIp = "host.docker.internal"  # 宿主机地址（Docker 特殊 DNS）
+#localPort = 8081         # nexus 服务端口
+#remotePort = 8081
+##customDomains = ["124.70.186.54"]  # 可选：绑定域名（需解析到云服务器 IP
+
+#[[proxies]]             # 自定义服务名称
+#name = "rocketmq-proxy"
+#type = "tcp"             # 协议类型（支持 tcp/udp/http/https）
+#localIp = "host.docker.internal"  # 宿主机地址（Docker 特殊 DNS）
+#localPort = 18081         #  proxy 服务端口
+#remotePort = 18081
 
 [[proxies]]             # 自定义服务名称
-name = "rocketmq-proxy"
+name = "windows remote address port"
 type = "tcp"             # 协议类型（支持 tcp/udp/http/https）
 localIp = "host.docker.internal"  # 宿主机地址（Docker 特殊 DNS）
-localPort = 18081         #  proxy 服务端口
-remotePort = 18081
+localPort = 3389         #  proxy 服务端口
+remotePort = 3389

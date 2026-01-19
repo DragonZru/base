@@ -8,6 +8,6 @@ auth.token = "bYoqT51-"
 webServer.addr = "0.0.0.0"
 webServer.port = 7500
 webServer.user = "admin"
-webServer.password = "admin"
+webServer.password = "Guyuefangyuan6"
 
 #vhostHTTPPort = 80

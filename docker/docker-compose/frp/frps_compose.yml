@@ -1,7 +1,7 @@
 # frps_server.yml
 services:
   frps:
-    image: snowdreamtech/frps:0.62
+    image: snowdreamtech/frps:0.65
     volumes:
       - ./frps.toml:/etc/frp/frps.toml
     ports:
@@ -9,5 +9,5 @@ services:
       #- "80:80"
       # web ui
       - "7500:7500"
-      - "8081:8081"
+      - "3389:3389"
     restart: always
