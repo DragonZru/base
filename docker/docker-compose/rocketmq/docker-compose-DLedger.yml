@@ -1,7 +1,9 @@
 services:
   namesrv:
-    image: apache/rocketmq:4.9.6
-    hostname: rocketmqNamesrv
+    image: apache/rocketmq:5.3.2
+    hostname: namesrv
+    networks:
+      - rocketmq
     environment:
       MAX_POSSIBLE_HEAP: 100000000
     ports:
@@ -9,65 +11,70 @@ services:
     command: sh mqnamesrv
 
   broker-1:
-    image: apache/rocketmq:4.9.6
-    hostname: broker-DLeger-1
+    image: apache/rocketmq:5.3.2
+    hostname: broker-1
+    networks:
+      - rocketmq
     ports:
-      - 10909:10909
-      - 10911:10911
-    #这里对应dLegerPeers=d0-192.168.10.7:40911;d1-192.168.10.7:40912;d2-192.168.10.7:40913
-    #不暴露DLeger 无法选举通信（因为是docker环境）
+      - 30911:30911
       - 40911:40911
     environment:
       MAX_POSSIBLE_HEAP: 200000000
       NAMESRV_ADDR: namesrv:9876
-      BROKER_ROLE: ASYNC_MASTER
-      FLUSH_DISK_TYPE: ASYNC_FLUSH
-      BROKER_NAME: broker-DLeger
     volumes: 
       - ./broker_1.conf:/opt/rocketmq/conf/broker.conf
-    links: 
-      - namesrv:namesrv
     command: sh mqbroker -c /opt/rocketmq/conf/broker.conf
     
   broker-2:
-    image: apache/rocketmq:4.9.6
-    hostname: broker-DLeger-2
+    image: apache/rocketmq:5.3.2
+    hostname: broker-2
+    networks:
+      - rocketmq
     ports:
-      - 10910:10909
-      - 10912:10911
+      - 30912:30912
       - 40912:40912
     environment:
       MAX_POSSIBLE_HEAP: 200000000
       NAMESRV_ADDR: namesrv:9876
-      BROKER_ROLE: ASYNC_MASTER
-      FLUSH_DISK_TYPE: ASYNC_FLUSH
-      BROKER_NAME: broker-DLeger
-
     volumes: 
       - ./broker_2.conf:/opt/rocketmq/conf/broker.conf
-    links: 
-      - namesrv:namesrv
     command: sh mqbroker -c /opt/rocketmq/conf/broker.conf
     
   broker-3:
-    image: apache/rocketmq:4.9.6
-    hostname: broker-DLeger-3
+    image: apache/rocketmq:5.3.2
+    hostname: broker-3
+    networks:
+      - rocketmq
     ports:
-      - 10913:10909
-      - 10915:10911
+      - 30913:30913
       - 40913:40913
     environment:
       MAX_POSSIBLE_HEAP: 200000000
       NAMESRV_ADDR: namesrv:9876
-      BROKER_ROLE: ASYNC_MASTER
-      FLUSH_DISK_TYPE: ASYNC_FLUSH
-      BROKER_NAME: broker-DLeger
-      
     volumes: 
       - ./broker_3.conf:/opt/rocketmq/conf/broker.conf
-    links: 
-      - namesrv:namesrv
     command: sh mqbroker -c /opt/rocketmq/conf/broker.conf
+
+  proxy:
+    image: apache/rocketmq:5.3.2
+    container_name: proxy
+    networks:
+      - rocketmq
+    depends_on:
+      - namesrv
+      - broker-1
+      - broker-2
+      - broker-3
+    ports:
+      - 8080:8080
+      - 8081:8081
+    restart: on-failure
+    volumes:
+      - ./proxy.json:/opt/rocketmq/conf/proxy.json
+    environment:
+      - NAMESRV_ADDR=namesrv:9876
+      -
+    command: sh mqproxy -pc /opt/rocketmq/conf/proxy.json
 
   console:
     image: apacherocketmq/rocketmq-dashboard:2.0.0
@@ -76,6 +83,10 @@ services:
     ports:
       - 9090:8080
     environment:
-      - "JAVA_OPTS=-Drocketmq.namesrv.addr=namesrv:9876" 
-    links: 
-      - namesrv:namesrv
+      - "JAVA_OPTS=-Drocketmq.namesrv.addr=namesrv:9876"
+    networks:
+      - rocketmq
+
+networks:
+  rocketmq:
+    driver: bridge
