@@ -71,8 +71,6 @@ services:
     restart: on-failure
     volumes:
       - ./proxy.json:/opt/rocketmq/conf/proxy.json
-    environment:
-      - NAMESRV_ADDR=namesrv:9876
     command: sh mqproxy -pc /opt/rocketmq/conf/proxy.json
 
   console:
@@ -82,7 +80,7 @@ services:
     ports:
       - 9090:8080
     environment:
-      - "JAVA_OPTS=-Drocketmq.namesrv.addr=namesrv:9876"
+      - "JAVA_OPTS=-Drocketmq.namesrv.addr=namesrv:9876 -Drocketmq.config.accessKey=rocketmq -Drocketmq.config.secretKey=12345678"
     networks:
       - rocketmq
 

@@ -1,3 +1,14 @@
 {
-  "rocketMQClusterName": "RaftCluster"
+  "rocketMQClusterName": "RaftCluster",
+  "namesrvAddr": "namesrv:9876",
+
+  "authenticationEnabled": true,
+  "authenticationProvider": "org.apache.rocketmq.auth.authentication.provider.DefaultAuthenticationProvider",
+  "authenticationMetadataProvider": "org.apache.rocketmq.proxy.auth.ProxyAuthenticationMetadataProvider",
+  "authenticationStrategy": "org.apache.rocketmq.auth.authentication.strategy.StatefulAuthenticationStrategy",
+
+  "authorizationEnabled": true,
+  "authorizationProvider": "org.apache.rocketmq.auth.authorization.provider.DefaultAuthorizationProvider",
+  "authorizationMetadataProvider": "org.apache.rocketmq.proxy.auth.ProxyAuthorizationMetadataProvider",
+  "authorizationStrategy": "org.apache.rocketmq.auth.authorization.strategy.StatefulAuthorizationStrategy"
 }

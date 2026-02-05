@@ -1,11 +1,5 @@
 package com.ylli.base.api.test;
 
-import org.apache.rocketmq.client.exception.MQBrokerException;
-import org.apache.rocketmq.client.exception.MQClientException;
-import org.apache.rocketmq.client.producer.DefaultMQProducer;
-import org.apache.rocketmq.client.producer.SendResult;
-import org.apache.rocketmq.common.message.Message;
-import org.apache.rocketmq.remoting.exception.RemotingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -13,8 +7,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-//import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 /**
  * @author ylli
@@ -40,7 +32,7 @@ public class TestController {
     String password;
 
     @GetMapping
-    public Object redis() throws MQBrokerException, RemotingException, InterruptedException, MQClientException {
+    public Object redis() {
 /*        applicationEventPublisher.publishEvent(new ExampleModel("ylli", "sbl"));
         stringRedisTemplate.opsForValue().set("ylli", value);*/
 
