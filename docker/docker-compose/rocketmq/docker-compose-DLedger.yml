@@ -80,7 +80,7 @@ services:
     ports:
       - 9090:8080
     environment:
-      - "JAVA_OPTS=-Drocketmq.namesrv.addr=namesrv:9876 -Drocketmq.config.accessKey=rocketmq -Drocketmq.config.secretKey=12345678"
+      - "JAVA_OPTS=-Drocketmq.namesrv.addr=namesrv:9876"
     networks:
       - rocketmq
 
