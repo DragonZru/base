@@ -69,3 +69,52 @@ TODO 性能测试PTS.
 
 # linux 内存回收
 - [github](https://github.com/0voice/kernel_memory_management/blob/main/%E2%9C%8D%20%E6%96%87%E7%AB%A0/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%20glibc%20malloc%EF%BC%9A%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E5%99%A8%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86.md)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# java内存回收 Garbage Collection GC
+> 在学习Java对象的自动内存回收（GC）机制之前，建议先了解JVM内存结构与对象内存分配机制。
+
+https://www.processon.com/view/6284c66b0791290711949fdb
+https://pdai.tech/md/java/jvm/java-jvm-struct.html
+
+## jvm内存结构 RuntimeDataArea
+## HotSpot对象内存布局 HotSpotObjectMemoryLayout
+
+# java内存模型(JMM) Java Memory Model
+> Java语言规范定义的多线程内存访问模型，用于保证共享变量的**可见性**、**原子性**和**有序性**，与垃圾回收无关
