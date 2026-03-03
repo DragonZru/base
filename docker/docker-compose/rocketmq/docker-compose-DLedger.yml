@@ -2,6 +2,7 @@ services:
   namesrv:
     image: apache/rocketmq:5.4.0
     hostname: namesrv
+    container_name: namesrv
     networks:
       - rocketmq
     environment:
@@ -13,6 +14,7 @@ services:
   broker-1:
     image: apache/rocketmq:5.4.0
     hostname: broker-1
+    container_name: broker-1
     networks:
       - rocketmq
     ports:
@@ -28,6 +30,7 @@ services:
   broker-2:
     image: apache/rocketmq:5.4.0
     hostname: broker-2
+    container_name: broker-2
     networks:
       - rocketmq
     ports:
@@ -43,6 +46,7 @@ services:
   broker-3:
     image: apache/rocketmq:5.4.0
     hostname: broker-3
+    container_name: broker-3
     networks:
       - rocketmq
     ports:
@@ -76,7 +80,8 @@ services:
   console:
     image: apacherocketmq/rocketmq-dashboard:2.0.0
     #restart: always
-    hostname: rocketmqDashboard
+#    hostname: rocketmqDashboard
+    container_name: console
     ports:
       - 9090:8080
     environment:

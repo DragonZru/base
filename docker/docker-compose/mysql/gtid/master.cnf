@@ -19,3 +19,7 @@ expire_logs_days=7
 #GTID
 gtid_mode=on
 enforce_gtid_consistency=on
+
+
+innodb_buffer_pool_size = 4G
+innodb_buffer_pool_instances = 4
