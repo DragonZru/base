@@ -111,9 +111,99 @@ TODO 性能测试PTS.
 > 在学习Java对象的自动内存回收（GC）机制之前，建议先了解JVM内存结构与对象内存分配机制。
 
 https://www.processon.com/view/6284c66b0791290711949fdb
-https://pdai.tech/md/java/jvm/java-jvm-struct.html
 
 ## jvm内存结构 RuntimeDataArea
+线程私有：
+* 程序计数器 ： 记录方法执行行号
+* 虚拟机栈(java 虚拟机栈Java Virtual Machine Stacks) ：内部保存一个个栈帧Stack Frame(对应一个个java方法)
+  * 栈帧的内部结构：
+    * 局部变量表：存储方法参数和局部变量，包括基本数据类型（int、long 等）和对象引用（reference）。编译期确定大小。
+      * 存储单位：Slot（槽），每个 Slot 32 位（4 字节），long double 占用两个连续的slot
+      * 索引 0: 实例方法中，索引 0 固定存储 this 指针；静态方法无 this
+    * 操作数栈：后进先出（LIFO）的工作区，用于字节码指令执行时的临时数据存储，如算术运算的中间结果。
+    * 动态链接：每个栈帧都持有一个指向运行时常量池中该方法所属类的符号引用，用于支持方法的动态分派。
+    * 返回地址：方法正常退出或异常退出后，需要恢复上层方法的执行状态，返回地址记录了调用者的 PC 值。
+    * 额外信息（如调试信息、锁信息等 (可选)）
+* 本地方法栈 native method stack ： 
+
+共享区域：
+* 堆 heap：存储对象实例、数组
+  * GC算法的主要操作空间，不同算法实现不同，CMS分代 8:1:1 (默认年轻代 Yong Gen中 Eden : from survivor : to survivor)，2:1 (老年代：年轻代 默认，可以用 NewRatio指定)，15(年轻代晋升15次后进入老年代，受 -XX:MaxTenuringThreshold=15 控制，cms默认是6 ！！！！！！！)(-XX:PretenureSizeThreshold 大对象直通:超过此大小的对象，直接在老年代分配，不经过年轻代,默认值：0（无限制，所有对象先走年轻代）,单位Bytes，仅对 Serial Old 和 ParNew 收集器有效（CMS 可用）。G1 收集器无效（G1 用 Humongous 区域处理大对象）)
+* 方法区Method Area（JVM规范中定义的逻辑区域） ：java7（包括之前）是永久代PermGen，java8之后是Metaspace
+    * 方法区是各个线程共享的内存区域，用于存储已被虚拟机加载的类型信息、字段信息 、方法信息、运行时常量池、即时编译器（JIT）编译后的代码缓存等数据
+      * 类型信息：这是方法区最主要的内容。每当 JVM 加载一个类或接口时，它会提取并存储以下信息
+        * 全限定名：类的完整包名+类名（例如 java.lang.String）。
+        * 修饰符：如 public、abstract、final 等。
+        * 直接超类/接口：父类的全限定名以及实现的接口列表。
+        * 类型属性：是类还是接口（或是枚举、注解）。
+      * 字段信息：类中声明的所有字段（成员变量）的定义信息
+        * 字段名称
+        * 字段类型（如 int、java.lang.String）
+        * 修饰符（public、private、static、final、volatile 等）
+      * 方法信息：类中所有方法的定义信息
+        * 方法名称
+        * 返回类型
+        * 参数列表（数量、类型、顺序）
+        * 修饰符（public、native、synchronized 等）
+        * 方法字节码：即方法内部的实际指令代码
+        * 异常表：记录 try-catch 块的范围及捕获的异常类型
+      * 运行时常量池：这是方法区中最活跃的部分。每个类被加载后，其 .class 文件中的“常量池表”会被存入这里
+        * 字面量（就是代码中显而易见的固定值，在编译期就确定了）：
+          * 字符串字面量 String s = "string";
+          * 数字字面量 100,3.14
+          * 最终常量 public static final int MAX = 100
+        * 符号引用（符号引用 是用一组符号来描述所引用的目标（类、字段、方法），它不包含目标在内存中的实际地址）
+          * 类和接口（全限定名）：java/lang/String
+          * 字段（字段名 + 描述符）：name:Ljava/lang/String
+          * 方法（方法名 + 描述符）：println:(Ljava/lang/String;)V
+        * 动态解析：在运行期间，JVM 会将这些符号引用转换为直接引用（内存地址）
+
+> Q: 字符串字面量 与 字符串常量池 区别？
+> 
+> A：字符串字面量是内容 “string abc” , 字符串常量池是字面量存储的位置，当我们定义一个 String str = "abc"时，编译期：编译器发现 "abc" 是字符串字面量，将其记录在 .class 文件的 常量池表 中（符号引用）；类加载期：JVM 加载类，将 .class 文件的常量池表加载到 运行时常量池（方法区/元空间）；运行期（执行到 ldc "abc" 指令时）：JVM 去 字符串常量池（堆中）查找有没有 "abc" 对象，如果有：直接返回该对象的引用，如果没有：在 字符串常量池 中创建一个新的 "abc" 对象，再返回引用，将引用赋值给变量 s 
+
+> Q: 不同版本方法去差异 & 为什么要从永久代转移至元空间？
+> 
+> A：首先永久代（non-heap）不是堆 heap，但是永久代同样属于jvm定义的内存结构中
+> 
+> A：为什么要将永久代转变为堆外内存（本地内存）呢，1. 永久代是jvm内存结构定义中的一部分，受jvm内存大小限制，为了缓解永久代oom，使用本地内存不受jvm内存大小限制（受物理内存影响），2.是减少GC压力：类卸载条件苛刻（需 ClassLoader 回收），导致永久代垃圾堆积，触发频繁 Full GC
+
+| 存储内容 | JDK 6 (永久代) | JDK 7 (永久代) | JDK 8+ (元空间) |
+| :--- | :--- | :--- | :--- |
+| **类型元数据** | 方法区 (永久代) | 方法区 (永久代) | 方法区 (元空间 - 本地内存) |
+| **方法字节码** | 方法区 (永久代) | 方法区 (永久代) | 方法区 (元空间 - 本地内存) |
+| **运行时常量池** | 方法区 (永久代) | 方法区 (永久代) | 方法区 (元空间 - 本地内存) |
+| **静态变量** | 方法区 (永久代) | Java 堆 (Heap) | Java 堆 (Heap) |
+| **字符串常量池** | 方法区 (永久代) | Java 堆 (Heap) | Java 堆 (Heap) |
+
+> Q：本地方法栈与 non-heap区域 JNI native memory 区别？
+> 
+> A：本地方法栈 内部也是存储 (栈帧Stack Frame)同虚拟机栈一样，不过是服务于native方法(操作系统底层方法 ), 而JNI Native Memory 是存储实际数据的位置
+
+> Q: jvm参数示例：
+> 
+> A：-Xms	堆初始大小	-Xms4G
+> 
+> -Xmx	堆最大大小	-Xmx4g
+> 
+> -Xss	每个线程栈大小	-Xss512k   (默认1M)
+> 
+> -Xmn	新生代大小	-Xmn512m
+> 
+> -XX:MetaspaceSize	元空间初始大小	-XX:MetaspaceSize=512m
+> 
+> -XX:MaxMetaspaceSize	元空间最大大小	-XX:MaxMetaspaceSize=512m
+> 
+> -XX:SurvivorRatio	Eden 与 Survivor 比例	-XX:SurvivorRatio=8
+> 
+> -XX:NewRatio	old Gen老年代 与 new Gen新生代 比例	-XX:NewRatio=2
+> 
+> -XX:MaxDirectMemorySize   NIO 直接内存  不指定默认等于 Xmx,主要堆外内存不仅包含Direct Memory(受 MaxDirectMemorySize 限制)，还有元空间 Metaspace(受 MaxMetaspaceSize 限制)，  线程栈 Thread Stacks(受 -Xss 限制)，代码缓存 Code Cache，JNI 手动分配内存 (malloc，完全不受限！)，GC 结构占用等
+
+> 什么是逃逸分析
+> 
+> 什么是TLAB
+
 ## HotSpot对象内存布局 HotSpotObjectMemoryLayout
 
 # java内存模型(JMM) Java Memory Model
