@@ -1,0 +1,12 @@
+{
+  "rocketMQClusterName": "RaftCluster",
+  "namesrvAddr": "namesrv:9876",
+  "enableAuthorization": true,
+  "enableAuthentication": true,
+  "aclFile": "/opt/rocketmq/conf/plain_acl.yml",
+  "enableAclRpcHookForClusterMode": true,
+  "grpcServerPort": 8081,
+  "remotingListenPort": 8080,
+  "proxyMode": "CLUSTER",
+  "enableACL": true
+}

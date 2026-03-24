@@ -1,0 +1,19 @@
+# 全局白名单
+globalWhiteRemoteAddresses:
+  - 127.0.0.1
+  - 0.0.0.0
+
+accounts:
+  # 管理员账户
+  - accessKey: admin
+    secretKey: admin123
+    admin: true
+
+  # 普通用户账户
+  - accessKey: rocketmq_user
+    secretKey: user123
+    admin: false
+    topicPerms:
+      - TopicTest=PUB|SUB   # 对 TopicTest 有发布和订阅权限
+    groupPerms:
+      - G_Test=SUB          # 对消费组 G_Test 有订阅权限

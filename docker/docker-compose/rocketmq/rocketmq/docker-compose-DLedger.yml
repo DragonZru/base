@@ -1,0 +1,95 @@
+services:
+  namesrv:
+    image: apache/rocketmq:5.4.0
+    hostname: namesrv
+    networks:
+      - rocketmq
+    environment:
+      MAX_POSSIBLE_HEAP: 100000000
+    ports:
+      - 9876:9876
+    command: sh mqnamesrv
+
+  broker-1:
+    image: apache/rocketmq:5.4.0
+    hostname: broker-1
+    networks:
+      - rocketmq
+    ports:
+      - 30911:30911
+      - 40911:40911
+    environment:
+      MAX_POSSIBLE_HEAP: 200000000
+      NAMESRV_ADDR: namesrv:9876
+    volumes: 
+      - ./broker_1.conf:/opt/rocketmq/conf/broker.conf
+      - ./plain_acl.yml:/opt/rocketmq/conf/plain_acl.yml
+    command: sh mqbroker -c /opt/rocketmq/conf/broker.conf
+    
+  broker-2:
+    image: apache/rocketmq:5.4.0
+    hostname: broker-2
+    networks:
+      - rocketmq
+    ports:
+      - 30912:30912
+      - 40912:40912
+    environment:
+      MAX_POSSIBLE_HEAP: 200000000
+      NAMESRV_ADDR: namesrv:9876
+    volumes: 
+      - ./broker_2.conf:/opt/rocketmq/conf/broker.conf
+      - ./plain_acl.yml:/opt/rocketmq/conf/plain_acl.yml
+    command: sh mqbroker -c /opt/rocketmq/conf/broker.conf
+    
+  broker-3:
+    image: apache/rocketmq:5.4.0
+    hostname: broker-3
+    networks:
+      - rocketmq
+    ports:
+      - 30913:30913
+      - 40913:40913
+    environment:
+      MAX_POSSIBLE_HEAP: 200000000
+      NAMESRV_ADDR: namesrv:9876
+    volumes: 
+      - ./broker_3.conf:/opt/rocketmq/conf/broker.conf
+      - ./plain_acl.yml:/opt/rocketmq/conf/plain_acl.yml
+    command: sh mqbroker -c /opt/rocketmq/conf/broker.conf
+
+  proxy:
+    image: apache/rocketmq:5.4.0
+    container_name: proxy
+    networks:
+      - rocketmq
+    depends_on:
+      - namesrv
+      - broker-1
+      - broker-2
+      - broker-3
+    ports:
+      - 8080:8080
+      - 8081:8081
+    restart: on-failure
+    volumes:
+      - ./proxy.json:/opt/rocketmq/conf/proxy.json
+      - ./plain_acl.yml:/opt/rocketmq/conf/plain_acl.yml
+#    environment:
+#      - NAMESRV_ADDR=namesrv:9876
+    command: sh mqproxy -pc /opt/rocketmq/conf/proxy.json
+
+  console:
+    image: apacherocketmq/rocketmq-dashboard:2.0.0
+    #restart: always
+    hostname: rocketmqDashboard
+    ports:
+      - 9090:8080
+    environment:
+      - "JAVA_OPTS=-Drocketmq.namesrv.addr=namesrv:9876 -Drocketmq.config.accessKey=admin -Drocketmq.config.secretKey=admin123"
+    networks:
+      - rocketmq
+
+networks:
+  rocketmq:
+    driver: bridge
