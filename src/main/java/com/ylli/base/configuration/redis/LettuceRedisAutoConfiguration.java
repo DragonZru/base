@@ -5,8 +5,8 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.data.redis.autoconfigure.DataRedisProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.*;
 import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * @author ylli
  */
 @AutoConfiguration
-@EnableConfigurationProperties(RedisProperties.class)
+@EnableConfigurationProperties(DataRedisProperties.class)
 public class LettuceRedisAutoConfiguration {
 
     @Bean
@@ -50,13 +50,13 @@ public class LettuceRedisAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(RedisConfiguration.class)
-    public RedisConfiguration redisConfiguration(ObjectProvider<RedisProperties> redisPropertiesProvider) {
+    public RedisConfiguration redisConfiguration(ObjectProvider<DataRedisProperties> redisPropertiesProvider) {
         // getIfAvailable return instance if exists, otherwise return null
         // RedisProperties host(default 127.0.0.1) and port(default 6379) has value, so it must obtain an instance.
-        RedisProperties redisProperties = redisPropertiesProvider.getIfAvailable();
+        DataRedisProperties redisProperties = redisPropertiesProvider.getIfAvailable();
 
         if (redisProperties.getCluster() != null) {
-            RedisProperties.Cluster cluster = redisProperties.getCluster();
+            DataRedisProperties.Cluster cluster = redisProperties.getCluster();
             RedisClusterConfiguration clusterConfiguration = new RedisClusterConfiguration(cluster.getNodes());
             // 密码和用户名
             Optional.ofNullable(redisProperties.getUsername()).ifPresent(clusterConfiguration::setUsername);
@@ -66,7 +66,7 @@ public class LettuceRedisAutoConfiguration {
         // TODO RedisConnectionConfiguration
         if (redisProperties.getSentinel() != null) {
             // TODO sentinel check.
-            RedisProperties.Sentinel sentinel = redisProperties.getSentinel();
+            DataRedisProperties.Sentinel sentinel = redisProperties.getSentinel();
             RedisSentinelConfiguration sentinelConfiguration = new RedisSentinelConfiguration().master(sentinel.getMaster());
             sentinelConfiguration.setSentinels(sentinel.getNodes().stream().map(nodeStr -> {
                 return RedisNode.fromString(nodeStr);

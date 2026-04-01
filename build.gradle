@@ -1,7 +1,7 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.3.5'
-    id 'io.spring.dependency-management' version '1.1.6'
+    id 'org.springframework.boot' version '4.0.5'
+    id 'io.spring.dependency-management' version '1.1.7'
     id 'maven-publish'
 }
 
@@ -9,14 +9,19 @@ group = 'com.ylli'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = '17'
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+//    toolchain {
+//        languageVersion = JavaLanguageVersion.of(17)
+//    }
 }
 
 repositories {
     mavenCentral()
 
     maven {
-        url "http://127.0.0.1:8081/repository/maven-public/"
+        url "http://127.0.0.1:18081/repository/maven-public/"
         credentials {
             username 'admin'
             password 'Guyuefangyuan6'
@@ -32,74 +37,50 @@ configurations {
 }
 
 dependencies {
+    //Spring Boot
 //    implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+
+    // Spring Cloud
     implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+    // Alibaba Cloud
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+
+    // Database
+    implementation 'com.mysql:mysql-connector-j'
+//    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+    implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:2.1.0'
+    implementation 'io.mybatis:mybatis-mapper:2.2.1'
+
+    // Tools
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
-    implementation 'com.mysql:mysql-connector-j'
-//    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
+    // nacos 使用yaml 格式时需要使用.
+    implementation 'org.yaml:snakeyaml:2.4'
+
+    // MQ & Distributed
+    implementation 'org.apache.rocketmq:rocketmq-client-java:5.2.0'
+    implementation 'org.apache.seata:seata-spring-boot-starter:2.6.0'
+    implementation 'org.apache.shardingsphere:shardingsphere-jdbc:5.5.2'
+    implementation 'org.apache.shardingsphere:shardingsphere-transaction-base-seata-at:5.5.2'
+
+    // Security
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
+
+    // Internal
+    implementation 'com.ylli:common:0.0.6'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
-}
-
-dependencies {
-    implementation 'com.ylli:common:0.0.6'
-    implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
-}
-
-dependencies {
-
-    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-
-    // https://mvnrepository.com/artifact/io.mybatis/mybatis-mapper
-    implementation 'io.mybatis:mybatis-mapper:2.2.1'
-
-    implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:2.1.0'
-
-}
-
-dependencies {
-
-    // https://mvnrepository.com/artifact/com.google.code.gson/gson
-    implementation 'com.google.code.gson:gson:2.10.1'
-
-    // https://mvnrepository.com/artifact/com.github.ben-manes.caffeine/caffeine
-    implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8'
-
-    // https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder
-    implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
-
-    // Source: https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-client-java
-    implementation 'org.apache.rocketmq:rocketmq-client-java:5.2.0'
-}
-
-dependencies {
-    // https://mvnrepository.com/artifact/io.seata/seata-spring-boot-starter
-    implementation 'org.apache.seata:seata-spring-boot-starter:2.3.0'
-
-    // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-jdbc
-    implementation 'org.apache.shardingsphere:shardingsphere-jdbc:5.5.2'
-
-    // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-transaction-base-seata-at
-    implementation 'org.apache.shardingsphere:shardingsphere-transaction-base-seata-at:5.5.2'
-}
-
-dependencies {
-    // https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-discovery
-    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:2023.0.1.2'
-
-    // https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-config
-    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:2023.0.1.2'
-
-    // https://mvnrepository.com/artifact/org.yaml/snakeyaml
-    // nacos 使用yaml 格式时需要使用.
-    implementation 'org.yaml:snakeyaml:2.4'
-
 }
 
 dependencies {
@@ -110,18 +91,15 @@ dependencies {
     implementation 'com.alibaba.csp:sentinel-transport-simple-http:1.8.8'
 }
 
-dependencies {
-    // 加密工具
-    // https://mvnrepository.com/artifact/com.github.ulisesbocchio/jasypt-spring-boot-starter
-    implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5")
-}
 
 ext {
-    set('springCloudVersion', "2023.0.3")
+    set('springCloudVersion', "2025.1.1")
+    set('springCloudAlibabaVersion', "2025.1.0.0")
 }
 
 dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${springCloudAlibabaVersion}"
     }
 }
