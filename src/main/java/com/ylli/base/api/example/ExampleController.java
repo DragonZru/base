@@ -1,5 +1,6 @@
 package com.ylli.base.api.example;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.github.pagehelper.PageInfo;
 import com.ylli.base.api.example.model.ExampleInfo;
 import com.ylli.base.api.example.model.ExampleModel;
@@ -39,6 +40,7 @@ public class ExampleController {
      * @param rightTime <= rightTime
      */
     @GetMapping
+    @SentinelResource(value = "example")
     public PageInfo<ExampleModel> get(@RequestParam(required = false) Long id,
                                       @RequestParam(required = false) String username,
                                       @RequestParam(required = false) Long version,

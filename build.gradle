@@ -84,11 +84,11 @@ tasks.named('test') {
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/com.alibaba.csp/sentinel-core
-    implementation 'com.alibaba.csp:sentinel-core:1.8.8'
+    // Source: https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-sentinel
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel'
 
-    // sentinel dashboard
-    implementation 'com.alibaba.csp:sentinel-transport-simple-http:1.8.8'
+    // Source: https://mvnrepository.com/artifact/com.alibaba.csp/sentinel-datasource-nacos
+    implementation 'com.alibaba.csp:sentinel-datasource-nacos'
 }
 
 
