@@ -19,6 +19,8 @@
                         "pid": "${PID:-}",
                         "thread": "%thread",
                         "class": "%logger{40}",
+                        "traceId": "%X{traceId:-}",
+                        "spanId": "%X{spanId:-}",
                         "rest": "%message"
                         }
                     </pattern>
