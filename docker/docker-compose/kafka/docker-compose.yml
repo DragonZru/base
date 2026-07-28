@@ -1,6 +1,6 @@
 services:
   kafka-0:
-    image: bitnami/kafka:4.0
+    image: soldevelo/kafka:4.0
     hostname: kafka-0
     ports:
       - 9092:9092
@@ -27,7 +27,7 @@ services:
       KAFKA_HEAP_OPTS: -Xmx512M -Xms256M
       
   kafka-1:
-    image: bitnami/kafka:4.0
+    image: soldevelo/kafka:4.0
     hostname: kafka-1
     ports:
       - 9192:9092
@@ -54,7 +54,7 @@ services:
       KAFKA_HEAP_OPTS: -Xmx512M -Xms256M
 
   kafka-2:
-    image: bitnami/kafka:4.0
+    image: soldevelo/kafka:4.0
     hostname: kafka-2
     ports:
       - 9292:9092
